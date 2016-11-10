@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.Scanner;
-
 public class Player extends Entity {
 	
 	public Player() {

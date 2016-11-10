@@ -35,12 +35,13 @@ public class GameLogic {
 	}
 	
 	public void startGame() {
+		Scanner sc = new Scanner(System.in);
 		while(!isGameOver()) {
 			stage = new Stage(level);
 			stage.addPlayer(player);
 			ArrayList<Enemy> enemies = stage.getEnemyList();
 			
-			Scanner sc = new Scanner(System.in);
+			
 			boolean won = false;
 			System.out.println("----------LEVEL "+(level+1)+"----------");
 			while(!won) {			
@@ -80,5 +81,6 @@ public class GameLogic {
 			System.out.println("You won!");
 			level++;
 		}	
+		sc.close();
 	}
 }
