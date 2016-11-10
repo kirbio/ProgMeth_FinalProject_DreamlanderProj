@@ -3,7 +3,7 @@ package pokemon;
 import java.util.Random;
 
 public class Pokemon {
-	private String species;
+	private String species; //lol
 	private double cp;
 	private boolean shiny; 
 	private String shininess = "";
