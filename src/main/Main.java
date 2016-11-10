@@ -12,6 +12,8 @@ public class Main {
 	static GameLogic logic = new GameLogic();
 	
 	public static void main(String[] args) {
+		
+		//test git lol
 		logic.startGame();
 		/*while(!logic.isGameOver()) {					
 			
