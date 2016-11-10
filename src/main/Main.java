@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		//test git lol lol2
+		//test git ignore this
 		logic.startGame();
 		/*while(!logic.isGameOver()) {					
 			
