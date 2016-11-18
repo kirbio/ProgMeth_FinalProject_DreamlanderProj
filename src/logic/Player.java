@@ -1,9 +1,11 @@
 package logic;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Player extends Entity {
 	
 	public Player() {
-		super("Kirby", 10, 1);
+		super("Kirby", 50, 1);
 	}
 	
 	@Override
@@ -12,6 +14,12 @@ public class Player extends Entity {
 		entity.decreaseHP(attack);
 		System.out.println("Kirby attacks "+entity.getName()+"!");
 
+		
+	}
+
+	@Override
+	public void draw(GraphicsContext g) {
+		// TODO Auto-generated method stub
 		
 	}
 

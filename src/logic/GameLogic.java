@@ -71,15 +71,25 @@ public class GameLogic {
 				won = enemies.get(0).isDead();
 				
 				for (Enemy e : enemies) {
-					System.out.println(e.getName()+" "+e.getHp()+" dead : "+e.isDead());
+					if(player.isDead()){
+						setGameOver(true);
+						System.out.println("Game Over");
+						break;
+					}
+					//System.out.println(e.getName()+" "+e.getHp()+" dead : "+e.isDead());
 					if (!e.isDead()) {
 						e.attack(player);
 					}
 					won = won && e.isDead();
 				}
+				if(isGameOver()){
+					break;
+				}
 			}
+			if(!isGameOver()){
 			System.out.println("You won!");
 			level++;
+			}
 		}	
 		sc.close();
 	}

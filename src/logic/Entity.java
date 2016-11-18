@@ -1,19 +1,56 @@
 package logic;
 
-public abstract class Entity {
+public abstract class Entity implements graphic.IRenderable{
 	protected String name;
 	protected int hp;
 	protected int attack;
 	protected boolean isDead;
+	
+	protected int x,y,z;
 	
 	Entity(String name, int hp, int attack) {
 		this.name = name;
 		this.hp = hp;
 		this.attack = attack;
 		isDead = false;
+		
+		x = 0;
+		y = 0;
+		z = 1;
 	}
 	
+	/*==================================
+	 * Position/Render-related methods
+	================================== */
+	@Override
+	public int getZ() {
+		// TODO Auto-generated method stub
+		return z;
+	}
+	public void setZ(int z) {
+		// TODO Auto-generated method stub
+		this.z=z;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	/*==================================
+	 * RPG Game Logic Methods
+	 ==================================*/
+	
+	
 	abstract void attack(Entity entity);
+	
 	
 	void increaseHP(int amount) { 
 		this.hp += amount;
@@ -23,6 +60,7 @@ public abstract class Entity {
 		this.hp -= amount;
 		if (hp <= 0) {
 			isDead = true;
+			System.out.println(getName()+" is Dead!");
 		}
 	}
 
