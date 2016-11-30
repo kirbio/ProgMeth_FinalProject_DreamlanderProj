@@ -59,13 +59,12 @@ public class GameLogic {
 		while(!isGameOver()) {
 			round = new Round(level);
 			round.addPlayer(player);
-			ArrayList<Enemy> enemies = round.getEnemyList();
-			
-			
-			boolean won = false;
-			System.out.println("----------LEVEL "+(level+1)+"----------");	
-			while(!won) {			
-				System.out.println(won);
+			ArrayList<Enemy> enemies = round.getEnemyList();	
+
+			System.out.println("----------LEVEL "+(level+1)+"----------");
+			boolean roundEnds = false;
+			while(!roundEnds) {			
+				System.out.println(isAllEnemyDead());
 				RPGTextArea.text = "Press Any Key to Attack";
 				if (InputUtility.getKeyTriggered(KeyCode.ENTER)) {
 					System.out.println("PRESSSSSSSSSSSSSSSS");
@@ -81,8 +80,6 @@ public class GameLogic {
 							}
 						}
 					}
-					
-					won = enemies.get(0).isDead();
 					
 					for (Enemy e : enemies) {
 						if(player.isDead()){
@@ -109,12 +106,14 @@ public class GameLogic {
 								e1.printStackTrace();
 							}
 						}
-						won = won && e.isDead();
+						
 					}
+					
 					if(isGameOver()){
 						break;
 					}
-					if(!isGameOver()){
+					
+					if(isAllEnemyDead()){
 						System.out.println("You won!");
 						RPGTextArea.text = "You won";
 						try {
@@ -124,6 +123,7 @@ public class GameLogic {
 							e1.printStackTrace();
 						}
 						level++;
+						roundEnds = true;
 					}	
 					
 				}
@@ -149,5 +149,14 @@ public class GameLogic {
 				
 		}	
 		
+	}
+	
+	private boolean isAllEnemyDead() {
+		ArrayList<Enemy> enemies = round.getEnemyList();
+		boolean allEnemyDead = true;
+		for (Enemy e : enemies) {
+			allEnemyDead = allEnemyDead && e.isDead();
+		}
+		return allEnemyDead;
 	}
 }
