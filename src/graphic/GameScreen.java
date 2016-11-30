@@ -8,10 +8,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import logic.GameLogic;
+import logic.RPGTextArea;
+import logic.StatusBar;
 import input.InputUtility;
 
 public class GameScreen extends BorderPane {
-	public static final GameScreen instance = new GameScreen();
+	//public static final GameScreen instance = new GameScreen();
 	public Canvas canvas;
 	public GraphicsContext gc;
 	
@@ -19,26 +22,30 @@ public class GameScreen extends BorderPane {
 		canvas = new Canvas(680,480);
 		gc = canvas.getGraphicsContext2D();
 		setCenter(canvas);
-		gc.setFill(Color.LIGHTGREEN);
+		gc.setFill(Color.PINK);
 		gc.fillRect(0, 0, 680, 480);
-		System.out.println("HIIIIIIIIIIIIIIIIII");
+		RenderableHolder.getInstance().add(new RPGTextArea("Initializing..."));
+		RenderableHolder.getInstance().add(new StatusBar());
+		System.out.println("gameScreen initialized");
 		initializeEventListeners();
 	}
 	
-	public void updateGameScreen() {
+	public void paintComponents() {
 		//draw all enemies in level
+		gc.clearRect(0, 0, 680, 480);
+		gc.setFill(Color.PINK);
+		gc.fillRect(0, 0, 680, 480);
+		for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
+			renderable.draw(gc);
+		}
 	}
 	
-	public void print(String text) {
-		gc.setFill(Color.LIGHTGREEN);
-		gc.fillRect(0, 0, 680, 480);
-		gc.setFont(Font.font("Comis Sans MS", 100));
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setFill(Color.BLACK);
-		gc.fillText(text, 340, 400);
-	}
 	
 	public void initializeEventListeners() {
+		
+		this.setOnMouseClicked(event -> {
+			System.out.println("MOUSE CLICKED");
+		});
 		
 		this.setOnKeyPressed((event) -> {
 			System.out.println("KeyPressed : " + event.getCode().toString());
@@ -51,5 +58,9 @@ public class GameScreen extends BorderPane {
 			System.out.println("KeyReleased : " + event.getCode().toString());
 			InputUtility.setKeyPressed(event.getCode(), false);
 		});
+	}
+	
+	public void requestFocusForCanvas(){
+		this.requestFocus();
 	}
 }

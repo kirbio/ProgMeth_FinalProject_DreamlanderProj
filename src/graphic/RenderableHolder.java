@@ -23,7 +23,7 @@ public class RenderableHolder {
 	public RenderableHolder(){
 		//Fill in here
 		entities = new ArrayList<IRenderable>();
-		arrow = new Image[4];
+		//arrow = new Image[4];
 		comparator = (IRenderable o1, IRenderable o2) -> {
 			return o1.getZ() - o2.getZ();
 		};
@@ -42,13 +42,13 @@ public class RenderableHolder {
 	private static void loadResource() {
 		// TODO Auto-generated method stub
 		//Fill in here
-		arrow[0] = new Image(ClassLoader.getSystemResource("arrow_down.png").toString());
-		arrow[1] = new Image(ClassLoader.getSystemResource("arrow_left.png").toString());
-		arrow[2] = new Image(ClassLoader.getSystemResource("arrow_right.png").toString());
-		arrow[3] = new Image(ClassLoader.getSystemResource("arrow_up.png").toString());
-		
-		star = new Image(ClassLoader.getSystemResource("star.png").toString());
-		
+//		arrow[0] = new Image(ClassLoader.getSystemResource("arrow_down.png").toString());
+//		arrow[1] = new Image(ClassLoader.getSystemResource("arrow_left.png").toString());
+//		arrow[2] = new Image(ClassLoader.getSystemResource("arrow_right.png").toString());
+//		arrow[3] = new Image(ClassLoader.getSystemResource("arrow_up.png").toString());
+//		
+//		star = new Image(ClassLoader.getSystemResource("star.png").toString());
+//		
 	}
 	public synchronized void remove(int index){
 		//Fill in here

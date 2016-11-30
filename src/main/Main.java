@@ -3,13 +3,17 @@ package main;
 import java.util.Scanner;
 
 import graphic.GameScreen;
+import input.InputUtility;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import logic.Enemy;
 import logic.GameLogic;
 import logic.Player;
@@ -17,24 +21,47 @@ import logic.Round;
 
 public class Main extends Application {
 
-	static GameLogic logic = new GameLogic();
+	
+	private GameScreen gameScreen;
+	private Scene gameScene;
+	private Stage primaryStage;
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
-	public void start(javafx.stage.Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) throws Exception {
 		//code here
-		BorderPane root = new BorderPane();
-		root.setCenter(GameScreen.instance);
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("KIRBY QUEST");
+		this.primaryStage.setResizable(false);
+		this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				System.exit(0);
+			}
+		});
+		
+		//BorderPane root = new BorderPane();
+		gameScreen = new GameScreen();
+		gameScreen.requestFocusForCanvas();
 		
 //		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Scene scene = new Scene(root,680,480);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		gameScene = new Scene(gameScreen,680,480);
+		this.primaryStage.setScene(gameScene);
+		addEventListener(this.primaryStage.getScene());
 		
-		/*new AnimationTimer() {
+		this.primaryStage.show();
+		
+		Thread t = new Thread(() -> {
+			GameLogic.instance.startGame();
+		});
+		t.start();
+		
+		
+		
+		new AnimationTimer() {
 			Long start=0l;
 			@Override
 			public void handle(long now) {
@@ -45,16 +72,31 @@ public class Main extends Application {
 					//update here
 					//GameScreen.paintComponents();
 					//GameLogic.update();
-					
+					gameScreen.paintComponents();
 					
 					start=now;
 
 				}
 			}
-		}.start();*/
+		}.start();
 		
-		logic.startGame();
+
 		
+		
+	}
+	
+	private void addEventListener(Scene s) {
+		s.setOnKeyPressed((event) -> {
+			System.out.println("KeyPressed : " + event.getCode().toString());
+			if (!InputUtility.getKeyPressed(event.getCode()))
+				InputUtility.setKeyTriggered(event.getCode(), true);
+			InputUtility.setKeyPressed(event.getCode(), true);		
+		});
+
+		s.setOnKeyReleased((event) -> {
+			System.out.println("KeyReleased : " + event.getCode().toString());
+			InputUtility.setKeyPressed(event.getCode(), false);
+		});
 	}
 
 }

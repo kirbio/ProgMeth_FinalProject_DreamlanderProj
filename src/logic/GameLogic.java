@@ -9,6 +9,7 @@ import input.InputUtility;
 import javafx.scene.input.KeyCode;
 
 public class GameLogic {
+	public static final GameLogic instance = new GameLogic();
 	private static boolean isGameOver;
 	private static int level;
 	private static Player player;
@@ -37,6 +38,22 @@ public class GameLogic {
 		GameLogic.level = level;
 	}
 	
+	public static Player getPlayer() {
+		return player;
+	}
+
+	public static void setPlayer(Player player) {
+		GameLogic.player = player;
+	}
+
+	public static Round getRound() {
+		return round;
+	}
+
+	public static void setRound(Round round) {
+		GameLogic.round = round;
+	}
+
 	public void startGame() {
 		
 		while(!isGameOver()) {
@@ -46,15 +63,22 @@ public class GameLogic {
 			
 			
 			boolean won = false;
-			System.out.println("----------LEVEL "+(level+1)+"----------");
+			System.out.println("----------LEVEL "+(level+1)+"----------");	
 			while(!won) {			
-				System.out.println("Press Any Key to Attack");
-				GameScreen.instance.print("Press Any Key to Attack");
+				System.out.println(won);
+				RPGTextArea.text = "Press Any Key to Attack";
 				if (InputUtility.getKeyTriggered(KeyCode.ENTER)) {
+					System.out.println("PRESSSSSSSSSSSSSSSS");
 					for (Enemy e : enemies) {
 						if (!e.isDead()) {
 							player.attack(e);
-							GameScreen.instance.print("Kirby Attacks "+e.getName());
+							RPGTextArea.text = "Kirby Attacks "+e.getName();
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 					}
 					
@@ -64,11 +88,26 @@ public class GameLogic {
 						if(player.isDead()){
 							setGameOver(true);
 							System.out.println("Game Over");
+							RPGTextArea.text = "GAME OVER";
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							break;
 						}
 						System.out.println(e.getName()+" "+e.getHp()+" dead : "+e.isDead());
+
 						if (!e.isDead()) {
 							e.attack(player);
+							RPGTextArea.text = e.getName()+" attacks!";
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 						won = won && e.isDead();
 					}
@@ -77,7 +116,13 @@ public class GameLogic {
 					}
 					if(!isGameOver()){
 						System.out.println("You won!");
-						GameScreen.instance.print("You won");
+						RPGTextArea.text = "You won";
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						level++;
 					}	
 					
