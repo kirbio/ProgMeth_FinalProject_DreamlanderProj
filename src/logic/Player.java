@@ -1,5 +1,6 @@
 package logic;
 
+import graphic.GameScreen;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Player extends Entity {
@@ -18,7 +19,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void draw(GraphicsContext g) {
+	public void draw(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		
 	}

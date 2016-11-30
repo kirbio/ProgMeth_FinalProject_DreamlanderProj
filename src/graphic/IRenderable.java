@@ -6,6 +6,6 @@ public interface IRenderable {
 	//Fill in here
 	
 	public int getZ();
-	public void draw(GraphicsContext g);
+	public void draw(GraphicsContext gc);
 	//public boolean isDestroy();
 }

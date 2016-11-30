@@ -1,6 +1,8 @@
 package logic;
 
-public abstract class Entity implements graphic.IRenderable{
+import graphic.IRenderable;
+
+public abstract class Entity implements IRenderable{
 	protected String name;
 	protected int hp;
 	protected int attack;
@@ -22,11 +24,15 @@ public abstract class Entity implements graphic.IRenderable{
 	/*==================================
 	 * Position/Render-related methods
 	================================== */
+	
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
 		return z;
 	}
+	
+	//draw() is implemented on subclass
+	
 	public void setZ(int z) {
 		// TODO Auto-generated method stub
 		this.z=z;

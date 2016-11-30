@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import data.EnemyEncounterPair;
 import data.GameData;
 
-public class Stage {
+public class Round {
 	ArrayList<Enemy> enemyList;
 	Player player;
 	
-	public Stage(int level) {
+	public Round(int level) {
 		enemyList = new ArrayList<Enemy>();
 		setEnemyInLevel(level);
 		

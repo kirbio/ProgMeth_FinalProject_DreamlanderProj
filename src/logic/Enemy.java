@@ -24,7 +24,7 @@ public class Enemy extends Entity{
 	}
 
 	@Override
-	public void draw(GraphicsContext g) {
+	public void draw(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		
 	}
