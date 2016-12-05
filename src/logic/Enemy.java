@@ -1,6 +1,7 @@
 package logic;
 
 import data.GameData;
+import graphic.DrawingUtility;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Enemy extends Entity{
@@ -25,7 +26,7 @@ public class Enemy extends Entity{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO Auto-generated method stub
+		DrawingUtility.drawEnemy(gc, this);
 		
 	}
 	

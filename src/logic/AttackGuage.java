@@ -43,7 +43,7 @@ public class AttackGuage extends Thread{
 					}
 				}
 				currentAtkPower = attackpower[f];
-				System.out.println("Guage: "+ currentAtkPower+" "+GameLogic.isWaitForInput());
+//				System.out.println("Guage: "+ currentAtkPower+" "+GameLogic.isWaitForInput());
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {

@@ -75,13 +75,13 @@ public class GameLogic {
 			boolean roundEnds = false;
 			AttackGuage atkguage = new AttackGuage(2);
 			atkguage.start();
-			while(!roundEnds) {			
+			while(!roundEnds) {	
 				//System.out.println(isAllEnemyDead());
 				RPGTextArea.text = "Press Any Key to Attack";
 				if(attackpower<0){
 					waitforInput = true;
 				}
-				System.out.println(InputUtility.getKeyTriggered(KeyCode.ENTER));
+//				System.out.println(InputUtility.getKeyTriggered(KeyCode.ENTER));
 				if(InputUtility.getKeyTriggered(KeyCode.ENTER)){
 					attackpower = AttackGuage.currentAtkPower;
 					System.out.println("Attack Success, Power: "+attackpower);

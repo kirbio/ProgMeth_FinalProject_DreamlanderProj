@@ -1,17 +1,12 @@
 package graphic;
 
-import javafx.event.EventHandler;
+import input.InputUtility;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import logic.GameLogic;
 import logic.RPGTextArea;
 import logic.StatusBar;
-import input.InputUtility;
 
 public class GameScreen extends BorderPane {
 	//public static final GameScreen instance = new GameScreen();

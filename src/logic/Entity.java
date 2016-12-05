@@ -5,6 +5,7 @@ import graphic.IRenderable;
 public abstract class Entity implements IRenderable{
 	protected String name;
 	protected int hp;
+	protected final int maxHP;
 	protected int attack;
 	protected boolean isDead;
 	
@@ -12,7 +13,7 @@ public abstract class Entity implements IRenderable{
 	
 	Entity(String name, int hp, int attack) {
 		this.name = name;
-		this.hp = hp;
+		this.maxHP = this.hp = hp;
 		this.attack = attack;
 		isDead = false;
 		
