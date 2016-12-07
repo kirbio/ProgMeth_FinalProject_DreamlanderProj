@@ -1,9 +1,13 @@
 package logic;
 
+import graphic.DrawingUtility;
+import graphic.IRenderable;
+import graphic.RenderableHolder;
 import input.InputUtility;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
-public class AttackGuage extends Thread {
+public class AttackGuage extends Thread implements IRenderable {
 	private int[] attackpower;
 	private int speed;
 	private int level;
@@ -13,6 +17,7 @@ public class AttackGuage extends Thread {
 		attackpower = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
+		RenderableHolder.getInstance().add(this);
 	}
 
 	public AttackGuage(int[] type, int speed) { // Constructor for Writing Own
@@ -20,6 +25,7 @@ public class AttackGuage extends Thread {
 		attackpower = type;
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
+		RenderableHolder.getInstance().add(this);
 	}
 
 	@Override
@@ -52,6 +58,17 @@ public class AttackGuage extends Thread {
 			}*/
 		}
 
+	}
+
+	@Override
+	public int getZ() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		
 	}
 
 }
