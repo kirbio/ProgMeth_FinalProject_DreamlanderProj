@@ -64,12 +64,12 @@ public class DrawingUtility {
 	 * Drawing attack gauge methods
 	 ==================================================*/
 	
-	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int currentAtkPower) {
+	/*public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int currentAtkPower) {
 		gc.setFill(Color.BLACK);
 		gc.fillRect(600, 160, 80, 160);
 		gc.setFill(Color.RED);
 		
-	}
+	}*/
 	
 
 }

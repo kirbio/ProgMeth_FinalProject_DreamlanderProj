@@ -68,8 +68,7 @@ public class AttackGuage extends Thread implements IRenderable {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO Auto-generated method stub
-		DrawingUtility.drawAttackGauge(gc, attackpower, currentAtkPower);
+		
 	}
 
 }

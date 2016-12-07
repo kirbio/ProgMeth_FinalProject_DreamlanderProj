@@ -32,9 +32,9 @@ public class GameScreen extends BorderPane {
 		gc.setFill(Color.PINK);
 		gc.fillRect(0, 0, 680, 480);
 		for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
-			Platform.runLater(() -> {
+//			Platform.runLater(() -> {
 				renderable.draw(gc);
-			});
+//			});
 			
 		}
 	}
