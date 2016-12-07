@@ -23,6 +23,7 @@ public class Main extends Application {
 
 	
 	private GameScreen gameScreen;
+	private GameLogic gameLogic = GameLogic.instance;
 	private Scene gameScene;
 	private Stage primaryStage;
 	
@@ -55,32 +56,27 @@ public class Main extends Application {
 		this.primaryStage.show();
 		
 		Thread t = new Thread(() -> {
-			GameLogic.instance.startGame();
+			gameLogic.startGame();
 		});
 		t.start();
 		
-		
-		
-		new AnimationTimer() {
-			Long start=0l;
-			@Override
-			public void handle(long now) {
-				// TODO Auto-generated method stub
-				if(start==0l)start=now;
-				long diff = now-start;
-				if(diff>=100000000l){ //100000000l = 100ms.
-					//update here
-					//GameScreen.paintComponents();
-					//GameLogic.update();
-					gameScreen.paintComponents();
-					
-					start=now;
-
+		Thread update = new Thread(() -> {
+			while (!GameLogic.instance.isGameOver()) {
+				gameScreen.paintComponents();
+				gameLogic.update();
+				
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-		}.start();
+			
+			
+		});
 		
-
+		update.start();
 		
 		
 	}
