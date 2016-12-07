@@ -44,42 +44,47 @@ public class Main extends Application {
 			}
 		});
 		
-		//BorderPane root = new BorderPane();
 		gameScreen = new GameScreen();
 		gameScreen.requestFocusForCanvas();
-		
-//		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		gameScene = new Scene(gameScreen,680,480);
-		this.primaryStage.setScene(gameScene);
-		addEventListener(this.primaryStage.getScene());
+		addEventListener(gameScene);
 		
+		this.primaryStage.setScene(gameScene);
 		this.primaryStage.show();
 		
-		Thread t = new Thread(() -> {
-			gameLogic.startGame();
-		});
-		t.start();
-		
+		gameLogic.startGame();
 		Thread update = new Thread(() -> {
-			while (!GameLogic.instance.isGameOver()) {
-				gameScreen.paintComponents();
+			while(!GameLogic.instance.isGameOver()) {
 				gameLogic.update();
-				
 				try {
-					Thread.sleep(50);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
-			
 		});
-		
 		update.start();
 		
+		new AnimationTimer() {
+			Long start=0l;
+			@Override
+			public void handle(long now) {
+				// TODO Auto-generated method stub
+				if(start==0l)start=now;
+				long diff = now-start;
+				if(diff>=100000000l){ //100000000l = 100ms.
+					gameScreen.paintComponents();
+					start=now;
+
+				}
+			}
+		}.start();
+		
+
 		
 	}
+
 	
 	private void addEventListener(Scene s) {
 		s.setOnKeyPressed((event) -> {

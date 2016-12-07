@@ -1,6 +1,7 @@
 package graphic;
 
 import input.InputUtility;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
@@ -31,7 +32,10 @@ public class GameScreen extends BorderPane {
 		gc.setFill(Color.PINK);
 		gc.fillRect(0, 0, 680, 480);
 		for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
-			renderable.draw(gc);
+//			Platform.runLater(() -> {
+				renderable.draw(gc);
+//			});
+			
 		}
 	}
 	
