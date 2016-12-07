@@ -64,12 +64,29 @@ public class DrawingUtility {
 	 * Drawing attack gauge methods
 	 ==================================================*/
 	
-	/*public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int currentAtkPower) {
+	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower) {
 		gc.setFill(Color.BLACK);
-		gc.fillRect(600, 160, 80, 160);
-		gc.setFill(Color.RED);
-		
-	}*/
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(1);
+		int x = 600;
+		int y = 150;
+		int h = 150/attackpower.length;
+		gc.fillRect(x, y, 80, 150);
+		for (int i = 0 ; i < attackpower.length ; i++) {
+			gc.setGlobalAlpha(0.3);
+			gc.setFill(AttackGuage.colorGauge[attackpower[i]]);
+			gc.fillRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.strokeRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.setGlobalAlpha(1);
+		}
+		for (int i = 0 ; i < index+1 ; i++) {
+			gc.setGlobalAlpha(0.7);
+			gc.setFill(AttackGuage.colorGauge[attackpower[i]]);
+			gc.fillRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.strokeRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.setGlobalAlpha(1);
+		}
+	}
 	
 
 }

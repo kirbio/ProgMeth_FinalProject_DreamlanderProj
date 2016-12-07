@@ -40,7 +40,7 @@ public class GameLogic {
 			round = new Round(level);
 			round.addPlayer(player);
 			
-			atkGuage = new AttackGuage(2);
+			atkGuage = new AttackGuage(0);
 			atkGuage.start();
 			waitforInput = true;
 			newRound = false;
@@ -57,20 +57,20 @@ public class GameLogic {
 			
 			if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
 				waitforInput = false;
-				attackpower = AttackGuage.currentAtkPower;
-				player.setAttack(attackpower);				
-				if (!checkPlayerDead()) {
-					playerAttack(enemies);
-					System.out.println("Attack Success, Power: " + attackpower);				
+				attackpower = atkGuage.getCurrentAtkPower();
+				if (attackpower == 0) {
+					enemyAttack(enemies);
+				} else {
+					player.setAttack(attackpower);				
+					if (!checkPlayerDead()) {
+						System.out.println("Attack Success, Power: " + attackpower);	
+						playerAttack(enemies);	
 				}
+				}	
 				if (isAllEnemyDead(enemies)) {
 					win();
-				} else {
-					enemyAttack(enemies);
 				}
-				
 				waitforInput = true;
-				System.out.println(waitforInput);
 			}
 
 		}
@@ -80,7 +80,7 @@ public class GameLogic {
 			for (Enemy e : enemies) {
 				if (!e.isDead()) {
 					player.attack(e);
-					RPGTextArea.text = "Kirby Attacks " + e.getName();
+					RPGTextArea.text = "Kirby Attacks!";
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e1) {
@@ -94,7 +94,7 @@ public class GameLogic {
 		for (Enemy e : enemies) {
 			if (!e.isDead()) {
 				 e.attack(player);
-				 RPGTextArea.text = e.getName()+" attacks!";
+				 RPGTextArea.text = "Enemies attack!";
 				 if (checkPlayerDead()) {
 					 break;
 				 }
@@ -121,8 +121,9 @@ public class GameLogic {
 	}
 	
 	private void win() {
+		atkGuage.interrupt();
 		System.out.println("You win");
-		RPGTextArea.text = "You win";
+		RPGTextArea.text = "You win!";
 		newRound = true;
 		level++;
 		
@@ -167,4 +168,10 @@ public class GameLogic {
 	public void setWaitForInput(boolean waitforInput) {
 		GameLogic.waitforInput = waitforInput;
 	}
+
+	public boolean isNewRound() {
+		return newRound;
+	}
+	
+	
 }
