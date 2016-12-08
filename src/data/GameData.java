@@ -74,8 +74,8 @@ public class GameData {
 				String[] levelmeta = parseddata[0].split("#");
 				if(levelmeta.length>1){
 					int[] attack;
-					attack = new int[levelmeta.length-2];
-					for(int i=0;i<levelmeta.length-2;i++){	
+					attack = new int[levelmeta.length-1];
+					for(int i=0;i<levelmeta.length-1;i++){	
 						attack[i] = Integer.parseInt(levelmeta[i]);
 					}
 					lvd.setAttackGuage(attack);

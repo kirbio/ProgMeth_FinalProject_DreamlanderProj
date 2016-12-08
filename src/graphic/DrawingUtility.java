@@ -75,15 +75,15 @@ public class DrawingUtility {
 		for (int i = 0 ; i < attackpower.length ; i++) {
 			gc.setGlobalAlpha(0.3);
 			gc.setFill(AttackGuage.colorGauge[attackpower[i]]);
-			gc.fillRect(x, y + 150 -(10*(i+1)), 80, h);
-			gc.strokeRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.fillRect(x, y + 150 -(h*(i+1)), 80, h);
+			gc.strokeRect(x, y + 150 -(h*(i+1)), 80, h);
 			gc.setGlobalAlpha(1);
 		}
 		for (int i = 0 ; i < index+1 ; i++) {
 			gc.setGlobalAlpha(0.7);
 			gc.setFill(AttackGuage.colorGauge[attackpower[i]]);
-			gc.fillRect(x, y + 150 -(10*(i+1)), 80, h);
-			gc.strokeRect(x, y + 150 -(10*(i+1)), 80, h);
+			gc.fillRect(x, y + 150 -(h*(i+1)), 80, h);
+			gc.strokeRect(x, y + 150 -(h*(i+1)), 80, h);
 			gc.setGlobalAlpha(1);
 		}
 	}
