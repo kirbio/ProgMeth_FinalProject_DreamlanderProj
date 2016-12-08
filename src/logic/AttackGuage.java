@@ -17,15 +17,14 @@ public class AttackGuage extends Thread implements IRenderable {
 	public static final Color[] colorGauge = {Color.DARKRED, Color.DARKORANGE, Color.RED, Color.YELLOW, Color.MAGENTA};
 	private static final int UP = 1;
 	private static final int DOWN = -1;
-	public AttackGuage(int speed) { // Constructor indexor using deindexault attack type
+	public AttackGuage(int speed) { // Constructor for using default attack array
 		attackpower = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
 		RenderableHolder.getInstance().add(this);
 	}
 
-	public AttackGuage(int[] type, int speed) { // Constructor indexor Writing Own
-												// attack type setting
+	public AttackGuage(int[] type, int speed) { // Constructor for import attack array
 		attackpower = type;
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
@@ -34,8 +33,7 @@ public class AttackGuage extends Thread implements IRenderable {
 	
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.MAX_VALUE;
 	}
 
 	@Override
@@ -48,6 +46,7 @@ public class AttackGuage extends Thread implements IRenderable {
 		// TODO KETE SETSUNA SANIWA
 		index = 0;
 		int way = UP;
+		System.out.println("Attack gauge started");
 		while (!GameLogic.instance.isNewRound()) {
 			if (GameLogic.instance.isWaitForInput()) {	
 				if (index == attackpower.length - 1) {
@@ -109,5 +108,10 @@ public class AttackGuage extends Thread implements IRenderable {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	@Override
+	public boolean isDead() {
+		return false;
 	}
 }

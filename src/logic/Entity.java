@@ -1,6 +1,8 @@
 package logic;
 
+import graphic.EntityAnimation;
 import graphic.IRenderable;
+import graphic.RenderableHolder;
 
 public abstract class Entity implements IRenderable{
 	protected String name;
@@ -8,6 +10,8 @@ public abstract class Entity implements IRenderable{
 	protected final int maxHP;
 	protected int attack;
 	protected boolean isDead;
+	protected EntityAnimation animation;
+	protected boolean isBeingAttacked;
 	
 	protected int x,y,z;
 	
@@ -15,12 +19,13 @@ public abstract class Entity implements IRenderable{
 		this.name = name;
 		this.maxHP = this.hp = hp;
 		this.attack = attack;
-		isDead = false;
+		isDead = isBeingAttacked =false;
 		
-		x = 0;
-		y = 0;
-		z = 1;
+		RenderableHolder.getInstance().add(this);
+		
+		animation = new EntityAnimation(getAnimationFilePath());
 	}
+
 	
 	/*==================================
 	 * Position/Render-related methods
@@ -103,5 +108,24 @@ public abstract class Entity implements IRenderable{
 		this.attack = attack;
 	}
 	
+	public boolean isBeingAttacked() {
+		return isBeingAttacked;
+	}
+
+	public void setBeingAttacked(boolean isBeingAttacked) {
+		this.isBeingAttacked = isBeingAttacked;
+	}
+	
+	/*==================================
+	 * Animation related Methods
+	 ==================================*/
+
+	public EntityAnimation getAnimation() {
+		return animation;
+	}
+	
+	private String getAnimationFilePath() {
+		return getName().toLowerCase().replace(' ', '_') + ".png";
+	}
 	
 }

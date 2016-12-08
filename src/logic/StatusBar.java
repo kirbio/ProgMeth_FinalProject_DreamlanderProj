@@ -13,13 +13,18 @@ public class StatusBar implements IRenderable {
 
 	@Override
 	public int getZ() {
-		return Integer.MAX_VALUE-1;
+		return Integer.MAX_VALUE;
 	}
 
 	@Override
 	public void draw(GraphicsContext gc) {
 		DrawingUtility.drawStatusBar(gc, GameLogic.instance.getLevel(), GameLogic.instance.getPlayer().getHp());
 		
+	}
+
+	@Override
+	public boolean isDead() {
+		return false;
 	}
 
 }

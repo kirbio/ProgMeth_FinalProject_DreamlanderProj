@@ -3,6 +3,7 @@ package main;
 import java.util.Scanner;
 
 import graphic.GameScreen;
+import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jdk.management.resource.internal.inst.ThreadRMHooks;
 import logic.Enemy;
 import logic.GameLogic;
 import logic.Player;
@@ -75,6 +77,7 @@ public class Main extends Application {
 				long diff = now-start;
 				if(diff>=10000000l){ //100000000l = 100ms.
 					gameScreen.paintComponents();
+					
 					start=now;
 
 				}

@@ -39,6 +39,14 @@ public class RenderableHolder {
 		
 		Collections.sort(entities, comparator);
 	}
+	
+	public synchronized void remove(IRenderable entity){
+		//Fill in here
+		entities.remove(entity);
+		
+		Collections.sort(entities, comparator);
+	}
+	
 	private static void loadResource() {
 		// TODO Auto-generated method stub
 		//Fill in here

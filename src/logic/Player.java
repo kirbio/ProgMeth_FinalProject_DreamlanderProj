@@ -1,12 +1,18 @@
 package logic;
 
+import graphic.DrawingUtility;
 import graphic.GameScreen;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Player extends Entity {
 	
+	private static final int TOTAL_HP = 50;
+	
 	public Player() {
-		super("Kirby", 50, 1);
+		super("Kirby", TOTAL_HP, 1);
+		x = 300;
+		y = 300;
+		z = 2;
 	}
 	
 	@Override
@@ -20,7 +26,11 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO Auto-generated method stub
+		if (isBeingAttacked()) {
+			DrawingUtility.drawHurtPlayer(gc, this);
+		} else {
+			DrawingUtility.drawPlayer(gc, this);
+		}
 		
 	}
 

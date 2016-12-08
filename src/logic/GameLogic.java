@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import data.GameData;
 import graphic.GameScreen;
+import graphic.IRenderable;
+import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.scene.input.KeyCode;
 
@@ -56,11 +58,6 @@ public class GameLogic {
 			int attackpower = -1;
 			RPGTextArea.text = "Press Any Key to Attack";
 			
-			/*
-			 * if (attackpower < 0) { waitforInput = true; }
-			 */
-			// System.out.println(InputUtility.getKeyTriggered(KeyCode.ENTER));
-			
 			if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
 				waitforInput = false;
 				attackpower = atkGuage.getCurrentAtkPower();
@@ -77,16 +74,24 @@ public class GameLogic {
 					win();
 				}
 				waitforInput = true;
-			}
+				player.setBeingAttacked(false);
+				for (Enemy e : enemies) {
+					e.setBeingAttacked(false);
+				}
+			}	
 
 		}
+		
+		removeDead();
+		
 	}
 
 	private void playerAttack(ArrayList<Enemy> enemies) {	
 			for (Enemy e : enemies) {
 				if (!e.isDead()) {
-					player.attack(e);
 					RPGTextArea.text = "Kirby Attacks!";
+					player.attack(e);
+					e.setBeingAttacked(true);
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e1) {
@@ -97,13 +102,20 @@ public class GameLogic {
 	}
 	
 	private void enemyAttack(ArrayList<Enemy> enemies) {
+		player.setBeingAttacked(true);
 		for (Enemy e : enemies) {
 			if (!e.isDead()) {
-				 e.attack(player);
 				 RPGTextArea.text = "Enemies attack!";
+				 e.attack(player);
 				 if (checkPlayerDead()) {
 					 break;
 				 }
+				 try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				 
 			}
 		}		
 	}
@@ -133,6 +145,14 @@ public class GameLogic {
 		newRound = true;
 		level++;
 		
+	}
+	
+	private void removeDead() {
+		for (int i = RenderableHolder.getInstance().getEntities().size()-1 ; i >=0 ; i--) {			
+			if (RenderableHolder.getInstance().getEntities().get(i).isDead()) {
+				RenderableHolder.getInstance().remove(i);
+			}
+		}
 	}
 
 	public boolean isGameOver() {

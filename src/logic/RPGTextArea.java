@@ -57,4 +57,9 @@ public class RPGTextArea extends Thread implements IRenderable {
 		DrawingUtility.drawTextArea(gc, disptext);
 	}
 
+	@Override
+	public boolean isDead() {
+		return false;
+	}
+
 }
