@@ -37,7 +37,7 @@ public class GameData {
 	
 	static ArrayList<EnemyData> enemyDatas = new ArrayList<EnemyData>();
 	static ArrayList<LevelData> levelDatas = new ArrayList<LevelData>();
-	
+	static ArrayList<LevelData> levelMetaDatas = new ArrayList<LevelData>();
 	
 	public GameData(){ 
 		/*Constructor, call once in Main at initiallize 
@@ -65,15 +65,32 @@ public class GameData {
 		fin = false;
 		try {
 			Scanner s = new Scanner(new File("leveldata.csv"));
-			s.nextLine();
+			s.nextLine(); //Skip First Line
 			while(!fin){
 				String rawdata = s.nextLine();
 				//System.out.println(rawdata);
 				String[] parseddata = rawdata.split(",");
 				LevelData lvd  = new LevelData();
+				String[] levelmeta = parseddata[0].split("#");
+				if(levelmeta.length>1){
+					int[] attack;
+					attack = new int[levelmeta.length-2];
+					for(int i=0;i<levelmeta.length-2;i++){	
+						attack[i] = Integer.parseInt(levelmeta[i]);
+					}
+					lvd.setAttackGuage(attack);
+					lvd.setAttackSpeed(Integer.parseInt(levelmeta[levelmeta.length-1]));
+				}else{
+					lvd.setAttackSpeed(Integer.parseInt(levelmeta[0]));
+				}
+				
+				
+				parseddata[0]="";
 				for(String str: parseddata){
-					String[] splitpair = str.split("-");
-					lvd.addEncounter(Integer.parseInt(splitpair[0]),Integer.parseInt(splitpair[1]));
+					if(str!=""){
+						String[] splitpair = str.split("n"); //Split each pair with delimiter "n"
+						lvd.addEncounter(Integer.parseInt(splitpair[0]),Integer.parseInt(splitpair[1]));
+					}
 				}
 				levelDatas.add(lvd);
 				
@@ -111,6 +128,14 @@ public class GameData {
 	//Return Enemy Atk, index is based on CSV sheet
 		public static ArrayList<EnemyEncounterPair> getEnemyList(int index){
 			return levelDatas.get(index).getEncounterList();
+		}
+		
+		public static int[] getAttackGuageType(int index){
+			return levelDatas.get(index).getAttackGuage();
+		}
+		
+		public static int getAttackGuageSpeed(int index){
+			return levelDatas.get(index).getAttackSpeed();
 		}
 	
 	

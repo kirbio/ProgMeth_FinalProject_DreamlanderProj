@@ -20,7 +20,9 @@ public class GameScreen extends BorderPane {
 		setCenter(canvas);
 		gc.setFill(Color.PINK);
 		gc.fillRect(0, 0, 680, 480);
-		RenderableHolder.getInstance().add(new RPGTextArea("Initializing..."));
+		RPGTextArea textArea = new RPGTextArea("Initializing...");
+		RenderableHolder.getInstance().add(textArea);
+		textArea.start();
 		RenderableHolder.getInstance().add(new StatusBar());
 		System.out.println("gameScreen initialized");
 		initializeEventListeners();

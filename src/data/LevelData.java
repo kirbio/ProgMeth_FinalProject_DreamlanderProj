@@ -4,9 +4,15 @@ import java.util.ArrayList;
 
 public class LevelData{
 	private ArrayList<EnemyEncounterPair> enemylist ;
-	LevelData(){
+	
+	private int[] attackguage;
+	private int attackspeed;
+	
+	public LevelData(){
 		enemylist = new ArrayList<EnemyEncounterPair>();
+		setAttackGuage(new int[]{-1});
 	}
+	
 	public ArrayList<EnemyEncounterPair> getEnemyList() {
 		return enemylist;
 	}
@@ -15,6 +21,22 @@ public class LevelData{
 	}
 	public ArrayList<EnemyEncounterPair> getEncounterList(){
 		return enemylist;
+	}
+
+	public int[] getAttackGuage() {
+		return attackguage;
+	}
+
+	public void setAttackGuage(int[] attackguage) {
+		this.attackguage = attackguage;
+	}
+
+	public int getAttackSpeed() {
+		return attackspeed;
+	}
+
+	public void setAttackSpeed(int attackspeed) {
+		this.attackspeed = attackspeed;
 	}
 	
 }

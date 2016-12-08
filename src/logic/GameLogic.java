@@ -19,7 +19,7 @@ public class GameLogic {
 											// AttackGuage
 	private static boolean newRound;
 	private static AttackGuage atkGuage;
-
+	
 	public void startGame() {
 		isGameOver = false;
 		level = 0;
@@ -40,7 +40,13 @@ public class GameLogic {
 			round = new Round(level);
 			round.addPlayer(player);
 			
-			atkGuage = new AttackGuage(0);
+			int[] atkguage = GameData.getAttackGuageType(level);
+			int atkguageseed = GameData.getAttackGuageSpeed(level);
+			if(atkguage.length>1){
+				atkGuage = new AttackGuage(atkguage,atkguageseed);
+			}else{
+				atkGuage = new AttackGuage(atkguageseed);
+			}
 			atkGuage.start();
 			waitforInput = true;
 			newRound = false;

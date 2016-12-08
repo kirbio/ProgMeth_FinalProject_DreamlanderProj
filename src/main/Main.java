@@ -73,7 +73,7 @@ public class Main extends Application {
 				// TODO Auto-generated method stub
 				if(start==0l)start=now;
 				long diff = now-start;
-				if(diff>=100000000l){ //100000000l = 100ms.
+				if(diff>=10000000l){ //100000000l = 100ms.
 					gameScreen.paintComponents();
 					start=now;
 
