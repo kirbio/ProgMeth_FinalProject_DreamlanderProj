@@ -1,7 +1,15 @@
 Name,Hp,Atk
 Dummy Dee,5,0
 Waddle Dee,5,2
-Waddle Doo,10,5
-Sir Kibble,15,10
-Blade Knight,15,15
-Sword Knight,15,20
+Alice,25,4
+Bob,22,4
+Cain,20,4
+Doug,18,4
+Mini-TankBot B,30,12
+Mini-TankBot R,30,10
+Haltworker,25,5
+Haltworker R,25,20
+Simple Doomer,10,5
+Small Doomer,5,10
+Split Doomer,20,5
+Twizzer,60,10

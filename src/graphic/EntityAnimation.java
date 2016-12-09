@@ -1,5 +1,8 @@
 package graphic;
 
+import java.net.URL;
+
+import exception.SpriteException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -20,23 +23,29 @@ public class EntityAnimation {
 	private final int number = 5;
 	private Image[] animationFrame;
 	
-	public EntityAnimation(String path) {
-		this.path = path;
-		System.out.println(path);
-		try {
-			img = new Image(ClassLoader.getSystemResource("img/character/"+path).toString());
-		} catch(NullPointerException | IllegalArgumentException e) {
+	public EntityAnimation(String path){
+		try{
+			this.path = path;
+			System.out.println(path);
+				URL imgpath = ClassLoader.getSystemResource("img/character/"+path);
+				if(imgpath == null){
+					throw new SpriteException(path);
+				}
+				img = new Image(imgpath.toString());
+				
+			
+			frameWidth = (int)img.getWidth()/5;
+			frameHeight = (int)img.getHeight();
+			animationFrame = new Image[number];
+			for (int i = 0 ; i < number ; i++) {
+				animationFrame[i] = new WritableImage(img.getPixelReader(), i*frameWidth, 0, frameWidth, frameHeight);
+			}
+			counter = 0;
+			delayCounter = 0;
+			animationDelay = 10;
+		}catch (SpriteException e){
 			e.printStackTrace();
 		}
-		frameWidth = (int)img.getWidth()/5;
-		frameHeight = (int)img.getHeight();
-		animationFrame = new Image[number];
-		for (int i = 0 ; i < number ; i++) {
-			animationFrame[i] = new WritableImage(img.getPixelReader(), i*frameWidth, 0, frameWidth, frameHeight);
-		}
-		counter = 0;
-		delayCounter = 0;
-		animationDelay = 10;
 	}
 	
 	public Image getCurrentIdleSprite() {
@@ -50,7 +59,7 @@ public class EntityAnimation {
 	public void updateAnimation() {		
 		if (delayCounter == animationDelay) {
 			counter++;
-			if (counter == 3) {		//end of sprite animation
+			if (counter == 4) {		//end of sprite animation
 				counter = 0;
 			}
 			delayCounter = 0;
