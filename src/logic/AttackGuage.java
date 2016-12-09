@@ -46,7 +46,7 @@ public class AttackGuage extends Thread implements IRenderable {
 		// TODO KETE SETSUNA SANIWA
 		index = 0;
 		int way = UP;
-		System.out.println("Attack gauge started");
+		System.out.println("Attack gauge started " + GameLogic.instance.isNewRound() + " " + GameLogic.instance.isWaitForInput());
 		while (!GameLogic.instance.isNewRound()) {
 			if (GameLogic.instance.isWaitForInput()) {	
 				if (index == attackpower.length - 1) {

@@ -2,13 +2,13 @@ package logic;
 
 import graphic.DrawingUtility;
 import graphic.IRenderable;
+import graphic.RenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
 
 public class StatusBar implements IRenderable {
 	
 	public StatusBar() {
-		super();
-		
+		RenderableHolder.getInstance().add(this);
 	}
 
 	@Override

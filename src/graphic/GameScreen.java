@@ -7,45 +7,49 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import logic.GameLogic;
 import logic.RPGTextArea;
 import logic.StatusBar;
 
 public class GameScreen extends StackPane {
-	//public static final GameScreen instance = new GameScreen();
+	// public static final GameScreen instance = new GameScreen();
 	private Canvas canvas;
 	public GraphicsContext gc;
 	public static final int SCREEN_WIDTH = 680;
 	public static final int SCREEN_HEIGHT = 480;
-	
+
 	public GameScreen() {
-		canvas = new Canvas(SCREEN_WIDTH,SCREEN_HEIGHT);
+		canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.PINK);
 		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		getChildren().add(canvas);
-		
-		RPGTextArea textArea = new RPGTextArea("Initializing...");
-		RenderableHolder.getInstance().add(textArea);
+
+		RPGTextArea textArea = new RPGTextArea("");
 		textArea.start();
-		
-		RenderableHolder.getInstance().add(new StatusBar());
-		
+
+		new StatusBar();
+
 		System.out.println("gameScreen initialized");
 	}
-	
+
 	public void paintComponents() {
-		//draw all enemies in level
-		gc.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		gc.setFill(Color.PINK);
-		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
-		for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
+
+		if (GameLogic.instance.isReadyToDraw()) {
+			// draw all renderable in level
+			gc.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+			gc.setFill(Color.PINK);
+			gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
 				renderable.draw(gc);
-			
+
+			}
 		}
+
 	}
-	
-	public void requestFocusForCanvas(){
+
+	public void requestFocusForCanvas() {
 		this.requestFocus();
 	}
 }

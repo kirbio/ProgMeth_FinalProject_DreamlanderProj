@@ -2,6 +2,7 @@ package logic;
 
 import graphic.DrawingUtility;
 import graphic.IRenderable;
+import graphic.RenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
 
 public class RPGTextArea extends Thread implements IRenderable {
@@ -14,6 +15,7 @@ public class RPGTextArea extends Thread implements IRenderable {
 		super();
 		this.text = text;
 		disptext = "";
+		RenderableHolder.getInstance().add(this);
 	}
 
 	@Override

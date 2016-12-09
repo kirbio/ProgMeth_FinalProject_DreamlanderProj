@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.EnemyEncounterPair;
 import data.GameData;
+import graphic.GameBackground;
 
 public class Round {
 	ArrayList<Enemy> enemyList;
@@ -12,7 +13,8 @@ public class Round {
 	public Round(int level) {
 		enemyList = new ArrayList<Enemy>();
 		setEnemyInLevel(level);
-		
+		Position.set(enemyList);
+		new GameBackground(Integer.toString(level));
 	}
 
 	public void setEnemyInLevel(int level) {
@@ -21,14 +23,7 @@ public class Round {
 			for(int j=0;j<i.getEnemyAmount();j++){
 				addEnemy(new Enemy(i.getEnemyType()));
 			}
-		}
-//		switch (level) {
-//			case 0 :	addEnemy(new Enemy("Waddle Dee", 3, 0));
-//						break;
-//			case 1 :	addEnemy(new Enemy("Waddle Dee", 3, 0));
-//						addEnemy(new Enemy("Waddle Doo", 5, 0));
-//						break;
-//		}		
+		}		
 	}
 	
 	public void addEnemy(Enemy enemy) {		

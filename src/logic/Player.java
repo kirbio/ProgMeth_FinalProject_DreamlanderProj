@@ -10,8 +10,8 @@ public class Player extends Entity {
 	
 	public Player() {
 		super("Kirby", TOTAL_HP, 1);
-		x = 300;
-		y = 300;
+		x = Position.PLAYER_POSITION_X;
+		y = Position.PLAYER_POSITION_Y - getAnimation().getFrameHeight()/2;
 		z = 2;
 	}
 	

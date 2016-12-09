@@ -100,6 +100,10 @@ public abstract class Entity implements IRenderable{
 		this.hp = hp;
 	}
 
+	public int getMaxHP() {
+		return maxHP;
+	}
+
 	public int getAttack() {
 		return attack;
 	}
@@ -115,6 +119,7 @@ public abstract class Entity implements IRenderable{
 	public void setBeingAttacked(boolean isBeingAttacked) {
 		this.isBeingAttacked = isBeingAttacked;
 	}
+		
 	
 	/*==================================
 	 * Animation related Methods

@@ -21,6 +21,7 @@ public class GameLogic {
 											// AttackGuage
 	private static boolean newRound;
 	private static AttackGuage atkGuage;
+	private static boolean readyToDraw;
 	
 	public void startGame() {
 		isGameOver = false;
@@ -28,6 +29,7 @@ public class GameLogic {
 		player = new Player();
 		new GameData();
 		newRound = true;
+		readyToDraw = false;
 	}
 
 	public void stopGame() {
@@ -36,31 +38,17 @@ public class GameLogic {
 
 	// This method loops until game over
 	public void update() {
-		// initialize new round, run once per round
 		if (newRound) {
-			System.out.println("----------LEVEL " + (level + 1) + "----------");
-			round = new Round(level);
-			round.addPlayer(player);
-			
-			int[] atkguage = GameData.getAttackGuageType(level);
-			int atkguageseed = GameData.getAttackGuageSpeed(level);
-			if(atkguage.length>1){
-				atkGuage = new AttackGuage(atkguage,atkguageseed);
-			}else{
-				atkGuage = new AttackGuage(atkguageseed);
-			}
-			atkGuage.start();
-			waitforInput = true;
-			newRound = false;
+			// initialize new round, run once per round
+			startNewRound();		
 			
 		} else {
 			ArrayList<Enemy> enemies = round.getEnemyList();
-			int attackpower = -1;
 			RPGTextArea.text = "Press Any Key to Attack";
 			
 			if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
 				waitforInput = false;
-				attackpower = atkGuage.getCurrentAtkPower();
+				int attackpower = atkGuage.getCurrentAtkPower();
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
@@ -84,6 +72,25 @@ public class GameLogic {
 		
 		removeDead();
 		
+	}
+	
+	private void startNewRound() {
+		System.out.println("----------LEVEL " + (level + 1) + "----------");
+		round = new Round(level);
+		round.addPlayer(player);
+		
+		waitforInput = true;
+		newRound = false;
+		
+		int[] atkguage = GameData.getAttackGuageType(level);
+		int atkguageseed = GameData.getAttackGuageSpeed(level);
+		if(atkguage.length>1){
+			atkGuage = new AttackGuage(atkguage,atkguageseed);
+		}else{
+			atkGuage = new AttackGuage(atkguageseed);
+		}
+		atkGuage.start();
+		readyToDraw = true;
 	}
 
 	private void playerAttack(ArrayList<Enemy> enemies) {	
@@ -198,6 +205,16 @@ public class GameLogic {
 	public boolean isNewRound() {
 		return newRound;
 	}
+
+	public boolean isReadyToDraw() {
+		return readyToDraw;
+	}
+
+	public void setReadyToDraw(boolean readyToDraw) {
+		GameLogic.readyToDraw = readyToDraw;
+	}
+	
+	
 	
 	
 }

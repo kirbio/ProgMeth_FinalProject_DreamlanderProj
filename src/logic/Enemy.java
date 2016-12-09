@@ -8,18 +8,16 @@ public class Enemy extends Entity{
 	
 	public Enemy(String name, int hp, int attack) {
 		super(name, hp, attack);
-		x = (int)(Math.random()*100);
-		y = (int)(Math.random()*100);
-		System.out.println(x+" "+y);
+		x = 0;
+		y = 0;
 		z = 1;
 		
 	}
 	
 	public Enemy(int type) {
 		super(GameData.getEnemyName(type), GameData.getEnemyHp(type), GameData.getEnemyAtk(type));
-		x = (int)(Math.random()*100);
-		y = (int)(Math.random()*100);
-		System.out.println(x+" "+y);
+		x = 0;
+		y = 0;
 		z = 1;
 	}
 	

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javafx.scene.image.Image;
+import logic.Enemy;
 
 public class RenderableHolder {
 	//Fill in here
@@ -74,4 +75,5 @@ public class RenderableHolder {
 		//Fill in here
 		return entities;
 	}
+	
 }
