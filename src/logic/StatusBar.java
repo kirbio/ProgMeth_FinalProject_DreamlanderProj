@@ -18,7 +18,7 @@ public class StatusBar implements IRenderable {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		DrawingUtility.drawStatusBar(gc, GameLogic.instance.getLevel(), GameLogic.instance.getPlayer().getHp());
+		DrawingUtility.drawStatusBar(gc, GameLogic.instance.getLevel(), GameLogic.instance.getPlayer().getHp(), GameLogic.instance.getPlayer().getMaxHP());
 		
 	}
 

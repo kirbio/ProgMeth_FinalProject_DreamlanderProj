@@ -2,7 +2,7 @@ package graphic;
 
 import java.net.URL;
 
-import exception.SpriteException;
+import exception.SpriteParsingException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -29,7 +29,7 @@ public class EntityAnimation {
 			System.out.println(path);
 				URL imgpath = ClassLoader.getSystemResource("img/character/"+path);
 				if(imgpath == null){
-					throw new SpriteException(path);
+					throw new SpriteParsingException(path);
 				}
 				img = new Image(imgpath.toString());
 				
@@ -43,7 +43,7 @@ public class EntityAnimation {
 			counter = 0;
 			delayCounter = 0;
 			animationDelay = 10;
-		}catch (SpriteException e){
+		}catch (SpriteParsingException e){
 			e.printStackTrace();
 		}
 	}

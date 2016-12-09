@@ -18,6 +18,8 @@ public class DrawingUtility {
 	public static final int STATUS_BAR_HEIGHT = 50;
 	public static final int HP_BAR_WIDTH = 50;
 	public static final int HP_BAR_HEIGHT = 10;
+	public static final int PLAYER_HP_BAR_WIDTH = 280;
+	public static final int PLAYER_HP_BAR_HEIGHT = 40;
 	public static final int ATK_GAUGE_WIDTH = 100;
 	public static final int ATK_GAUGE_HEIGHT = GameScreen.SCREEN_HEIGHT - (TEXT_AREA_HEIGHT + STATUS_BAR_HEIGHT);
 	public static final int ATK_GAUGE_X = GameScreen.SCREEN_WIDTH - ATK_GAUGE_WIDTH;
@@ -50,20 +52,22 @@ public class DrawingUtility {
 		
 	}
 	
-	public static void drawStatusBar(GraphicsContext gc, int level, int hp) {
+	public static void drawStatusBar(GraphicsContext gc, int level, int HP, int maxHP) {
+		//draw Status bar
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, GameScreen.SCREEN_WIDTH, STATUS_BAR_HEIGHT);
 		
+		//set text properties
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.TOP);
 		gc.setFill(Color.WHITE);
 		
+		//draw text
 		gc.setFont(Font.font("Arial", 20));
 		gc.fillText("Level : "+(level+1), 40, 5);
-		gc.fillText("HP : "+hp, 340, 5);
+		gc.fillText("HP : "+HP, 340, 5);
 		
-		gc.setFill(Color.BLACK);
-		gc.fillRect(PLAY_SCREEN_WIDTH/2, PLAY_SCREEN_HEIGHT/2, 1, 1);
+		drawPlayerHPBar(gc, 380, 5, HP, maxHP);
 	}
 	
 	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower) {
@@ -94,12 +98,53 @@ public class DrawingUtility {
 	 * Drawing entity methods
 	 ==================================================*/
 	
+	//draw player hp bar on StatusBar
+	private static void drawPlayerHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP) {       
+		//HP bar background color
+		gc.setFill(Color.BLACK);
+		gc.fillRect(x, y, PLAYER_HP_BAR_WIDTH, PLAYER_HP_BAR_HEIGHT);
+		
+		//HP bar gauge, varying color depend on HP
+		double t = (double)HP/(double)maxHP;
+        
+        try {
+			if (0.5 <= t) {
+				gc.setFill(Color.rgb((int) (510 * (1 - t)), 255, 0));
+			} else {
+				gc.setFill(Color.rgb(255, (int) (t * 510), 0));
+			}
+			gc.fillRect(x, y, ((double) HP / maxHP) * PLAYER_HP_BAR_WIDTH, PLAYER_HP_BAR_HEIGHT);
+		} catch (IllegalArgumentException e) {
+			//System.out.println("HP Out of range");
+		}
+        
+		//HP bar border
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(2);
+		gc.strokeRect(x, y, PLAYER_HP_BAR_WIDTH, PLAYER_HP_BAR_HEIGHT);
+	}
+	
 	//Use to draw HPBar on entity's spot
-	private static void drawEnemyHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP) {
+	private static void drawEnemyHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP) {       
+		//HP bar background color
 		gc.setFill(Color.BLACK);
 		gc.fillRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
-		gc.setFill(Color.GREENYELLOW);
-		gc.fillRect(x, y, ((double)HP/maxHP)*HP_BAR_WIDTH, HP_BAR_HEIGHT);
+		
+		//HP bar gauge, varying color depend on HP
+		double t = (double)HP/(double)maxHP;
+        
+        try {
+			if (0.5 <= t) {
+				gc.setFill(Color.rgb((int) (510 * (1 - t)), 255, 0));
+			} else {
+				gc.setFill(Color.rgb(255, (int) (t * 510), 0));
+			}
+			gc.fillRect(x, y, ((double) HP / maxHP) * HP_BAR_WIDTH, HP_BAR_HEIGHT);
+		} catch (IllegalArgumentException e) {
+			//System.out.println("HP Out of range");
+		}
+        
+		//HP bar border
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(2);
 		gc.strokeRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
@@ -111,13 +156,17 @@ public class DrawingUtility {
 		Image sprite = enemy.getAnimation().getCurrentIdleSprite();
 		gc.drawImage(sprite, enemy.getX(), enemy.getY());
 		enemy.getAnimation().updateAnimation();
-		drawEnemyHPBar(gc, enemy.getX(), enemy.getY()-HP_BAR_HEIGHT, enemy.getHp(), enemy.getMaxHP());
+		int x = (enemy.getX() + enemy.getAnimation().getFrameWidth()/2 - HP_BAR_WIDTH/2);
+		int y = enemy.getY() - HP_BAR_HEIGHT;
+		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP());
 	}
 	
 	public static void drawHurtEnemy(GraphicsContext gc, Enemy enemy) {
 		Image sprite = enemy.getAnimation().getHurtSprite();
 		gc.drawImage(sprite, enemy.getX(), enemy.getY());
-		drawEnemyHPBar(gc, enemy.getX(), enemy.getY()-HP_BAR_HEIGHT, enemy.getHp(), enemy.getMaxHP());
+		int x = (enemy.getX() + enemy.getAnimation().getFrameWidth()/2 - HP_BAR_WIDTH/2);
+		int y = enemy.getY() - HP_BAR_HEIGHT;
+		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP());
 	}
 	
 	

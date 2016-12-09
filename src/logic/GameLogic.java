@@ -56,11 +56,14 @@ public class GameLogic {
 					if (!checkPlayerDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);	
 						playerAttack(enemies);	
+					}		
 				}
-				}	
+				atkGuage.resetGauge();		//start at bottom again after attack
+				
 				if (isAllEnemyDead(enemies)) {
 					win();
 				}
+				
 				waitforInput = true;
 				player.setBeingAttacked(false);
 				for (Enemy e : enemies) {
@@ -75,12 +78,13 @@ public class GameLogic {
 	}
 	
 	private void startNewRound() {
+		readyToDraw = false;
+		waitforInput = true;
+		newRound = false;
+		
 		System.out.println("----------LEVEL " + (level + 1) + "----------");
 		round = new Round(level);
 		round.addPlayer(player);
-		
-		waitforInput = true;
-		newRound = false;
 		
 		int[] atkguage = GameData.getAttackGuageType(level);
 		int atkguageseed = GameData.getAttackGuageSpeed(level);
@@ -90,6 +94,7 @@ public class GameLogic {
 			atkGuage = new AttackGuage(atkguageseed);
 		}
 		atkGuage.start();
+		
 		readyToDraw = true;
 	}
 
@@ -118,13 +123,18 @@ public class GameLogic {
 					 break;
 				 }
 				 try {
-						Thread.sleep(500);
+						Thread.sleep(50);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
 				 
 			}
-		}		
+		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	private boolean checkPlayerDead() {

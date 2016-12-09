@@ -70,6 +70,9 @@ public class AttackGuage extends Thread implements IRenderable {
 			
 		}
 	
+	public void resetGauge() {
+		index = 0;
+	}
 	public int[] getAttackpower() {
 		return attackpower;
 	}

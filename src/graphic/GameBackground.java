@@ -7,14 +7,14 @@ public class GameBackground implements IRenderable {
 	private Image bg;
 	private String path;
 	
-	public GameBackground(String backgroundName) {
-		path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".jpg").toString();
+	public GameBackground(String backgroundName) {	
 		try {
-			bg = new Image(path, (double) DrawingUtility.PLAY_SCREEN_WIDTH, (double) DrawingUtility.PLAY_SCREEN_HEIGHT,
-					false, false);
+			path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".jpg").toString();		
 		} catch (NullPointerException | IllegalArgumentException e) {
-			e.printStackTrace();
+			path = ClassLoader.getSystemResource("img/bg/0.jpg").toString();
 		}
+		bg = new Image(path, (double) DrawingUtility.PLAY_SCREEN_WIDTH, (double) DrawingUtility.PLAY_SCREEN_HEIGHT,
+				false, false);
 		RenderableHolder.getInstance().add(this);
 		System.out.println("bg added");
 	

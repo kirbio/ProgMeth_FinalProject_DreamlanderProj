@@ -58,11 +58,11 @@ public class Main extends Application {
 		Thread update = new Thread(() -> {
 			while(!GameLogic.instance.isGameOver()) {
 				gameLogic.update();
+				InputUtility.postUpdate();
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("Interrupted");
 				}
 			}
 		});
@@ -92,8 +92,9 @@ public class Main extends Application {
 	private void addEventListener(Scene s) {
 		s.setOnKeyPressed((event) -> {
 			System.out.println("KeyPressed : " + event.getCode().toString());
-			if (!InputUtility.getKeyPressed(event.getCode()))
-				InputUtility.setKeyTriggered(event.getCode(), true);
+			if (!InputUtility.getKeyPressed(event.getCode())) {
+				InputUtility.setKeyTriggered(event.getCode(), true);		
+			}		
 			InputUtility.setKeyPressed(event.getCode(), true);		
 		});
 

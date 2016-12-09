@@ -21,9 +21,10 @@ public abstract class Entity implements IRenderable{
 		this.attack = attack;
 		isDead = isBeingAttacked =false;
 		
-		RenderableHolder.getInstance().add(this);
-		
 		animation = new EntityAnimation(getAnimationFilePath());
+		
+		RenderableHolder.getInstance().add(this);	
+		
 	}
 
 	
