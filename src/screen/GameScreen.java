@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
 import logic.RPGTextArea;
@@ -27,6 +28,9 @@ public class GameScreen extends Group {
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		getChildren().add(canvas);
+		
+		
+		
 
 		RPGTextArea textArea = new RPGTextArea("");
 		textArea.start();

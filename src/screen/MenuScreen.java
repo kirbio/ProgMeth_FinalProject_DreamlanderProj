@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import logic.GameLogic;
 import main.Main;
 import thread.AnimationThread;
@@ -58,6 +59,12 @@ public class MenuScreen extends BorderPane {
 			GameLogic.instance.startGame();	
 			new UpdateThread().start();	
 			new AnimationThread().start();
+			
+			//Play Music
+			AudioClip audio = new AudioClip(ClassLoader.getSystemResource("bgm/PeppermintLoop.wav").toString());
+	        audio.setVolume(0.5f);
+	        audio.setCycleCount(AudioClip.INDEFINITE);
+	        audio.play();
 		});
 		exitButton.setOnAction(e -> {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
