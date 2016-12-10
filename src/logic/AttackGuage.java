@@ -14,14 +14,18 @@ public class AttackGuage extends Thread implements IRenderable {
 	private int level;
 	private int currentAtkPower = -1;
 	private int index;
-	public static final Color[] colorGauge = {Color.DARKRED, Color.DARKORANGE, Color.RED, Color.YELLOW, Color.MAGENTA};
+	private boolean showAttackDescription;
 	private static final int UP = 1;
 	private static final int DOWN = -1;
+	public static final Color[] colorGauge = 			{Color.GRAY	, Color.DARKRED	, Color.RED	, Color.YELLOW	, Color.MAGENTA};
+	public static final String[] attackDescription = 	{"MISSED!"		, "GOOD!"	, "GREAT!"		, "UNUSED!"		, "PERFECT!"};
+	
 	public AttackGuage(int speed) { // Constructor for using default attack array
 		attackpower = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
 		RenderableHolder.getInstance().add(this);
+		showAttackDescription = false;
 	}
 
 	public AttackGuage(int[] type, int speed) { // Constructor for import attack array
@@ -29,6 +33,7 @@ public class AttackGuage extends Thread implements IRenderable {
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
 		RenderableHolder.getInstance().add(this);
+		showAttackDescription = false;
 	}
 	
 	@Override
@@ -38,7 +43,7 @@ public class AttackGuage extends Thread implements IRenderable {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		DrawingUtility.drawAttackGauge(gc, attackpower, index, currentAtkPower);
+		DrawingUtility.drawAttackGauge(gc, attackpower, index, currentAtkPower, showAttackDescription);
 	}
 
 	@Override
@@ -46,9 +51,10 @@ public class AttackGuage extends Thread implements IRenderable {
 		// TODO KETE SETSUNA SANIWA
 		index = 0;
 		int way = UP;
-		System.out.println("Attack gauge started " + GameLogic.instance.isNewRound() + " " + GameLogic.instance.isWaitForInput());
-		while (!GameLogic.instance.isNewRound()) {
-			if (GameLogic.instance.isWaitForInput()) {	
+		//System.out.println("Attack gauge started " + GameLogic.instance.isNewRound() + " " + GameLogic.instance.isWaitForInput());
+		while (!GameLogic.instance.isNewRound() && !GameLogic.instance.isGameOver()) {
+			showAttackDescription = false;
+			if (GameLogic.instance.isWaitForInput()) {		
 				if (index == attackpower.length - 1) {
 					way = DOWN;
 				} else if (index == 0) {
@@ -60,18 +66,21 @@ public class AttackGuage extends Thread implements IRenderable {
 					index--;
 				}
 				currentAtkPower = attackpower[index]; 
+			} else {
+				showAttackDescription = true;
 			}
 			try {
-				Thread.sleep(100-(speed*10));
+				Thread.sleep(100-(speed*10));		//affect gauge speed
 			} catch (InterruptedException e) {
 				System.out.println("Interrupted");
 			}
-			}
-			
 		}
+			
+	}
 	
 	public void resetGauge() {
 		index = 0;
+		showAttackDescription = false;
 	}
 	public int[] getAttackpower() {
 		return attackpower;

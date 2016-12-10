@@ -2,12 +2,13 @@ package main;
 
 import java.util.Scanner;
 
-import graphic.GameScreen;
 import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,14 +21,24 @@ import logic.Enemy;
 import logic.GameLogic;
 import logic.Player;
 import logic.Round;
+import screen.GameScreen;
+import screen.MenuScreen;
+import screen.RoundStartScreen;
+import thread.AnimationThread;
+import thread.UpdateThread;
 
 public class Main extends Application {
 
-	
+	public static Main instance;	
+	private MenuScreen menuScreen;
 	private GameScreen gameScreen;
-	private GameLogic gameLogic = GameLogic.instance;
+	private RoundStartScreen roundScreen;
 	private Scene gameScene;
+	private Scene menuScene;
+	private Scene roundScene;
+	private GameLogic gameLogic = GameLogic.instance;
 	private Stage primaryStage;
+	
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -35,60 +46,63 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		//code here
+		instance = this;
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("KIRBY QUEST");
 		this.primaryStage.setResizable(false);
-		this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				System.exit(0);
-			}
-		});
+		this.primaryStage.setOnCloseRequest(WindowEvent -> System.exit(0));
+		
+		initializeScene();
+		setToMenuScene();
+		
+		this.primaryStage.show();
+		
+	}
+	
+	private void initializeScene() {
+		menuScreen = new MenuScreen();
+		menuScene = new Scene(menuScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		menuScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		
 		gameScreen = new GameScreen();
 		gameScreen.requestFocusForCanvas();
-		gameScene = new Scene(gameScreen,680,480);
+		gameScene = new Scene(getGameScreen(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		addEventListener(gameScene);
 		
-		this.primaryStage.setScene(gameScene);
-		this.primaryStage.show();
-		
-		gameLogic.startGame();
-		Thread update = new Thread(() -> {
-			while(!GameLogic.instance.isGameOver()) {
-				gameLogic.update();
-				InputUtility.postUpdate();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					System.out.println("Interrupted");
-				}
-			}
+		roundScreen = new RoundStartScreen();
+		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+	}
+	
+	public void setToMenuScene() {	
+		primaryStage.setScene(menuScene);
+	}
+	
+	public void setToGameScene() {	
+		Platform.runLater(() -> {
+			primaryStage.setScene(gameScene);
 		});
-		update.start();
-		
-		new AnimationTimer() {
-			Long start=0l;
-			@Override
-			public void handle(long now) {
-				// TODO Auto-generated method stub
-				if(start==0l)start=now;
-				long diff = now-start;
-				if(diff>=10000000l){ //100000000l = 100ms.
-					gameScreen.paintComponents();
-					
-					start=now;
-
-				}
-			}
-		}.start();
-		
-
 		
 	}
-
 	
+	public void setToRoundScene() {
+		Platform.runLater(() -> {
+			primaryStage.setScene(roundScene);
+		});
+		
+	}
+	
+	public GameScreen getGameScreen() {
+		return gameScreen;
+	}
+
+	public MenuScreen getMenuScreen() {
+		return menuScreen;
+	}
+
+	public RoundStartScreen getRoundScreen() {
+		return roundScreen;
+	}
+
 	private void addEventListener(Scene s) {
 		s.setOnKeyPressed((event) -> {
 			System.out.println("KeyPressed : " + event.getCode().toString());
@@ -103,5 +117,7 @@ public class Main extends Application {
 			InputUtility.setKeyPressed(event.getCode(), false);
 		});
 	}
+	
+
 
 }

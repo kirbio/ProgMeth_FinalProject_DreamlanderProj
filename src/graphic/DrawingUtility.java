@@ -1,14 +1,23 @@
 package graphic;
 
+import java.io.InputStream;
+import java.util.List;
+
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.FontMetrics;
+
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import logic.AttackGuage;
 import logic.Enemy;
 import logic.Position;
+import screen.GameScreen;
 import logic.Entity;
 import logic.Player;
 
@@ -31,6 +40,7 @@ public class DrawingUtility {
 	public static final int ATK_GAUGE_BASE_Y = (ATK_GAUGE_Y + ATK_GAUGE_HEIGHT - ATK_GAUGE_PADDING);
 	public static final int PLAY_SCREEN_WIDTH = GameScreen.SCREEN_WIDTH - DrawingUtility.ATK_GAUGE_WIDTH;
 	public static final int PLAY_SCREEN_HEIGHT = DrawingUtility.ATK_GAUGE_HEIGHT;
+	public static final int ATK_GAUGE_TEXT_X = ATK_GAUGE_CELL_X + ATK_GAUGE_CELL_W/2;
 	
 	
 	/*=================================================
@@ -70,11 +80,10 @@ public class DrawingUtility {
 		drawPlayerHPBar(gc, 380, 5, HP, maxHP);
 	}
 	
-	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower) {
+	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower, boolean showAttackDescription) {
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(1);
-
 		
 		double cellHeight = ((double) ATK_GAUGE_ALL_CELL_H / attackpower.length);
 		gc.fillRect(ATK_GAUGE_X, ATK_GAUGE_Y, ATK_GAUGE_WIDTH, ATK_GAUGE_HEIGHT);
@@ -90,8 +99,23 @@ public class DrawingUtility {
 			gc.setFill(AttackGuage.colorGauge[attackpower[i]]);
 			gc.fillRect(ATK_GAUGE_CELL_X, ATK_GAUGE_BASE_Y - (cellHeight*(i+1)), ATK_GAUGE_CELL_W, cellHeight);
 			gc.strokeRect(ATK_GAUGE_CELL_X, ATK_GAUGE_BASE_Y - (cellHeight*(i+1)), ATK_GAUGE_CELL_W, cellHeight);
-			gc.setGlobalAlpha(1);
+			gc.setGlobalAlpha(1);			
 		}
+		if (showAttackDescription) {
+			
+			gc.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, cellHeight-5));
+			gc.setTextAlign(TextAlignment.CENTER);
+			gc.setTextBaseline(VPos.TOP);
+			
+			gc.setFill(Color.WHITESMOKE);
+			gc.fillText(AttackGuage.attackDescription[currentAtkPower], ATK_GAUGE_TEXT_X, ATK_GAUGE_BASE_Y - (cellHeight*(index+1)));	
+			
+//			gc.setStroke(Color.BLACK);
+//			gc.setLineWidth(1);	
+//			gc.strokeText(AttackGuage.attackDescription[currentAtkPower], ATK_GAUGE_TEXT_X, ATK_GAUGE_BASE_Y - (cellHeight*(index+1)));
+		
+		}
+
 	}
 	
 	/*=================================================
@@ -125,10 +149,18 @@ public class DrawingUtility {
 	}
 	
 	//Use to draw HPBar on entity's spot
-	private static void drawEnemyHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP) {       
+	private static void drawEnemyHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP, String name) {   
+		
 		//HP bar background color
 		gc.setFill(Color.BLACK);
 		gc.fillRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
+		
+		//Enemy's name
+		gc.setFont(Font.font("Arial", 10));
+		gc.setFill(Color.WHITE);
+		gc.setTextAlign(TextAlignment.LEFT);
+		gc.setTextBaseline(VPos.BASELINE);
+		gc.fillText(name, x, y-5);
 		
 		//HP bar gauge, varying color depend on HP
 		double t = (double)HP/(double)maxHP;
@@ -158,7 +190,7 @@ public class DrawingUtility {
 		enemy.getAnimation().updateAnimation();
 		int x = (enemy.getX() + enemy.getAnimation().getFrameWidth()/2 - HP_BAR_WIDTH/2);
 		int y = enemy.getY() - HP_BAR_HEIGHT;
-		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP());
+		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP(), enemy.getName());
 	}
 	
 	public static void drawHurtEnemy(GraphicsContext gc, Enemy enemy) {
@@ -166,7 +198,7 @@ public class DrawingUtility {
 		gc.drawImage(sprite, enemy.getX(), enemy.getY());
 		int x = (enemy.getX() + enemy.getAnimation().getFrameWidth()/2 - HP_BAR_WIDTH/2);
 		int y = enemy.getY() - HP_BAR_HEIGHT;
-		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP());
+		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP(), enemy.getName());
 	}
 	
 	

@@ -1,8 +1,8 @@
 package logic;
 
 import graphic.DrawingUtility;
-import graphic.GameScreen;
 import javafx.scene.canvas.GraphicsContext;
+import screen.GameScreen;
 
 public class Player extends Entity {
 	

@@ -11,6 +11,7 @@ import logic.Enemy;
 public class RenderableHolder {
 	//Fill in here
 	private List<IRenderable> entities;
+	private List<IRenderable> menuEntities;
 	private Comparator<IRenderable> comparator;
 
 	public static Image star;
@@ -24,6 +25,7 @@ public class RenderableHolder {
 	public RenderableHolder(){
 		//Fill in here
 		entities = new ArrayList<IRenderable>();
+		menuEntities = new ArrayList<IRenderable>();
 		//arrow = new Image[4];
 		comparator = (IRenderable o1, IRenderable o2) -> {
 			return o1.getZ() - o2.getZ();
@@ -41,11 +43,25 @@ public class RenderableHolder {
 		Collections.sort(entities, comparator);
 	}
 	
+	public synchronized void addMenu(IRenderable entity){
+		//Fill in here
+		menuEntities.add(entity);
+		
+		Collections.sort(menuEntities, comparator);
+	}
+	
 	public synchronized void remove(IRenderable entity){
 		//Fill in here
 		entities.remove(entity);
 		
 		Collections.sort(entities, comparator);
+	}
+	
+	public synchronized void removeMenu(IRenderable entity){
+		//Fill in here
+		menuEntities.remove(entity);
+		
+		Collections.sort(menuEntities, comparator);
 	}
 	
 	private static void loadResource() {
@@ -74,6 +90,10 @@ public class RenderableHolder {
 		// TODO Auto-generated method stub
 		//Fill in here
 		return entities;
+	}
+	
+	public synchronized void clearMenuEntities() {
+		menuEntities.clear();
 	}
 	
 }

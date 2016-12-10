@@ -1,7 +1,10 @@
-package graphic;
+package screen;
 
+import graphic.IRenderable;
+import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.application.Platform;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
@@ -11,7 +14,7 @@ import logic.GameLogic;
 import logic.RPGTextArea;
 import logic.StatusBar;
 
-public class GameScreen extends StackPane {
+public class GameScreen extends Group {
 	// public static final GameScreen instance = new GameScreen();
 	private Canvas canvas;
 	public GraphicsContext gc;
@@ -21,7 +24,7 @@ public class GameScreen extends StackPane {
 	public GameScreen() {
 		canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.PINK);
+		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		getChildren().add(canvas);
 

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import data.GameData;
-import graphic.GameScreen;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.scene.input.KeyCode;
+import main.Main;
+import screen.GameScreen;
 
 public class GameLogic {
 	public static final GameLogic instance = new GameLogic();
@@ -55,14 +56,18 @@ public class GameLogic {
 					player.setAttack(attackpower);				
 					if (!checkPlayerDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);	
-						playerAttack(enemies);	
+						playerAttack(enemies);
+						removeDead();
 					}		
 				}
-				atkGuage.resetGauge();		//start at bottom again after attack
 				
 				if (isAllEnemyDead(enemies)) {
 					win();
+					Main.instance.getRoundScreen().update();
+					Main.instance.setToRoundScene();
 				}
+				
+				atkGuage.resetGauge();		//start at bottom again after attack
 				
 				waitforInput = true;
 				player.setBeingAttacked(false);
@@ -73,7 +78,7 @@ public class GameLogic {
 
 		}
 		
-		removeDead();
+		
 		
 	}
 	
@@ -93,9 +98,18 @@ public class GameLogic {
 		}else{
 			atkGuage = new AttackGuage(atkguageseed);
 		}
-		atkGuage.start();
 		
 		readyToDraw = true;
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {			
+			e.printStackTrace();
+		}
+		
+		Main.instance.setToGameScene();
+		atkGuage.start();
+		
 	}
 
 	private void playerAttack(ArrayList<Enemy> enemies) {	
@@ -140,6 +154,7 @@ public class GameLogic {
 	private boolean checkPlayerDead() {
 		if (player.isDead()) {
 			setGameOver(true);
+			atkGuage.interrupt();	
 			System.out.println("Game Over");
 			RPGTextArea.text = "GAME OVER";
 			return true;
@@ -157,11 +172,22 @@ public class GameLogic {
 	
 	private void win() {
 		atkGuage.interrupt();
-		System.out.println("You win");
-		RPGTextArea.text = "You win!";
 		newRound = true;
+		RPGTextArea.text = "You win!";
+		System.out.println("You win");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		level++;
 		
+	}
+	
+	private void removeIfDead(IRenderable renderable) {
+		if (renderable.isDead()) {
+			RenderableHolder.getInstance().remove(renderable);
+		}
 	}
 	
 	private void removeDead() {

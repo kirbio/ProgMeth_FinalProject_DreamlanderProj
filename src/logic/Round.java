@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import data.EnemyEncounterPair;
 import data.GameData;
 import graphic.GameBackground;
+import graphic.RenderableHolder;
+import main.Main;
 
 public class Round {
 	ArrayList<Enemy> enemyList;
@@ -14,7 +16,7 @@ public class Round {
 		enemyList = new ArrayList<Enemy>();
 		setEnemyInLevel(level);
 		Position.set(enemyList);
-		new GameBackground(Integer.toString(level));
+		RenderableHolder.getInstance().add(new GameBackground(Integer.toString(level)));
 	}
 
 	public void setEnemyInLevel(int level) {

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import graphic.DrawingUtility;
-import graphic.GameScreen;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
+import screen.GameScreen;
 
 public class Position {
 	public static final int PLAYER_POSITION_X = DrawingUtility.PLAY_SCREEN_WIDTH*75/100;
@@ -56,7 +56,7 @@ public class Position {
 			
 			enemy.setX(x);
 			enemy.setY(DrawingUtility.STATUS_BAR_HEIGHT + offset +(DrawingUtility.PLAY_SCREEN_HEIGHT/2 - (enemy.getAnimation().getFrameHeight()/2)));
-			System.out.println(enemy.getX() + " " + enemy.getY());
+			
 		}	 
 	}	
 
