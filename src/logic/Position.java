@@ -15,7 +15,7 @@ public class Position {
 	
 	public static void set(ArrayList<Enemy> enemyList) {
 		amount = enemyList.size();
-		LineForm(enemyList);
+		PlaceEnemy(enemyList);
 	}
 	
 	public static void set(ArrayList<Enemy> enemyList, String format) {
@@ -26,6 +26,30 @@ public class Position {
 			LineForm(enemyList);
 		}
 	
+	}
+	
+	private static void PlaceEnemy(ArrayList<Enemy> enemyList){
+		final int ENEMY_ORIGIN_X = DrawingUtility.PLAY_SCREEN_WIDTH/4+30;
+		final int ENEMY_ORIGIN_Y = PLAYER_POSITION_Y-30;
+		
+		if(enemyList.size()==1){
+			Enemy enemy = enemyList.get(0);
+			enemy.setX(ENEMY_ORIGIN_X);
+			enemy.setY(ENEMY_ORIGIN_Y);
+		}else if(enemyList.size()==2){
+			for(int i=0;i<2;i++){
+				Enemy enemy = enemyList.get(i);
+				enemy.setX(ENEMY_ORIGIN_X);
+				enemy.setY((int) (ENEMY_ORIGIN_Y+60*(Math.pow(-1, i))));
+			}
+		}else{
+			int totalEnemy = enemyList.size();
+			for(int i=0;i<totalEnemy;i++){
+				Enemy enemy = enemyList.get(i);
+				enemy.setX((int) (ENEMY_ORIGIN_X+80*Math.cos(Math.toRadians(i*360/totalEnemy))));
+				enemy.setY((int) (ENEMY_ORIGIN_Y+80*Math.sin(Math.toRadians(i*360/totalEnemy))));
+			}
+		}
 	}
 	
 	private static void LineForm(ArrayList<Enemy> enemyList) {	

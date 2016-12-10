@@ -1,5 +1,6 @@
 package logic;
 
+import data.GameData;
 import graphic.DrawingUtility;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
@@ -18,7 +19,7 @@ public class StatusBar implements IRenderable {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		DrawingUtility.drawStatusBar(gc, GameLogic.instance.getLevel(), GameLogic.instance.getPlayer().getHp(), GameLogic.instance.getPlayer().getMaxHP());
+		DrawingUtility.drawStatusBar(gc, GameLogic.instance.getLevel(), GameLogic.instance.getPlayer().getHp(), GameLogic.instance.getPlayer().getMaxHP(),GameLogic.instance.getRound().getEnemyList());
 		
 	}
 

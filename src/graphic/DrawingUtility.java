@@ -1,6 +1,7 @@
 package graphic;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sun.javafx.tk.FontLoader;
@@ -62,7 +63,7 @@ public class DrawingUtility {
 		
 	}
 	
-	public static void drawStatusBar(GraphicsContext gc, int level, int HP, int maxHP) {
+	public static void drawStatusBar(GraphicsContext gc, int level, int HP, int maxHP,ArrayList<Enemy> enemyList) {
 		//draw Status bar
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, GameScreen.SCREEN_WIDTH, STATUS_BAR_HEIGHT);
@@ -78,6 +79,10 @@ public class DrawingUtility {
 		gc.fillText("HP : "+HP, 340, 5);
 		
 		drawPlayerHPBar(gc, 380, 5, HP, maxHP);
+		
+		for(int i=0;i<enemyList.size();i++){
+			drawEnemyName(gc,enemyList.get(i).getName(),i);
+		}
 	}
 	
 	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower, boolean showAttackDescription) {
@@ -156,11 +161,11 @@ public class DrawingUtility {
 		gc.fillRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 		
 		//Enemy's name
-		gc.setFont(Font.font("Arial", 10));
-		gc.setFill(Color.WHITE);
-		gc.setTextAlign(TextAlignment.LEFT);
-		gc.setTextBaseline(VPos.BASELINE);
-		gc.fillText(name, x, y-5);
+//		gc.setFont(Font.font("Arial", 10));
+//		gc.setFill(Color.WHITE);
+//		gc.setTextAlign(TextAlignment.LEFT);
+//		gc.setTextBaseline(VPos.BASELINE);
+//		gc.fillText(name, x, y-5);
 		
 		//HP bar gauge, varying color depend on HP
 		double t = (double)HP/(double)maxHP;
@@ -191,6 +196,14 @@ public class DrawingUtility {
 		int x = (enemy.getX() + enemy.getAnimation().getFrameWidth()/2 - HP_BAR_WIDTH/2);
 		int y = enemy.getY() - HP_BAR_HEIGHT;
 		drawEnemyHPBar(gc, x, y, enemy.getHp(), enemy.getMaxHP(), enemy.getName());
+	}
+	
+	public static void drawEnemyName(GraphicsContext gc,String name,int number){
+		gc.setFont(Font.font("Arial", 15));
+		gc.setFill(Color.WHITE);
+		gc.setTextAlign(TextAlignment.LEFT);
+		gc.setTextBaseline(VPos.TOP);
+		gc.fillText(name, 5, STATUS_BAR_HEIGHT+5+15*number);
 	}
 	
 	public static void drawHurtEnemy(GraphicsContext gc, Enemy enemy) {

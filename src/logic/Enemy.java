@@ -39,6 +39,12 @@ public class Enemy extends Entity{
 		
 	}
 	
+	@Override
+	public void setY(int y) {
+		this.y = y;
+		this.z = y;
+	}
+	
 		
 
 }
