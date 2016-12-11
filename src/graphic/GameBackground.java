@@ -9,9 +9,9 @@ public class GameBackground implements IRenderable {
 	
 	public GameBackground(String backgroundName) {	
 		try {
-			path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".jpg").toString();		
+			path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".png").toString();		
 		} catch (NullPointerException | IllegalArgumentException e) {
-			path = ClassLoader.getSystemResource("img/bg/0.jpg").toString();
+			path = ClassLoader.getSystemResource("img/bg/0.png").toString();
 		}
 		bg = new Image(path, (double) DrawingUtility.PLAY_SCREEN_WIDTH, (double) DrawingUtility.PLAY_SCREEN_HEIGHT,
 				false, false);
@@ -19,9 +19,9 @@ public class GameBackground implements IRenderable {
 	
 	public GameBackground(String backgroundName, double width, double height) {	
 		try {
-			path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".jpg").toString();		
+			path = ClassLoader.getSystemResource("img/bg/"+backgroundName+".png").toString();		
 		} catch (NullPointerException | IllegalArgumentException e) {
-			path = ClassLoader.getSystemResource("img/bg/0.jpg").toString();
+			path = ClassLoader.getSystemResource("img/bg/0.png").toString();
 		}
 		bg = new Image(path, width, height, false, false);
 	}
