@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.sun.javafx.tk.FontLoader;
 import com.sun.javafx.tk.FontMetrics;
+import com.sun.javafx.tk.Toolkit;
 
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,7 +27,7 @@ public class DrawingUtility {
 	
 	public static final int TEXT_AREA_HEIGHT = 100;
 	public static final int STATUS_BAR_HEIGHT = 50;
-	public static final int HP_BAR_WIDTH = 50;
+	public static final int HP_BAR_WIDTH = 60;
 	public static final int HP_BAR_HEIGHT = 10;
 	public static final int PLAYER_HP_BAR_WIDTH = 280;
 	public static final int PLAYER_HP_BAR_HEIGHT = 40;
@@ -149,23 +150,26 @@ public class DrawingUtility {
         
 		//HP bar border
 		gc.setStroke(Color.BLACK);
-		gc.setLineWidth(2);
+		gc.setLineWidth(5);
 		gc.strokeRect(x, y, PLAYER_HP_BAR_WIDTH, PLAYER_HP_BAR_HEIGHT);
 	}
 	
 	//Use to draw HPBar on entity's spot
 	private static void drawEnemyHPBar(GraphicsContext gc, int x, int y, int HP, int maxHP, String name) {   
 		
-		//HP bar background color
+		gc.setFont(Font.font("Arial Narrow", 10));
+		FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+		double font_height= fontLoader.getFontMetrics(gc.getFont()).getLineHeight();
+				
+		//HP bar panel
 		gc.setFill(Color.BLACK);
-		gc.fillRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
+		gc.fillRoundRect(x - 5, y - (5 + font_height), HP_BAR_WIDTH + 10, font_height + (10 + HP_BAR_HEIGHT), 8, 8);
 		
-		//Enemy's name
-//		gc.setFont(Font.font("Arial", 10));
-//		gc.setFill(Color.WHITE);
-//		gc.setTextAlign(TextAlignment.LEFT);
-//		gc.setTextBaseline(VPos.BASELINE);
-//		gc.fillText(name, x, y-5);
+		//Enemy's name	
+		gc.setFill(Color.WHITE);
+		gc.setTextAlign(TextAlignment.LEFT);
+		gc.setTextBaseline(VPos.BASELINE);
+		gc.fillText(name, x, y-5);
 		
 		//HP bar gauge, varying color depend on HP
 		double t = (double)HP/(double)maxHP;
@@ -176,7 +180,7 @@ public class DrawingUtility {
 			} else {
 				gc.setFill(Color.rgb(255, (int) (t * 510), 0));
 			}
-			gc.fillRect(x, y, ((double) HP / maxHP) * HP_BAR_WIDTH, HP_BAR_HEIGHT);
+			gc.fillRoundRect(x, y, ((double) HP / maxHP) * HP_BAR_WIDTH, HP_BAR_HEIGHT, 5, 5);
 		} catch (IllegalArgumentException e) {
 			//System.out.println("HP Out of range");
 		}
@@ -184,7 +188,7 @@ public class DrawingUtility {
 		//HP bar border
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(2);
-		gc.strokeRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
+		gc.strokeRoundRect(x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT, 1, 1);
 	}
 	
 	//Use to draw sprite
