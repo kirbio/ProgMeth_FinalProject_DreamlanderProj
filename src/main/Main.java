@@ -21,11 +21,12 @@ import logic.Enemy;
 import logic.GameLogic;
 import logic.Player;
 import logic.Round;
+import screen.GameOverScreen;
 import screen.GameScreen;
 import screen.MenuScreen;
 import screen.RoundStartScreen;
 import sound.AudioHolder;
-import thread.AnimationThread;
+import thread.AnimationStarter;
 import thread.UpdateThread;
 
 public class Main extends Application {
@@ -34,11 +35,13 @@ public class Main extends Application {
 	private MenuScreen menuScreen;
 	private GameScreen gameScreen;
 	private RoundStartScreen roundScreen;
+	private GameOverScreen gameOverScreen;
 	private Scene gameScene;
 	private Scene menuScene;
 	private Scene roundScene;
-	private GameLogic gameLogic = GameLogic.instance;
+	private Scene gameOverScene;
 	private Stage primaryStage;
+	private GameLogic gameLogic = GameLogic.instance;
 	
 	
 	public static void main(String[] args) {
@@ -69,31 +72,42 @@ public class Main extends Application {
 		
 		gameScreen = new GameScreen();
 		gameScreen.requestFocusForCanvas();
-		gameScene = new Scene(getGameScreen(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		gameScene = new Scene(gameScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		addEventListener(gameScene);
 		
 		roundScreen = new RoundStartScreen();
 		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+	
+		gameOverScreen = new GameOverScreen();
+		gameOverScene = new Scene(gameOverScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		gameOverScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
 	}
 	
 	public void setToMenuScene() {	
 		primaryStage.setScene(menuScene);
+		//Play Titlescreen bgm
+		AudioHolder.getInstance().playBGM("titlescreen", true, 0.9);	
+				
 	}
 	
 	public void setToGameScene() {	
 		Platform.runLater(() -> {
 			primaryStage.setScene(gameScene);
-		});
-		
+		});		
 	}
 	
 	public void setToRoundScene() {
 		Platform.runLater(() -> {
 			primaryStage.setScene(roundScene);
-		});
-		
+		});	
 	}
 	
+	public void setToGameOverScene() {
+		Platform.runLater(() -> {
+			primaryStage.setScene(gameOverScene);
+		});	
+	}
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
@@ -109,7 +123,7 @@ public class Main extends Application {
 	public void startMainGame() {
 		GameLogic.instance.startGame();	
 		new UpdateThread().start();	
-		new AnimationThread().start();
+		new AnimationStarter().start();
 	}
 
 	private void addEventListener(Scene s) {

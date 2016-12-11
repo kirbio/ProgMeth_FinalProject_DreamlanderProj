@@ -73,7 +73,8 @@ public class AudioHolder {
 	
 	public void playLevelBGM(int level) {
 		switch (level) {
-		default :	playBGM("battle", true, 0.5); break;
+		default :	playBGM("battle", true, 0.2); break;
+		case 4	:	playBGM("slave", true, 0.2); break;
 		case 5  :   playBGM("tankbot", true, 0.3); break;
 		//case 1  :   playBGM(".."); break;
 		}

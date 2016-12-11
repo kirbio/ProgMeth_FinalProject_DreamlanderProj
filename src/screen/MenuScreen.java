@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import graphic.GameBackground;
 import graphic.RenderableHolder;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -15,13 +18,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import logic.GameLogic;
 import main.Main;
 import sound.AudioHolder;
-import thread.AnimationThread;
+import thread.AnimationStarter;
 import thread.UpdateThread;
 
-public class MenuScreen extends BorderPane {
+public class MenuScreen extends Group {
 	private Button startButton;
 	private Button exitButton;
 	private VBox menu;
@@ -30,31 +34,37 @@ public class MenuScreen extends BorderPane {
 	private GameBackground gameBG;
 
 	public MenuScreen() {
-		canvas =  new Canvas(GameScreen.SCREEN_WIDTH*3/4, GameScreen.SCREEN_HEIGHT);
+		canvas =  new Canvas(GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		setCenter(canvas);
-		gameBG = new GameBackground("menu", canvas.getWidth(), canvas.getHeight());
+		getChildren().add(canvas);
+		gameBG = new GameBackground("menu", GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gc.drawImage(gameBG.getBg(), 0, 0);
 		
-		getStyleClass().add("menuScreen");
+		addButtonPane();
 		
-		//Play Titlescreen bgm
-		AudioHolder.getInstance().playBGM("titlescreen", true, 0.5);
-		
-		menu = new VBox(10);
-		menu.setPrefWidth(GameScreen.SCREEN_WIDTH/4);
-		menu.getStyleClass().add("right");
+	}
+	
+	private void addButtonPane() {
+		/*menu = new VBox(10);
+		menu.setPrefWidth(GameScreen.SCREEN_WIDTH);
+		menu.relocate(0, GameScreen.SCREEN_HEIGHT - 200);
+		//menu.setPadding(new Insets(100));
+		menu.setAlignment(Pos.CENTER);
+		menu.getStyleClass().add("right");*/
 		
 		startButton = new Button("Start");
 		startButton.getStyleClass().add("button");
+		startButton.relocate(200, 400);
 		
 		exitButton = new Button("Exit");
 		exitButton.getStyleClass().add("button");
-		
-		menu.getChildren().addAll(startButton, exitButton);
+		exitButton.relocate(400, 400);
 		
 		addButtonListener();
-		setRight(menu);
+		
+		getChildren().addAll(startButton, exitButton);
+		//getChildren().add(menu);
+		
 	}
 	
 	private void addButtonListener() {

@@ -41,7 +41,8 @@ public class GameLogic {
 	}
 
 	public void stopGame() {
-
+		readyToDraw = false;
+		defeatedEnemies.clear();
 	}
 
 	// This method loops until game over
@@ -69,16 +70,18 @@ public class GameLogic {
 					enemyAttack(enemies);
 				} else {
 					player.setAttack(attackpower);				
-					if (!checkPlayerDead()) {
+					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);	
 						playerAttack(enemies);
 						removeDead();
-					}		
+					} else {
+						triggerGameOver();
+					}
 				}
 				
 				if (isAllEnemyDead(enemies)) {
 					defeatedEnemies.addAll(round.getEnemyList());
-					win();
+					triggerWin();
 					Main.instance.getRoundScreen().update();
 					Main.instance.setToRoundScene();
 				}
@@ -151,15 +154,11 @@ public class GameLogic {
 			if (!e.isDead()) {
 				 RPGTextArea.text = "Enemies attack!";
 				 e.attack(player);	 
-				 if (checkPlayerDead()) {
-					 break;
-				 }
 				 try {
 						Thread.sleep(50);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
-					}
-				 
+					}			 
 			}
 		}
 		playAttackSound("enemy");
@@ -168,19 +167,12 @@ public class GameLogic {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+		 if (player.isDead()) {
+			 triggerGameOver();
+		 }
+		
 	}
-
-	private boolean checkPlayerDead() {
-		if (player.isDead()) {
-			setGameOver(true);
-			atkGuage.interrupt();	
-			System.out.println("Game Over");
-			RPGTextArea.text = "GAME OVER";
-			return true;
-		}
-		return false;
-	}
-
+	
 	private boolean isAllEnemyDead(ArrayList<Enemy> enemies) {
 		boolean allEnemyDead = true;
 		for (Enemy e : enemies) {
@@ -189,7 +181,7 @@ public class GameLogic {
 		return allEnemyDead;
 	}
 	
-	private void win() {
+	private void triggerWin() {
 		atkGuage.interrupt();
 		AudioHolder.getInstance().stopBGM();
 		newRound = true;
@@ -216,10 +208,22 @@ public class GameLogic {
 		
 	}
 	
-	private void removeIfDead(IRenderable renderable) {
-		if (renderable.isDead()) {
-			RenderableHolder.getInstance().remove(renderable);
+	private void triggerGameOver() {
+		AudioHolder.getInstance().stopBGM();
+		setGameOver(true);
+		atkGuage.interrupt();	
+		System.out.println("Game Over");
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		Main.instance.setToGameOverScene();
+		AudioHolder.getInstance().playSFX("gameover2", 1);
+		
+		RPGTextArea.text = "GAME OVER";
 	}
 	
 	private void removeDead() {

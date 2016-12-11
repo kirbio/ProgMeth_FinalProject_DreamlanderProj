@@ -39,6 +39,7 @@ public class RoundStartScreen extends Group {
 		gc.setTextBaseline(VPos.CENTER);
 		gc.fillText("LEVEL "+( GameLogic.instance.getLevel()+1), GameScreen.SCREEN_WIDTH/2, GameScreen.SCREEN_HEIGHT/5);
 		
+		//drawing grave yard
 		gc.setFill(Color.GREY);
 		gc.setFont(Font.font("Arial", FontWeight.BOLD, 30));
 		if (GameLogic.instance.getLevel() > 0) {
@@ -54,9 +55,9 @@ public class RoundStartScreen extends Group {
 				}
 				gc.drawImage(e.getAnimation().getDefaultIdleSprite(), x, y - e.getAnimation().getFrameHeight());
 				if (e.getAnimation().getFrameWidth() > 160) {
-					x += 60;
+					x += 80;
 				} else {
-					x+= 20;
+					x+= 40;
 				}
 			} 
 		} catch (NullPointerException e) {

@@ -39,12 +39,14 @@ public class EntityAnimation {
 			for (int i = 0; i < number; i++) {
 				animationFrame[i] = new WritableImage(img.getPixelReader(), i * frameWidth, 0, frameWidth, frameHeight);
 			}
-			counter = 0;
-			delayCounter = 0;
-			animationDelay = 10;
 		} catch (SpriteParsingException e) {
-			e.printStackTrace();
+			e.getMessage();
+			img = null;
+			animationFrame = null;
 		}
+		counter = 0;
+		delayCounter = 0;
+		animationDelay = 10;
 	}
 
 	public Image getCurrentIdleSprite() {
