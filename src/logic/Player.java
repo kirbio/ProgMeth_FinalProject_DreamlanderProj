@@ -3,6 +3,7 @@ package logic;
 import graphic.DrawingUtility;
 import javafx.scene.canvas.GraphicsContext;
 import screen.GameScreen;
+import sound.AudioHolder;
 
 public class Player extends Entity {
 	
@@ -17,7 +18,6 @@ public class Player extends Entity {
 	
 	@Override
 	void attack(Entity entity) {
-
 		entity.decreaseHP(attack);
 		System.out.println("Kirby attacks "+entity.getName()+"!");
 

@@ -7,9 +7,11 @@ import input.InputUtility;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import sound.AudioHolder;
+import javafx.scene.media.AudioClip;
 
 public class AttackGuage extends Thread implements IRenderable {
-	private int[] attackpower;
+	private int[] attackgauge;
 	private int speed;
 	private int level;
 	private int currentAtkPower = -1;
@@ -19,9 +21,14 @@ public class AttackGuage extends Thread implements IRenderable {
 	private static final int DOWN = -1;
 	public static final Color[] colorGauge = 			{Color.GRAY	, Color.DARKRED	, Color.RED	, Color.YELLOW	, Color.MAGENTA};
 	public static final String[] attackDescription = 	{"MISSED!"		, "GOOD!"	, "GREAT!"		, "UNUSED!"		, "PERFECT!"};
+	public static final AudioClip[] sound = {	AudioHolder.getInstance().getSFX("missed"), 
+												AudioHolder.getInstance().getSFX("good"), 
+												AudioHolder.getInstance().getSFX("great"),
+												null,
+												AudioHolder.getInstance().getSFX("perfect")};
 	
 	public AttackGuage(int speed) { // Constructor for using default attack array
-		attackpower = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
+		attackgauge = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
 		RenderableHolder.getInstance().add(this);
@@ -29,7 +36,7 @@ public class AttackGuage extends Thread implements IRenderable {
 	}
 
 	public AttackGuage(int[] type, int speed) { // Constructor for import attack array
-		attackpower = type;
+		attackgauge = type;
 		this.speed = speed;
 		level = GameLogic.instance.getLevel();
 		RenderableHolder.getInstance().add(this);
@@ -43,7 +50,7 @@ public class AttackGuage extends Thread implements IRenderable {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		DrawingUtility.drawAttackGauge(gc, attackpower, index, currentAtkPower, showAttackDescription);
+		DrawingUtility.drawAttackGauge(gc, attackgauge, index, currentAtkPower, showAttackDescription);
 	}
 
 	@Override
@@ -55,7 +62,7 @@ public class AttackGuage extends Thread implements IRenderable {
 		while (!GameLogic.instance.isNewRound() && !GameLogic.instance.isGameOver()) {
 			showAttackDescription = false;
 			if (GameLogic.instance.isWaitForInput()) {		
-				if (index == attackpower.length - 1) {
+				if (index == attackgauge.length - 1) {
 					way = DOWN;
 				} else if (index == 0) {
 					way = UP;
@@ -65,7 +72,7 @@ public class AttackGuage extends Thread implements IRenderable {
 				} else {
 					index--;
 				}
-				currentAtkPower = attackpower[index]; 
+				currentAtkPower = attackgauge[index]; 
 			} else {
 				showAttackDescription = true;
 			}
@@ -83,11 +90,11 @@ public class AttackGuage extends Thread implements IRenderable {
 		showAttackDescription = false;
 	}
 	public int[] getAttackpower() {
-		return attackpower;
+		return attackgauge;
 	}
 
 	public void setAttackpower(int[] attackpower) {
-		this.attackpower = attackpower;
+		this.attackgauge = attackpower;
 	}
 
 	public int getSpeed() {
@@ -121,9 +128,18 @@ public class AttackGuage extends Thread implements IRenderable {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+	
+	public boolean isPerfect() {
+		return (currentAtkPower == 4);
+	}
 
 	@Override
 	public boolean isDead() {
 		return false;
+	}
+	
+	public void playSound() {
+		sound[currentAtkPower].setVolume(1.0);
+		sound[currentAtkPower].play();
 	}
 }

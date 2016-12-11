@@ -50,6 +50,10 @@ public class EntityAnimation {
 	public Image getCurrentIdleSprite() {
 		return animationFrame[counter];
 	}
+	
+	public Image getDefaultIdleSprite() {
+		return animationFrame[0];
+	}
 
 	public Image getHurtSprite() {
 		return animationFrame[number - 1];

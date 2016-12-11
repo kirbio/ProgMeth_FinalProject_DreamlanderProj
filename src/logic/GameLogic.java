@@ -1,6 +1,8 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import data.GameData;
@@ -10,6 +12,7 @@ import input.InputUtility;
 import javafx.scene.input.KeyCode;
 import main.Main;
 import screen.GameScreen;
+import sound.AudioHolder;
 
 public class GameLogic {
 	public static final GameLogic instance = new GameLogic();
@@ -23,6 +26,9 @@ public class GameLogic {
 	private static boolean newRound;
 	private static AttackGuage atkGuage;
 	private static boolean readyToDraw;
+	private static List<Enemy> defeatedEnemies;
+	private static final int MID_BOSS = 4;
+	private static final int BOSS = 9;
 	
 	public void startGame() {
 		isGameOver = false;
@@ -31,6 +37,7 @@ public class GameLogic {
 		new GameData();
 		newRound = true;
 		readyToDraw = false;
+		defeatedEnemies = new ArrayList<>();
 	}
 
 	public void stopGame() {
@@ -49,6 +56,14 @@ public class GameLogic {
 			
 			if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
 				waitforInput = false;
+				atkGuage.playSound();
+				
+				try {
+					Thread.sleep(800);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
 				int attackpower = atkGuage.getCurrentAtkPower();
 				if (attackpower == 0) {
 					enemyAttack(enemies);
@@ -62,6 +77,7 @@ public class GameLogic {
 				}
 				
 				if (isAllEnemyDead(enemies)) {
+					defeatedEnemies.addAll(round.getEnemyList());
 					win();
 					Main.instance.getRoundScreen().update();
 					Main.instance.setToRoundScene();
@@ -107,6 +123,7 @@ public class GameLogic {
 			e.printStackTrace();
 		}
 		
+		AudioHolder.getInstance().playLevelBGM(level);
 		Main.instance.setToGameScene();
 		atkGuage.start();
 		
@@ -116,7 +133,8 @@ public class GameLogic {
 			for (Enemy e : enemies) {
 				if (!e.isDead()) {
 					RPGTextArea.text = "Kirby Attacks!";
-					player.attack(e);
+					playAttackSound("player");
+					player.attack(e);	
 					e.setBeingAttacked(true);
 					try {
 						Thread.sleep(500);
@@ -132,7 +150,7 @@ public class GameLogic {
 		for (Enemy e : enemies) {
 			if (!e.isDead()) {
 				 RPGTextArea.text = "Enemies attack!";
-				 e.attack(player);
+				 e.attack(player);	 
 				 if (checkPlayerDead()) {
 					 break;
 				 }
@@ -144,6 +162,7 @@ public class GameLogic {
 				 
 			}
 		}
+		playAttackSound("enemy");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e1) {
@@ -172,14 +191,27 @@ public class GameLogic {
 	
 	private void win() {
 		atkGuage.interrupt();
+		AudioHolder.getInstance().stopBGM();
 		newRound = true;
 		RPGTextArea.text = "You win!";
 		System.out.println("You win");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (level == MID_BOSS || level == BOSS) {
+			AudioHolder.getInstance().playSFX("win2", 0.7);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} else {
+			AudioHolder.getInstance().playSFX("win1", 0.7);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		
 		level++;
 		
 	}
@@ -195,6 +227,20 @@ public class GameLogic {
 			if (RenderableHolder.getInstance().getEntities().get(i).isDead()) {
 				RenderableHolder.getInstance().remove(i);
 			}
+		}
+	}
+	
+	private void playAttackSound(String attacker) {
+		Random r = new Random();
+		if (attacker.equals("player")) {
+			if (atkGuage.isPerfect()) {
+				AudioHolder.getInstance().playSFX("fightperfect", 1.0);
+			} else {
+				AudioHolder.getInstance().playSFX("fight" + (r.nextInt(2) + 1), 1.0);
+			} 
+		} else {
+			AudioHolder.getInstance().playSFX("hurt" + (r.nextInt(2) + 1), 0.7);
+			//AudioHolder.getInstance().playSFX("hurtvoice", 1.0);
 		}
 	}
 
@@ -248,6 +294,10 @@ public class GameLogic {
 
 	public void setReadyToDraw(boolean readyToDraw) {
 		GameLogic.readyToDraw = readyToDraw;
+	}
+
+	public List<Enemy> getDefeatedEnemies() {
+		return defeatedEnemies;
 	}
 	
 	

@@ -7,7 +7,7 @@ import graphic.RenderableHolder;
 public abstract class Entity implements IRenderable{
 	protected String name;
 	protected int hp;
-	protected final int maxHP;
+	protected int maxHP;
 	protected int attack;
 	protected boolean isDead;
 	protected EntityAnimation animation;
@@ -67,11 +67,15 @@ public abstract class Entity implements IRenderable{
 	
 	void increaseHP(int amount) { 
 		this.hp += amount;
+		if (hp > maxHP) {
+			hp = maxHP;
+		}
 	}
 	
 	void decreaseHP(int amount) {
 		this.hp -= amount;
-		if (hp <= 0) {
+		if (hp < 0) {
+			hp = 0;
 			isDead = true;
 			System.out.println(getName()+" is Dead!");
 		}

@@ -24,6 +24,7 @@ import logic.Round;
 import screen.GameScreen;
 import screen.MenuScreen;
 import screen.RoundStartScreen;
+import sound.AudioHolder;
 import thread.AnimationThread;
 import thread.UpdateThread;
 
@@ -54,6 +55,8 @@ public class Main extends Application {
 		
 		initializeScene();
 		setToMenuScene();
+		
+		AudioHolder.getInstance();
 		
 		this.primaryStage.show();
 		
@@ -101,6 +104,12 @@ public class Main extends Application {
 
 	public RoundStartScreen getRoundScreen() {
 		return roundScreen;
+	}
+	
+	public void startMainGame() {
+		GameLogic.instance.startGame();	
+		new UpdateThread().start();	
+		new AnimationThread().start();
 	}
 
 	private void addEventListener(Scene s) {

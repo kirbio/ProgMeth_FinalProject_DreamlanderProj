@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import logic.GameLogic;
 import main.Main;
+import sound.AudioHolder;
 import thread.AnimationThread;
 import thread.UpdateThread;
 
@@ -54,19 +55,13 @@ public class MenuScreen extends BorderPane {
 	}
 	
 	private void addButtonListener() {
-		startButton.setOnAction(e -> {		
+		startButton.setOnAction(e -> {
+			AudioHolder.getInstance().playSFX("select");
 			Main.instance.setToRoundScene();
-			GameLogic.instance.startGame();	
-			new UpdateThread().start();	
-			new AnimationThread().start();
-			
-			//Play Music
-			AudioClip audio = new AudioClip(ClassLoader.getSystemResource("bgm/PeppermintLoop.wav").toString());
-	        audio.setVolume(0.5f);
-	        audio.setCycleCount(AudioClip.INDEFINITE);
-	        audio.play();
+			Main.instance.startMainGame();	
 		});
 		exitButton.setOnAction(e -> {
+			AudioHolder.getInstance().playSFX("select");
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setContentText("Are you sure you want to quit?");
 			alert.setHeaderText(null);
@@ -74,9 +69,11 @@ public class MenuScreen extends BorderPane {
 			
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == alert.getButtonTypes().get(0)){
+				AudioHolder.getInstance().playSFX("select");
 			    // ... user chose OK
 				System.exit(0);
 			} else {
+				AudioHolder.getInstance().playSFX("select2");
 			    // ... user chose CANCEL or closed the dialog
 			}
 			
