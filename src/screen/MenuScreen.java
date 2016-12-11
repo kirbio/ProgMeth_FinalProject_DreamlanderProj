@@ -38,6 +38,9 @@ public class MenuScreen extends BorderPane {
 		
 		getStyleClass().add("menuScreen");
 		
+		//Play Titlescreen bgm
+		AudioHolder.getInstance().playBGM("titlescreen", true, 0.5);
+		
 		menu = new VBox(10);
 		menu.setPrefWidth(GameScreen.SCREEN_WIDTH/4);
 		menu.getStyleClass().add("right");
@@ -57,6 +60,7 @@ public class MenuScreen extends BorderPane {
 	private void addButtonListener() {
 		startButton.setOnAction(e -> {
 			AudioHolder.getInstance().playSFX("select");
+			AudioHolder.getInstance().stopBGM();
 			Main.instance.setToRoundScene();
 			Main.instance.startMainGame();	
 		});

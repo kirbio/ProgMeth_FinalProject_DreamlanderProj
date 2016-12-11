@@ -56,10 +56,10 @@ public class AudioHolder {
 	
 	public void playBGM(String name, boolean looping, double volume) {
 		try {
-			if (!bgm_name.contains(name+".mp3")) {
+			if (!bgm_name.contains(name+".wav")) {
 				throw new AudioNotFoundException();
 			}
-			AudioClip audio = bgm.get(bgm_name.indexOf(name+".mp3"));
+			AudioClip audio = bgm.get(bgm_name.indexOf(name+".wav"));
 			audio.setVolume(volume);
 			if (looping) {
 				audio.setCycleCount(AudioClip.INDEFINITE);
@@ -73,8 +73,8 @@ public class AudioHolder {
 	
 	public void playLevelBGM(int level) {
 		switch (level) {
-		default :	playBGM("peppermint", true, 0.5); break;
-		case 4  :   playBGM("slave", true, 0.3); break;
+		default :	playBGM("battle", true, 0.5); break;
+		case 5  :   playBGM("tankbot", true, 0.3); break;
 		//case 1  :   playBGM(".."); break;
 		}
 	}
