@@ -265,8 +265,6 @@ public class DrawingUtility {
 	 ==================================================*/
 	
 	public static void drawBG(GraphicsContext gc, Image bg) {
-		gc.setFill(Color.DARKBLUE);
-		gc.fillRect(0, 0, PLAY_SCREEN_WIDTH, PLAY_SCREEN_HEIGHT);
 		gc.drawImage(bg, COUNTER_WIDTH, STATUS_BAR_HEIGHT);
 	}
 	
