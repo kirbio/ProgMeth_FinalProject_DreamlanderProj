@@ -73,9 +73,8 @@ public class AttackGuage extends Thread implements IRenderable {
 					index--;
 				}
 				currentAtkPower = attackgauge[index]; 
-			} else {
-				showAttackDescription = true;
-			}
+			} 
+			
 			try {
 				Thread.sleep(100-(speed*10));		//affect gauge speed
 			} catch (InterruptedException e) {
@@ -142,4 +141,14 @@ public class AttackGuage extends Thread implements IRenderable {
 		sound[currentAtkPower].setVolume(1.0);
 		sound[currentAtkPower].play();
 	}
+
+	public boolean isShowAttackDescription() {
+		return showAttackDescription;
+	}
+
+	public void setShowAttackDescription(boolean showAttackDescription) {
+		this.showAttackDescription = showAttackDescription;
+	}
+	
+	
 }

@@ -25,6 +25,7 @@ public class GameLogic {
 											// AttackGuage
 	private static boolean newRound;
 	private static AttackGuage atkGuage;
+	private static Counter counter;
 	private static boolean readyToDraw;
 	private static List<Enemy> defeatedEnemies;
 	private static final int MID_BOSS = 4;
@@ -55,8 +56,24 @@ public class GameLogic {
 			ArrayList<Enemy> enemies = round.getEnemyList();
 			RPGTextArea.text = "Press Any Key to Attack";
 			
-			if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
+			if (counter.isTimeOut()) {
 				waitforInput = false;
+				atkGuage.resetGauge();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				enemyAttack(enemies);
+				
+				waitforInput = true;
+				player.setBeingAttacked(false);
+				counter.resetCounter();
+				
+				
+			} else if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER) ) {
+				waitforInput = false;
+				atkGuage.setShowAttackDescription(true);
 				atkGuage.playSound();
 				
 				try {
@@ -93,6 +110,8 @@ public class GameLogic {
 				for (Enemy e : enemies) {
 					e.setBeingAttacked(false);
 				}
+				
+				counter.resetCounter();
 			}	
 
 		}
@@ -117,6 +136,7 @@ public class GameLogic {
 		}else{
 			atkGuage = new AttackGuage(atkguageseed);
 		}
+		counter = new Counter();
 		
 		readyToDraw = true;
 		
@@ -129,6 +149,7 @@ public class GameLogic {
 		AudioHolder.getInstance().playLevelBGM(level);
 		Main.instance.setToGameScene();
 		atkGuage.start();
+		counter.start();
 		
 	}
 

@@ -40,13 +40,15 @@ public class DrawingUtility {
 	public static final int ATK_GAUGE_ALL_CELL_H = ATK_GAUGE_HEIGHT - (2 * ATK_GAUGE_PADDING);
 	public static final int ATK_GAUGE_CELL_X = ATK_GAUGE_X + ATK_GAUGE_PADDING;
 	public static final int ATK_GAUGE_BASE_Y = (ATK_GAUGE_Y + ATK_GAUGE_HEIGHT - ATK_GAUGE_PADDING);
-	public static final int PLAY_SCREEN_WIDTH = GameScreen.SCREEN_WIDTH - DrawingUtility.ATK_GAUGE_WIDTH;
-	public static final int PLAY_SCREEN_HEIGHT = DrawingUtility.ATK_GAUGE_HEIGHT;
 	public static final int ATK_GAUGE_TEXT_X = ATK_GAUGE_CELL_X + ATK_GAUGE_CELL_W/2;
+	public static final int COUNTER_WIDTH = 50;
+	public static final int PLAY_SCREEN_WIDTH = GameScreen.SCREEN_WIDTH - DrawingUtility.ATK_GAUGE_WIDTH - COUNTER_WIDTH;
+	public static final int PLAY_SCREEN_HEIGHT = DrawingUtility.ATK_GAUGE_HEIGHT;
+	
 	
 	
 	/*=================================================
-	 * Drawing GUI - TextArea, StatusBar, Attack Gauge
+	 * Drawing GUI - TextArea, StatusBar, Attack Gauge, counter
 	 ==================================================*/
 	
 	public static void drawTextArea(GraphicsContext gc, String text) {
@@ -81,9 +83,9 @@ public class DrawingUtility {
 		
 		drawPlayerHPBar(gc, 380, 5, HP, maxHP);
 		
-		for(int i=0;i<enemyList.size();i++){
+		/*for(int i=0;i<enemyList.size();i++){
 			drawEnemyName(gc,enemyList.get(i).getName(),i);
-		}
+		}*/
 	}
 	
 	public static void drawAttackGauge(GraphicsContext gc, int[] attackpower, int index, int currentAtkPower, boolean showAttackDescription) {
@@ -122,6 +124,30 @@ public class DrawingUtility {
 		
 		}
 
+	}
+	
+	public static void drawCounter(GraphicsContext gc, int startTime, int currentTime) {
+		gc.setFill(Color.BLACK);
+		gc.setStroke(Color.DARKRED);
+		gc.setLineWidth(1);
+		
+		gc.fillRect(0, ATK_GAUGE_Y, COUNTER_WIDTH, ATK_GAUGE_HEIGHT);
+		gc.setFill(Color.DARKRED);
+		gc.fillRect(5, ATK_GAUGE_Y + 5, COUNTER_WIDTH - 10, ATK_GAUGE_HEIGHT - 10);
+		
+		double cellHeight = ((double) (ATK_GAUGE_HEIGHT - 20)) / startTime;
+		if (currentTime > 5) {
+			gc.setFill(Color.CHOCOLATE);
+		} else {
+			gc.setFill(Color.YELLOW);
+		}
+		
+		for (int i = 0 ; i < currentTime ; i++) {
+			gc.fillRoundRect(10, (ATK_GAUGE_Y + ATK_GAUGE_HEIGHT - 10) - (cellHeight*(i+1)), COUNTER_WIDTH - 20, cellHeight, 10, 10);
+			gc.strokeRoundRect(10, (ATK_GAUGE_Y + ATK_GAUGE_HEIGHT - 10 ) - (cellHeight*(i+1)), COUNTER_WIDTH - 20, cellHeight, 10, 10);
+			//gc.strokeRect(ATK_GAUGE_CELL_X, ATK_GAUGE_BASE_Y - (cellHeight*(i+1)), ATK_GAUGE_CELL_W, cellHeight);
+		}
+		
 	}
 	
 	/*=================================================
@@ -238,7 +264,7 @@ public class DrawingUtility {
 	 ==================================================*/
 	
 	public static void drawBG(GraphicsContext gc, Image bg) {
-		gc.drawImage(bg, 0, STATUS_BAR_HEIGHT);
+		gc.drawImage(bg, COUNTER_WIDTH, STATUS_BAR_HEIGHT);
 	}
 	
 	
