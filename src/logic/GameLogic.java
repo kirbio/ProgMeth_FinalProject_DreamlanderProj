@@ -39,7 +39,7 @@ public class GameLogic {
 
 	public void startGame(int mode) {
 		isGameOver = false;
-		level = 9;
+		level = 0;
 		player = new Player();
 		new GameData();
 		textArea = new RPGTextArea();
@@ -109,7 +109,7 @@ public class GameLogic {
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
-					player.setAttack(attackpower + 100);
+					player.setAttack(attackpower);	//set attack
 					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);
 						playerAttack(enemies);
