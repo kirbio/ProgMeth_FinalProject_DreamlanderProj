@@ -1,5 +1,5 @@
 Name,Hp,Atk
-Dummy Dee,5,0
+Dummy Dee,4,0
 Waddle Dee,5,2
 Alice,25,4
 Bill,22,4
@@ -16,9 +16,9 @@ Twizzer,60,10
 Waddle Doo,8,3
 Sir Kibble,15,4
 Sparky,10,5
-Sword Knight,15,4
+Sword Knight,20,4
 Bronto Burt,8,2
-Laser Ball,10,5
+Laser Ball,20,10
 Beanbon,6,2
 Jungle Bomb,15,10
-Oohroo,15,6
+Oohroo,30,12

@@ -30,7 +30,6 @@ public class Round {
 	
 	public void addEnemy(Enemy enemy) {		
 		enemyList.add(enemy);
-		Position.set(enemyList);
 	}
 	
 	public void addPlayer(Player player) {
@@ -47,6 +46,14 @@ public class Round {
 	
 	public void removeEnemy(int index ) {
 		 enemyList.remove(index);
+	}
+	
+	public void removeDeadEnemy() {
+		for (int i = enemyList.size()-1 ; i >=0 ; i--) {			
+			if (enemyList.get(i).isDead()) {
+				removeEnemy(i);
+			}
+		}
 	}
 	
 	

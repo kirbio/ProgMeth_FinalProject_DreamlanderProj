@@ -70,6 +70,25 @@ public class MenuScreen extends Group {
 	private void addButtonListener() {
 		startButton.setOnAction(e -> {
 			AudioHolder.getInstance().playSFX("select");
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setContentText(null);
+			alert.setHeaderText("Choose Chapter");
+			alert.getButtonTypes().set(0, new ButtonType("Chapter 1"));
+			alert.getButtonTypes().set(1, new ButtonType("Chapter 2"));
+			alert.getButtonTypes().add(new ButtonType("Chapter 3"));
+			
+			String leveldata;
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == alert.getButtonTypes().get(0)){
+				leveldata = "leveldata1.csv";
+			} else if (result.get() == alert.getButtonTypes().get(1)){
+				leveldata = "leveldata2.csv";
+			} else {
+				leveldata = "leveldata3.csv";
+			}
+			Main.instance.setLeveldatafile(leveldata);
+			AudioHolder.getInstance().playSFX("select");
 			AudioHolder.getInstance().stopBGM();
 			Main.instance.setToRoundScene();
 			Main.instance.startMainGame();	

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import main.Main;
+
 public class GameData {
 	class EnemyData{
 		private String name;
@@ -64,7 +66,7 @@ public class GameData {
 		}
 		fin = false;
 		try {
-			Scanner s = new Scanner(new File("leveldata.csv"));
+			Scanner s = new Scanner(new File(Main.instance.getLeveldatafile()));
 			s.nextLine(); //Skip First Line
 			while(!fin){
 				String rawdata = s.nextLine();

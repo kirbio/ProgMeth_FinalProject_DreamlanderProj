@@ -3,21 +3,22 @@ package logic;
 import data.GameData;
 import graphic.DrawingUtility;
 import javafx.scene.canvas.GraphicsContext;
+import screen.GameScreen;
 
 public class Enemy extends Entity{
 	
 	public Enemy(String name, int hp, int attack) {
 		super(name, hp, attack);
-		x = 0;
-		y = 0;
+		x = GameScreen.SCREEN_WIDTH;
+		y = GameScreen.SCREEN_HEIGHT;
 		z = 1;
 		
 	}
 	
 	public Enemy(int type) {
 		super(GameData.getEnemyName(type), GameData.getEnemyHp(type), GameData.getEnemyAtk(type));
-		x = 0;
-		y = 0;
+		x = GameScreen.SCREEN_WIDTH;
+		y = GameScreen.SCREEN_HEIGHT;
 		z = 1;
 	}
 	

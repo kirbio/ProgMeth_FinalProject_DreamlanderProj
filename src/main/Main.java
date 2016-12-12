@@ -42,6 +42,7 @@ public class Main extends Application {
 	private Scene gameOverScene;
 	private Stage primaryStage;
 	private GameLogic gameLogic = GameLogic.instance;
+	private String leveldatafile;
 	
 	
 	public static void main(String[] args) {
@@ -139,6 +140,14 @@ public class Main extends Application {
 			System.out.println("KeyReleased : " + event.getCode().toString());
 			InputUtility.setKeyPressed(event.getCode(), false);
 		});
+	}
+
+	public String getLeveldatafile() {
+		return leveldatafile;
+	}
+
+	public void setLeveldatafile(String leveldatafile) {
+		this.leveldatafile = leveldatafile;
 	}
 	
 

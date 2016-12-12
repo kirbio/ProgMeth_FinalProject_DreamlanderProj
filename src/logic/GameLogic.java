@@ -101,18 +101,24 @@ public class GameLogic {
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
-					player.setAttack(attackpower);				
+					player.setAttack(attackpower+100);				
 					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);	
 						playerAttack(enemies);
-						removeDead();			
+						
+						spawnSpecialEnemies();
+						removeDeadIrenderable();
+						addDeadEnemy();
+						round.removeDeadEnemy();
+						Position.set(enemies);
+
 					} else {
 						triggerGameOver();
 					}
 				}
 				
 				if (isAllEnemyDead(enemies)) {
-					defeatedEnemies.addAll(round.getEnemyList());
+					
 					triggerWin();
 					Main.instance.getRoundScreen().update();
 					Main.instance.setToRoundScene();
@@ -271,19 +277,17 @@ public class GameLogic {
 		}
 	}
 	
-	private void removeDead() {
-		for (int i = round.getEnemyList().size()-1 ; i >=0 ; i--) {			
-			if (round.getEnemy(i).isDead()) {
-				if (round.getEnemy(i).getName().toLowerCase().equals("split doomer")) {
-					spawnSpecialEnemies();
-				}
-				round.removeEnemy(i);
-			}
-		}
+	private void removeDeadIrenderable() {
 		for (int i = RenderableHolder.getInstance().getEntities().size()-1 ; i >=0 ; i--) {			
 			if (RenderableHolder.getInstance().getEntities().get(i).isDead()) {
 				RenderableHolder.getInstance().remove(i);
 			}
+		}
+	}
+	
+	private void addDeadEnemy() {
+		for (Enemy e : round.getEnemyList()) {
+			if (e.isDead()) defeatedEnemies.add(e);
 		}
 	}
 	
@@ -301,10 +305,12 @@ public class GameLogic {
 		}
 	}
 	
-	private void spawnSpecialEnemies() {	
-//		for (int i = 0 ; i < round.getEnemyList().size() ; i++) {
-//			Enemy e = round.getEnemy(i);
-//			if (e.getName().toLowerCase().equals("split doomer") && e.isDead()) {
+	private void spawnSpecialEnemies() {
+		boolean added = false;
+		for (int i = 0 ; i < round.getEnemyList().size() ; i++) {
+			Enemy e = round.getEnemy(i);
+			if (e.getName().toLowerCase().equals("split doomer") && e.isDead()) {
+				textArea.setText("Split Doomer splits apart!");
 				double randomseed = Math.random();
 				int amount;
 				if (randomseed <= 0.4) {
@@ -317,9 +323,18 @@ public class GameLogic {
 				for (int i1 = 0 ; i1 < amount ; i1++ ) {
 					round.addEnemy(new Enemy(11));	//add small doomer
 				}
-//				break;
-//			}
-//		}	
+				added = true;
+			}
+		}
+		
+		if (added) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			} 
+		}
+		
 	}
 
 	public boolean isGameOver() {

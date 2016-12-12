@@ -32,7 +32,7 @@ public class RPGTextArea extends Thread implements IRenderable {
 				}
 			}
 			try {
-				Thread.sleep(30);
+				Thread.sleep(15);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
