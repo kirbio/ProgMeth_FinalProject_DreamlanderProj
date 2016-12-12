@@ -46,6 +46,9 @@ public class DrawingUtility {
 	public static final int PLAY_SCREEN_WIDTH = GameScreen.SCREEN_WIDTH - DrawingUtility.ATK_GAUGE_WIDTH - COUNTER_WIDTH;
 	public static final int PLAY_SCREEN_HEIGHT = DrawingUtility.ATK_GAUGE_HEIGHT;
 	
+	
+	public static final String FONT_8BIT = ClassLoader.getSystemResource("8bit.ttf").toString();
+	
 	/*=================================================
 	 * Drawing GUI - TextArea, StatusBar, Attack Gauge, counter
 	 ==================================================*/
@@ -59,7 +62,7 @@ public class DrawingUtility {
 		gc.setTextBaseline(VPos.TOP);
 		gc.setFill(Color.WHITE);
 		
-		gc.setFont(Font.font("Arial", 40));
+		gc.setFont(Font.loadFont(FONT_8BIT, 40));
 		
 		gc.fillText(text, 20, GameScreen.SCREEN_HEIGHT-TEXT_AREA_HEIGHT);
 		
@@ -76,7 +79,7 @@ public class DrawingUtility {
 		gc.setFill(Color.WHITE);
 		
 		//draw text
-		gc.setFont(Font.loadFont(ClassLoader.getSystemResource("ChaserDemo.ttf").toString(), 20));
+		gc.setFont(Font.loadFont(FONT_8BIT, 20));
 		gc.fillText("Level : "+(level+1), 40, 5);
 		gc.fillText("HP : "+HP, 340, 5);
 		

@@ -45,6 +45,13 @@ public class GameData {
 		/*Constructor, call once in Main at initiallize 
 		 * to parse the file to local variable
 		 */
+		
+		//============Clearing Old Data first! :D========
+		enemyDatas.clear();
+		levelDatas.clear();
+		levelMetaDatas.clear();
+		//================================================
+		
 		Boolean fin = false;
 		System.out.println("new call");
 		try {
