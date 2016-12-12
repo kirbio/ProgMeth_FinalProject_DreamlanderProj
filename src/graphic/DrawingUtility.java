@@ -112,12 +112,23 @@ public class DrawingUtility {
 		}
 		if (showAttackDescription) {
 			
-			gc.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, cellHeight-5));
+			
+			gc.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, cellHeight/1.5));
+			
+			FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+			double font_width= fontLoader.computeStringWidth("PERFECT!", gc.getFont());
+			
+			if (font_width > ATK_GAUGE_CELL_W - 4) {
+				gc.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 15));
+			}
+			
+			
+			
 			gc.setTextAlign(TextAlignment.CENTER);
-			gc.setTextBaseline(VPos.TOP);
+			gc.setTextBaseline(VPos.CENTER);
 			
 			gc.setFill(Color.WHITESMOKE);
-			gc.fillText(AttackGuage.attackDescription[currentAtkPower], ATK_GAUGE_TEXT_X, ATK_GAUGE_BASE_Y - (cellHeight*(index+1)));	
+			gc.fillText(AttackGuage.attackDescription[currentAtkPower], ATK_GAUGE_TEXT_X, ATK_GAUGE_BASE_Y - (cellHeight*(index+1)) + cellHeight/2);	
 			
 //			gc.setStroke(Color.BLACK);
 //			gc.setLineWidth(1);	
