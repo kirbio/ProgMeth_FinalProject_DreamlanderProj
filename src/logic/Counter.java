@@ -34,6 +34,7 @@ public class Counter extends Thread implements IRenderable {
 			
 	}
 	
+	
 	private void decreaseTime() {
 		currentTime--;
 		if (currentTime <= 0) currentTime = 0;

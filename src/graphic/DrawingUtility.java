@@ -21,6 +21,7 @@ import logic.Enemy;
 import logic.Position;
 import screen.GameScreen;
 import logic.Entity;
+import logic.GameLogic;
 import logic.Player;
 
 public class DrawingUtility {
@@ -267,6 +268,16 @@ public class DrawingUtility {
 		gc.drawImage(bg, COUNTER_WIDTH, STATUS_BAR_HEIGHT);
 	}
 	
+	public static void drawPauseText(GraphicsContext gc, boolean pause) {
+		if (pause) {
+			gc.setFill(Color.WHITE);
+			gc.setFont(Font.font("Arial Black", 50));
+			gc.setTextAlign(TextAlignment.CENTER);
+			gc.setTextBaseline(VPos.CENTER);
+			
+			gc.fillText("PAUSE", COUNTER_WIDTH + PLAY_SCREEN_WIDTH/2, STATUS_BAR_HEIGHT + PLAY_SCREEN_HEIGHT/2);
+		}
+	}
 	
 
 }

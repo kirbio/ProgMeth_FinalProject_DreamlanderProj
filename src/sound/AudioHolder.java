@@ -59,13 +59,13 @@ public class AudioHolder {
 			if (!bgm_name.contains(name+".wav")) {
 				throw new AudioNotFoundException();
 			}
-			AudioClip audio = bgm.get(bgm_name.indexOf(name+".wav"));
-			audio.setVolume(volume);
+			currentBGM = bgm.get(bgm_name.indexOf(name+".wav"));
+			currentBGM.setVolume(volume);
 			if (looping) {
-				audio.setCycleCount(AudioClip.INDEFINITE);
+				currentBGM.setCycleCount(AudioClip.INDEFINITE);
 			}    
-		    audio.play();
-		    currentBGM = audio;
+			currentBGM.play();
+
 		} catch (AudioNotFoundException e) {
 			System.out.println(e.getMessage());;
 		}	
@@ -115,5 +115,5 @@ public class AudioHolder {
 			currentBGM.stop();
 		}
 	}
-
+	
 }

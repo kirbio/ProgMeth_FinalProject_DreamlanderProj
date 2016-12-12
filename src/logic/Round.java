@@ -30,6 +30,7 @@ public class Round {
 	
 	public void addEnemy(Enemy enemy) {		
 		enemyList.add(enemy);
+		Position.set(enemyList);
 	}
 	
 	public void addPlayer(Player player) {
@@ -42,6 +43,10 @@ public class Round {
 	
 	public Enemy getEnemy(int index) {
 		return enemyList.get(index);
+	}
+	
+	public void removeEnemy(int index ) {
+		 enemyList.remove(index);
 	}
 	
 	

@@ -60,7 +60,6 @@ public class AttackGuage extends Thread implements IRenderable {
 		int way = UP;
 		//System.out.println("Attack gauge started " + GameLogic.instance.isNewRound() + " " + GameLogic.instance.isWaitForInput());
 		while (!GameLogic.instance.isNewRound() && !GameLogic.instance.isGameOver()) {
-			showAttackDescription = false;
 			if (GameLogic.instance.isWaitForInput()) {		
 				if (index == attackgauge.length - 1) {
 					way = DOWN;

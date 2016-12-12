@@ -1,5 +1,6 @@
 package screen;
 
+import graphic.DrawingUtility;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
 import input.InputUtility;
@@ -28,12 +29,6 @@ public class GameScreen extends Group {
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		getChildren().add(canvas);
-		
-		
-		
-
-		RPGTextArea textArea = new RPGTextArea("");
-		textArea.start();
 
 		new StatusBar();
 
@@ -45,18 +40,23 @@ public class GameScreen extends Group {
 		if (GameLogic.instance.isReadyToDraw()) {
 			// draw all renderable in level
 			gc.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-			gc.setFill(Color.PINK);
+			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			for (IRenderable renderable : RenderableHolder.getInstance().getEntities()) {
 				renderable.draw(gc);
-
 			}
+		} else {
+			DrawingUtility.drawPauseText(gc, GameLogic.instance.isPause());
 		}
 
 	}
 
 	public void requestFocusForCanvas() {
 		this.requestFocus();
+	}
+	
+	public GraphicsContext getGraphicsContext() {
+		return gc;
 	}
 }

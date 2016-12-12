@@ -7,13 +7,12 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class RPGTextArea extends Thread implements IRenderable {
 	
-	public static String text;
+	private static String text;
 	private static String disptext;
 	private String prevtext;
 
-	public RPGTextArea(String text) {
-		super();
-		this.text = text;
+	public RPGTextArea() {
+		text = "";
 		disptext = "";
 		RenderableHolder.getInstance().add(this);
 	}
@@ -33,7 +32,7 @@ public class RPGTextArea extends Thread implements IRenderable {
 				}
 			}
 			try {
-				Thread.sleep(50);
+				Thread.sleep(30);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
