@@ -14,9 +14,6 @@ public class EntityAnimation {
 	private Image img;
 	private Entity entity;
 	private String path;
-	/*
-	 * private int delay; private int delayCounter;
-	 */
 	private int counter;
 	private int animationDelay;
 	private int delayCounter;

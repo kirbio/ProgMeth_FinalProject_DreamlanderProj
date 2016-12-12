@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import data.GameData;
+import graphic.AttackAnimation;
 import graphic.DrawingUtility;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
@@ -189,11 +190,14 @@ public class GameLogic {
 				playAttackSound("player");
 				player.attack(e);
 				e.setBeingAttacked(true);
+				AttackAnimation a = new AttackAnimation(e.getX(), e.getY());
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
+				a.setEnd(true);
+				
 				if(e.isDead()){
 					textArea.setText(e.getName() + " is defeated !");
 					try {

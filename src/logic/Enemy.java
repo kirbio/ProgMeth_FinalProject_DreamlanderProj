@@ -43,7 +43,7 @@ public class Enemy extends Entity{
 	@Override
 	public void setY(int y) {
 		this.y = y;
-		this.z = y;
+		this.z = y;		//prevent lower enemy to block upper enemy hp bar
 	}
 	
 		

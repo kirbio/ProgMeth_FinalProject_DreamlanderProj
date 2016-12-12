@@ -293,5 +293,10 @@ public class DrawingUtility {
 		}
 	}
 	
+	public static void drawAttackAnim(GraphicsContext gc, Image img, int x, int y) {
+		gc.drawImage(img, x, y);
+		
+	}
+	
 
 }
