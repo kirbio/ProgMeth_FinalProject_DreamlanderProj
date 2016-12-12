@@ -79,19 +79,20 @@ public class MenuScreen extends Group {
 			alert.getButtonTypes().add(new ButtonType("Chapter 3"));
 			
 			String leveldata;
+			int mode;
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == alert.getButtonTypes().get(0)){
-				leveldata = "leveldata1.csv";
+				leveldata = "leveldata1.csv"; mode = 0;
 			} else if (result.get() == alert.getButtonTypes().get(1)){
-				leveldata = "leveldata2.csv";
+				leveldata = "leveldata2.csv"; mode = 1;
 			} else {
-				leveldata = "leveldata3.csv";
+				leveldata = "leveldata3.csv"; mode = 2;
 			}
 			Main.instance.setLeveldatafile(leveldata);
 			AudioHolder.getInstance().playSFX("select");
 			AudioHolder.getInstance().stopBGM();
 			Main.instance.setToRoundScene();
-			Main.instance.startMainGame();	
+			Main.instance.startMainGame(mode);	
 		});
 		exitButton.setOnAction(e -> {
 			AudioHolder.getInstance().playSFX("select");

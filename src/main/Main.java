@@ -121,8 +121,8 @@ public class Main extends Application {
 		return roundScreen;
 	}
 	
-	public void startMainGame() {
-		GameLogic.instance.startGame();	
+	public void startMainGame(int mode) {
+		GameLogic.instance.startGame(mode);	
 		new UpdateThread().start();	
 		new AnimationStarter().start();
 	}
@@ -149,6 +149,9 @@ public class Main extends Application {
 	public void setLeveldatafile(String leveldatafile) {
 		this.leveldatafile = leveldatafile;
 	}
+
+	
+	
 	
 
 

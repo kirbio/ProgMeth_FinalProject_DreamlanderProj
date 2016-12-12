@@ -17,6 +17,7 @@ import sound.AudioHolder;
 
 public class GameLogic {
 	public static final GameLogic instance = new GameLogic();
+	private static int mode;
 	private static boolean isGameOver;
 	private static int level;
 	private static Player player;
@@ -30,11 +31,12 @@ public class GameLogic {
 	private static Counter counter;
 	private static boolean readyToDraw;
 	private static List<Enemy> defeatedEnemies;
-	private static final int MID_BOSS = 4;
-	private static final int BOSS = 9;
+	public static final int MID_BOSS = 4;
+	public static final int KAWASAKI = 6;
+	public static final int BOSS = 9;
 	private static boolean pause;
 	
-	public void startGame() {
+	public void startGame(int mode) {
 		isGameOver = false;
 		level = 0;
 		player = new Player();
@@ -45,6 +47,7 @@ public class GameLogic {
 		readyToDraw = false;
 		pause = false;
 		defeatedEnemies = new ArrayList<>();
+		instance.mode = mode;
 	}
 
 	public void stopGame() {
@@ -168,7 +171,7 @@ public class GameLogic {
 			e.printStackTrace();
 		}
 		
-		AudioHolder.getInstance().playLevelBGM(level);
+		AudioHolder.getInstance().playLevelBGM(mode, level);
 		Main.instance.setToGameScene();
 		atkGuage.start();
 		counter.start();
@@ -395,6 +398,14 @@ public class GameLogic {
 
 	public boolean isPause() {
 		return pause;
+	}
+
+	public int getMode() {
+		return mode;
+	}
+
+	public void setMode(int mode) {
+		GameLogic.mode = mode;
 	}
 	
 	

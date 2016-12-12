@@ -16,7 +16,7 @@ public class Round {
 		enemyList = new ArrayList<Enemy>();
 		setEnemyInLevel(level);
 		Position.set(enemyList);
-		RenderableHolder.getInstance().add(new GameBackground(Integer.toString(level)));
+		RenderableHolder.getInstance().add(new GameBackground(GameLogic.instance.getMode(), level));
 	}
 
 	public void setEnemyInLevel(int level) {
