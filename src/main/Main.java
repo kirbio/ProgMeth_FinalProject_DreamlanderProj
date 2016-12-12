@@ -21,6 +21,7 @@ import logic.Enemy;
 import logic.GameLogic;
 import logic.Player;
 import logic.Round;
+import screen.CongratulationScreen;
 import screen.GameOverScreen;
 import screen.GameScreen;
 import screen.MenuScreen;
@@ -43,6 +44,9 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private GameLogic gameLogic = GameLogic.instance;
 	private String leveldatafile;
+	private CongratulationScreen congratsScreen;
+	private Scene congratsScene;
+	private AnimationStarter animator;
 	
 	
 	public static void main(String[] args) {
@@ -106,6 +110,13 @@ public class Main extends Application {
 			primaryStage.setScene(gameOverScene);
 		});	
 	}
+	
+	public void setToCongratsScene() {
+		Platform.runLater(() -> {
+			primaryStage.setScene(congratsScene);
+		});	
+	}
+	
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
@@ -123,7 +134,19 @@ public class Main extends Application {
 		roundScreen = new RoundStartScreen();
 		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);	
 		new UpdateThread().start();	
-		new AnimationStarter().start();
+		animator = new AnimationStarter();
+	}
+	
+	public void stopMainGame() {
+		GameLogic.instance.stopGame();
+		animator.checkStop();
+	}
+	
+	public void initializeCongratsScreen() {
+		congratsScreen = new CongratulationScreen();
+		congratsScene = new Scene(congratsScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		congratsScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
 	}
 
 	private void addEventListener(Scene s) {

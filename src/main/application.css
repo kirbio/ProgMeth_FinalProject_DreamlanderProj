@@ -31,3 +31,19 @@
 .returnbutton:hover {
     -fx-background-color:rgb(134,210,49);
 }
+
+.congratsreturnbutton {
+	-fx-text-fill: rgb(0,0,160);
+    -fx-font-size: 25;
+    -fx-padding: 6  6  6  6;
+    -fx-pref-width: 300 ;
+    -fx-pref-height: 50;
+    -fx-background-color: transparent ;
+    -fx-border-color : transparent ;
+    -fx-wrap-text: true ;
+}
+
+.congratsreturnbutton:hover {
+    -fx-text-fill: rgb(128,255,255);
+    -fx-background-color: transparent ;
+}

@@ -1,12 +1,15 @@
 package thread;
 
 import javafx.animation.AnimationTimer;
+import logic.GameLogic;
 import main.Main;
 
 public class AnimationStarter {
 	
-	public void start() {
-		new AnimationTimer() {
+	private AnimationTimer animation;
+	
+	public AnimationStarter() {
+		animation = new AnimationTimer() {
 			Long start=0l;
 			@Override
 			public void handle(long now) {
@@ -20,7 +23,15 @@ public class AnimationStarter {
 
 				}
 			}
-		}.start();
+		};
+		
+		animation.start();	
+		
 	}
 
+	public void checkStop() {
+		if (GameLogic.instance.isGameOver()) {
+			animation.stop();
+		}
+	}
 }
