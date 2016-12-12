@@ -207,7 +207,7 @@ public class GameLogic {
 						e1.printStackTrace();
 					}
 					if(currLevel!=player.getLevel()){
-						textArea.setText("Kirby's Level increased!");
+						textArea.setText("Kirby's level increased!");
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
