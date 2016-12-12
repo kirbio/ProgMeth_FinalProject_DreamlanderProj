@@ -109,7 +109,7 @@ public class GameLogic {
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
-					player.setAttack(attackpower);	//set attack
+					player.setAttack(attackpower*player.getLevel());	//set attack
 					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);
 						playerAttack(enemies);
@@ -189,6 +189,31 @@ public class GameLogic {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
+				}
+				if(e.isDead()){
+					textArea.setText(e.getName() + " is defeated !");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					int expGet = e.getMaxHP()*30;
+					int currLevel = player.getLevel();
+					player.increaseEXP(expGet);
+					textArea.setText("Kirby get "+expGet+" EXP!");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					if(currLevel!=player.getLevel()){
+						textArea.setText("Kirby's Level increased!");
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
 				}
 			}
 		}

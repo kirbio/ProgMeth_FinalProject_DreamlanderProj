@@ -68,7 +68,7 @@ public class DrawingUtility {
 		
 	}
 	
-	public static void drawStatusBar(GraphicsContext gc, int level, int HP, int maxHP,ArrayList<Enemy> enemyList) {
+	public static void drawStatusBar(GraphicsContext gc, int level, int HP, int maxHP,int plLevel,int exp,int nextExp) {
 		//draw Status bar
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, GameScreen.SCREEN_WIDTH, STATUS_BAR_HEIGHT);
@@ -80,8 +80,11 @@ public class DrawingUtility {
 		
 		//draw text
 		gc.setFont(Font.loadFont(FONT_8BIT, 20));
-		gc.fillText("Level : "+(level+1), 40, 5);
+		gc.fillText("Stage : "+(level+1), 40, 5);
 		gc.fillText("HP : "+HP, 340, 5);
+		
+		gc.setTextAlign(TextAlignment.LEFT);
+		gc.fillText("LV : "+plLevel+"    EXP : "+exp+" / "+nextExp, 120, 5);
 		
 		drawPlayerHPBar(gc, 380, 5, HP, maxHP);
 		
