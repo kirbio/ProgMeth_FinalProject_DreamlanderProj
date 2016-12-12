@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -36,16 +37,17 @@ public class MenuScreen extends Group {
 	public MenuScreen() {
 		canvas =  new Canvas(GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		getChildren().add(canvas);
-		gameBG = new GameBackground("menu", GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		gameBG = new GameBackground("menu", GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT-100);
 		gc.drawImage(gameBG.getBg(), 0, 0);
+		getChildren().add(canvas);
 		
 		addButtonPane();
-		
 	}
 	
 	private void addButtonPane() {
-		/*menu = new VBox(10);
+		/*menu = new HBox(10);
 		menu.setPrefWidth(GameScreen.SCREEN_WIDTH);
 		menu.relocate(0, GameScreen.SCREEN_HEIGHT - 200);
 		//menu.setPadding(new Insets(100));

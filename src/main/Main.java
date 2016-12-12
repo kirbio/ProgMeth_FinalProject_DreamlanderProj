@@ -67,18 +67,18 @@ public class Main extends Application {
 	}
 	
 	private void initializeScene() {
-		menuScreen = new MenuScreen();
-		menuScene = new Scene(menuScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
-		menuScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
 		gameScreen = new GameScreen();
 		gameScreen.requestFocusForCanvas();
 		gameScene = new Scene(gameScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		addEventListener(gameScene);
 		
+		menuScreen = new MenuScreen();
+		menuScene = new Scene(menuScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		menuScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
 		roundScreen = new RoundStartScreen();
-		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
-	
+		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);	
+		
 		gameOverScreen = new GameOverScreen();
 		gameOverScene = new Scene(gameOverScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gameOverScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

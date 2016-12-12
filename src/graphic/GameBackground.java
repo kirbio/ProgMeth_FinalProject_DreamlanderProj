@@ -27,14 +27,14 @@ public class GameBackground implements IRenderable {
 	public GameBackground(int mode, int index) {
 		String backgroundName = "";
 		switch (index) {
-		default : 	backgroundName = "default"	; break;
+		default : 	backgroundName = "plain"	; break;
 		//both case 0,1,2 use the same result
 		case 0	:   
 		case 1	:   
 		case 2  :  backgroundName = "plain"	; break;
 		//both case 3,4 use the same result
 		case 3  :
-		case 4  :  backgroundName = "..."	; break;
+		case 4  :  backgroundName = "plain"	; break;
 		
 		case GameLogic.BOSS : 	switch (mode) {
 									case 0 : backgroundName = "slave" ; break;

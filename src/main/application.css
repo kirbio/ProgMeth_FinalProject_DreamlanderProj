@@ -31,8 +31,3 @@
 .returnbutton:hover {
     -fx-background-color:rgb(134,210,49);
 }
-.right {
-	-fx-alignment: center-left ;
-	-fx-background-color: black;
-	-fx-padding: 10.0% ;
-}
