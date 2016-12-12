@@ -18,42 +18,42 @@ import sound.AudioHolder;
 
 public class GameLogic {
 	public static final GameLogic instance = new GameLogic();
-	private static int mode;
-	private static boolean isGameOver;
-	private static int level;
-	private static Player player;
-	private static Round round;
-	private static boolean waitforInput; // using to determine if it's wait for
+	private int mode;
+	private boolean isGameOver;
+	private int stage;
+	private Player player;
+	private Round round;
+	private boolean isWaitforInput; // using to determine if it's wait for
 											// input or not - using mainly for
-											// AttackGuage
-	private static boolean newRound;
-	private static RPGTextArea textArea;
-	private static AttackGuage atkGuage;
-	private static Counter counter;
-	private static boolean readyToDraw;
-	private static List<Enemy> defeatedEnemies;
+											// update graphics and gauges
+	private boolean isNewRound;
+	private RPGTextArea textArea;
+	private AttackGuage atkGuage;
+	private Counter counter;
+	private boolean isReadyToDraw;
+	private List<Enemy> defeatedEnemies;
 	public static final int MID_BOSS = 4;
 	public static final int KAWASAKI = 6;
 	public static final int BOSS = 9;
-	private static boolean pause;
+	private boolean isPause;
 
 	public void startGame(int mode) {
 		isGameOver = false;
-		level = 0;
+		stage = 0;
 		player = new Player();
 		new GameData();
 		textArea = new RPGTextArea();
 		new StatusBar();
 		textArea.start();
-		newRound = true;
-		readyToDraw = false;
-		pause = false;
+		isNewRound = true;
+		isReadyToDraw = false;
+		isPause = false;
 		defeatedEnemies = new ArrayList<>();
 		instance.mode = mode;
 	}
 
 	public void stopGame() {
-		readyToDraw = false;
+		isReadyToDraw = false;
 		defeatedEnemies.clear();
 		textArea.interrupt();
 		counter.interrupt();
@@ -65,7 +65,7 @@ public class GameLogic {
 	// This method loops until game over
 	public void update() {
 
-		if (newRound) {
+		if (isNewRound) {
 			// initialize new round, run once per round
 			startNewRound();
 
@@ -74,14 +74,14 @@ public class GameLogic {
 			textArea.setText("Press Any Key to Attack");
 
 			if (InputUtility.getKeyTriggered(KeyCode.SPACE)) {
-				pause = !pause;
-				waitforInput = !waitforInput;
-				readyToDraw = !readyToDraw;
+				isPause = !isPause;
+				isWaitforInput = !isWaitforInput;
+				isReadyToDraw = !isReadyToDraw;
 				return;
 			}
 
 			if (counter.isTimeOut()) {
-				waitforInput = false;
+				isWaitforInput = false;
 				atkGuage.resetGauge();
 				try {
 					Thread.sleep(1000);
@@ -90,12 +90,12 @@ public class GameLogic {
 				}
 				enemyAttack(enemies);
 
-				waitforInput = true;
+				isWaitforInput = true;
 				player.setBeingAttacked(false);
 				counter.resetCounter();
 
-			} else if (waitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER)) {
-				waitforInput = false;
+			} else if (isWaitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER)) {
+				isWaitforInput = false;
 				atkGuage.setShowAttackDescription(true);
 				atkGuage.playSound();
 
@@ -109,7 +109,7 @@ public class GameLogic {
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
-					player.setAttack(attackpower*player.getLevel());	//set attack
+					player.setAttack(attackpower);	//set attack
 					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);
 						playerAttack(enemies);
@@ -130,7 +130,7 @@ public class GameLogic {
 					triggerWin();
 				}
 
-				waitforInput = true;
+				isWaitforInput = true;
 				player.setBeingAttacked(false);
 				for (Enemy e : enemies) {
 					e.setBeingAttacked(false);
@@ -144,18 +144,22 @@ public class GameLogic {
 		}
 
 	}
+	
+	private void checkPause() {
+		
+	}
 
 	private void startNewRound() {
-		readyToDraw = false;
-		waitforInput = true;
-		newRound = false;
+		isReadyToDraw = false;
+		isWaitforInput = true;
+		isNewRound = false;
 
-		System.out.println("----------LEVEL " + (level + 1) + "----------");
-		round = new Round(level);
+		System.out.println("----------LEVEL " + (stage + 1) + "----------");
+		round = new Round(stage);
 		round.addPlayer(player);
 
-		int[] atkguage = GameData.getAttackGuageType(level);
-		int atkguageseed = GameData.getAttackGuageSpeed(level);
+		int[] atkguage = GameData.getAttackGuageType(stage);
+		int atkguageseed = GameData.getAttackGuageSpeed(stage);
 		if (atkguage.length > 1) {
 			atkGuage = new AttackGuage(atkguage, atkguageseed);
 		} else {
@@ -163,7 +167,7 @@ public class GameLogic {
 		}
 		counter = new Counter();
 
-		readyToDraw = true;
+		isReadyToDraw = true;
 
 		try {
 			Thread.sleep(1000);
@@ -171,7 +175,7 @@ public class GameLogic {
 			e.printStackTrace();
 		}
 
-		AudioHolder.getInstance().playLevelBGM(mode, level);
+		AudioHolder.getInstance().playLevelBGM(mode, stage);
 		Main.instance.setToGameScene();
 		atkGuage.start();
 		counter.start();
@@ -255,10 +259,10 @@ public class GameLogic {
 	private void triggerWin() {
 		atkGuage.interrupt();
 		AudioHolder.getInstance().stopBGM();
-		newRound = true;
+		isNewRound = true;
 		textArea.setText("You win!");
 		System.out.println("You win");
-		if (level == BOSS) {
+		if (stage == BOSS) {
 			AudioHolder.getInstance().playSFX("win2", 0.7);
 			try {
 				Thread.sleep(3000);
@@ -268,7 +272,7 @@ public class GameLogic {
 			triggerCongrats();
 			
 		} else {
-			if (level == MID_BOSS) {
+			if (stage == MID_BOSS) {
 				AudioHolder.getInstance().playSFX("win2", 0.7);
 				try {
 					Thread.sleep(3000);
@@ -284,7 +288,7 @@ public class GameLogic {
 					e.printStackTrace();
 				}
 			}
-			level++;
+			stage++;
 			recoverHP();
 			Main.instance.getRoundScreen().update();
 			Main.instance.setToRoundScene();
@@ -326,7 +330,7 @@ public class GameLogic {
 	}
 
 	private void recoverHP() { // call after win every round
-		if (level == MID_BOSS || level == BOSS) {
+		if (stage == MID_BOSS || stage == BOSS) {
 			player.increaseHP(25);
 		} else {
 			player.increaseHP(10);
@@ -400,15 +404,15 @@ public class GameLogic {
 	}
 
 	public void setGameOver(boolean isGameOver) {
-		GameLogic.isGameOver = isGameOver;
+		this.isGameOver = isGameOver;
 	}
 
-	public int getLevel() {
-		return level;
+	public int getStageLevel() {
+		return stage;
 	}
 
-	public void setLevel(int level) {
-		GameLogic.level = level;
+	public void setStageLevel(int level) {
+		this.stage = level;
 	}
 
 	public Player getPlayer() {
@@ -416,7 +420,7 @@ public class GameLogic {
 	}
 
 	public void setPlayer(Player player) {
-		GameLogic.player = player;
+		this.player = player;
 	}
 
 	public Round getRound() {
@@ -424,27 +428,27 @@ public class GameLogic {
 	}
 
 	public void setRound(Round round) {
-		GameLogic.round = round;
+		this.round = round;
 	}
 
 	public boolean isWaitForInput() {
-		return waitforInput;
+		return isWaitforInput;
 	}
 
 	public void setWaitForInput(boolean waitforInput) {
-		GameLogic.waitforInput = waitforInput;
+		this.isWaitforInput = waitforInput;
 	}
 
 	public boolean isNewRound() {
-		return newRound;
+		return isNewRound;
 	}
 
 	public boolean isReadyToDraw() {
-		return readyToDraw;
+		return isReadyToDraw;
 	}
 
 	public void setReadyToDraw(boolean readyToDraw) {
-		GameLogic.readyToDraw = readyToDraw;
+		this.isReadyToDraw = readyToDraw;
 	}
 
 	public List<Enemy> getDefeatedEnemies() {
@@ -452,7 +456,7 @@ public class GameLogic {
 	}
 
 	public boolean isPause() {
-		return pause;
+		return isPause;
 	}
 
 	public int getMode() {
@@ -460,7 +464,7 @@ public class GameLogic {
 	}
 
 	public void setMode(int mode) {
-		GameLogic.mode = mode;
+		this.mode = mode;
 	}
 
 }

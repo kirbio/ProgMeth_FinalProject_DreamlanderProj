@@ -30,7 +30,7 @@ public class AttackGuage extends Thread implements IRenderable {
 	public AttackGuage(int speed) { // Constructor for using default attack array
 		attackgauge = new int[] { 0, 0, 0, 0, 1, 2, 2, 4, 2, 2, 1, 0, 0, 0, 0 };
 		this.speed = speed;
-		level = GameLogic.instance.getLevel();
+		level = GameLogic.instance.getStageLevel();
 		RenderableHolder.getInstance().add(this);
 		showAttackDescription = false;
 	}
@@ -38,7 +38,7 @@ public class AttackGuage extends Thread implements IRenderable {
 	public AttackGuage(int[] type, int speed) { // Constructor for import attack array
 		attackgauge = type;
 		this.speed = speed;
-		level = GameLogic.instance.getLevel();
+		level = GameLogic.instance.getStageLevel();
 		RenderableHolder.getInstance().add(this);
 		showAttackDescription = false;
 	}

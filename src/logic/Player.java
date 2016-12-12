@@ -57,11 +57,16 @@ public class Player extends Entity {
 	}
 	
 	public int getNextEXP(){
-		return 350+200*level;
+		return (int) (500+50*(Math.pow(level, 2)));	//algorithm for exp calculation
 	}
 
 	public int getLevel(){
 		return level;
+	}
+	
+	@Override
+	public void setAttack(int attack) {
+		this.attack = ( attack * ( level + 1 ) / 2 ) ;
 	}
 
 

@@ -37,12 +37,12 @@ public class RoundStartScreen extends Group {
 		gc.setFont(Font.font("IMPACT", 100));
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
-		gc.fillText("LEVEL "+( GameLogic.instance.getLevel()+1), GameScreen.SCREEN_WIDTH/2, GameScreen.SCREEN_HEIGHT/5);
+		gc.fillText("LEVEL "+( GameLogic.instance.getStageLevel()+1), GameScreen.SCREEN_WIDTH/2, GameScreen.SCREEN_HEIGHT/5);
 		
 		//drawing grave yard
 		gc.setFill(Color.GREY);
 		gc.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-		if (GameLogic.instance.getLevel() > 0) {
+		if (GameLogic.instance.getStageLevel() > 0) {
 			gc.fillText("GRAVEYARD", GameScreen.SCREEN_WIDTH/2, GameScreen.SCREEN_HEIGHT/5 + 80);	
 		}
 		try {
