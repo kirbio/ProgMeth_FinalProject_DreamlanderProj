@@ -76,9 +76,6 @@ public class Main extends Application {
 		menuScene = new Scene(menuScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		menuScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-		roundScreen = new RoundStartScreen();
-		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);	
-		
 		gameOverScreen = new GameOverScreen();
 		gameOverScene = new Scene(gameOverScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gameOverScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -122,7 +119,9 @@ public class Main extends Application {
 	}
 	
 	public void startMainGame(int mode) {
-		GameLogic.instance.startGame(mode);	
+		GameLogic.instance.startGame(mode);
+		roundScreen = new RoundStartScreen();
+		roundScene = new Scene(roundScreen, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);	
 		new UpdateThread().start();	
 		new AnimationStarter().start();
 	}

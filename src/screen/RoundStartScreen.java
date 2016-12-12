@@ -16,7 +16,7 @@ public class RoundStartScreen extends Group {
 	private Canvas canvas;
 	private GraphicsContext gc;
 	
-	//call once by Main
+	//call once when start game
 	public RoundStartScreen() {
 		canvas = new Canvas(GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		gc = canvas.getGraphicsContext2D();

@@ -24,6 +24,7 @@ public class Round {
 		for(EnemyEncounterPair i:data){
 			for(int j=0;j<i.getEnemyAmount();j++){
 				addEnemy(new Enemy(i.getEnemyType()));
+				System.out.println(i.getEnemyType());
 			}
 		}		
 	}

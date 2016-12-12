@@ -46,6 +46,7 @@ public class GameData {
 		 * to parse the file to local variable
 		 */
 		Boolean fin = false;
+		System.out.println("new call");
 		try {
 			Scanner s = new Scanner(new File("enemydata.csv"));
 			s.nextLine();
@@ -66,6 +67,7 @@ public class GameData {
 		}
 		fin = false;
 		try {
+			System.out.println(Main.instance.getLeveldatafile());
 			Scanner s = new Scanner(new File(Main.instance.getLeveldatafile()));
 			s.nextLine(); //Skip First Line
 			while(!fin){

@@ -30,8 +30,6 @@ public class GameScreen extends Group {
 		gc.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		getChildren().add(canvas);
 
-		new StatusBar();
-
 		System.out.println("gameScreen initialized");
 	}
 

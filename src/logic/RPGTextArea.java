@@ -20,7 +20,7 @@ public class RPGTextArea extends Thread implements IRenderable {
 	@Override
 	public void run() {
 		int index = 0;
-		while(true){
+		while(!GameLogic.instance.isGameOver()){
 			if(prevtext!=text){
 				prevtext = text;
 				disptext = "";

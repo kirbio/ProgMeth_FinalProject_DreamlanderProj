@@ -13,6 +13,7 @@ import input.InputUtility;
 import javafx.scene.input.KeyCode;
 import main.Main;
 import screen.GameScreen;
+import screen.RoundStartScreen;
 import sound.AudioHolder;
 
 public class GameLogic {
@@ -42,6 +43,7 @@ public class GameLogic {
 		player = new Player();
 		new GameData();
 		textArea = new RPGTextArea();
+		new StatusBar();
 		textArea.start();
 		newRound = true;
 		readyToDraw = false;
@@ -53,6 +55,11 @@ public class GameLogic {
 	public void stopGame() {
 		readyToDraw = false;
 		defeatedEnemies.clear();
+		textArea.interrupt();
+		counter.interrupt();
+		atkGuage.interrupt();
+		RenderableHolder.getInstance().getEntities().clear();
+		
 
 	}
 
@@ -258,7 +265,8 @@ public class GameLogic {
 	private void triggerGameOver() {
 		AudioHolder.getInstance().stopBGM();
 		setGameOver(true);
-		atkGuage.interrupt();	
+		atkGuage.interrupt();
+		counter.interrupt();
 		System.out.println("Game Over");
 		try {
 			Thread.sleep(800);

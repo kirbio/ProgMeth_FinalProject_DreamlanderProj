@@ -91,10 +91,10 @@ public class MenuScreen extends Group {
 				leveldata = "leveldata3.csv"; mode = 2;
 			}
 			Main.instance.setLeveldatafile(leveldata);
+			Main.instance.startMainGame(mode);
 			AudioHolder.getInstance().playSFX("select");
 			AudioHolder.getInstance().stopBGM();
-			Main.instance.setToRoundScene();
-			Main.instance.startMainGame(mode);	
+			Main.instance.setToRoundScene();	
 		});
 		exitButton.setOnAction(e -> {
 			AudioHolder.getInstance().playSFX("select");
