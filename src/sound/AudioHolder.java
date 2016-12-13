@@ -74,7 +74,6 @@ public class AudioHolder {
 
 		} catch (AudioNotFoundException e) {
 			System.out.println(e.getMessage());
-			;
 		}
 	}
 

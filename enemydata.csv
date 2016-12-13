@@ -1,25 +1,33 @@
 Name,Hp,Atk
 Dummy Dee,4,0
-Waddle Dee,5,2
-Alice,25,4
-Bill,22,4
-Cain,20,4
-Doug,18,4
-Mini-TankBot B,30,12
-Mini-TankBot R,30,10
+Waddle Dee,5,4
+Alice,50,8
+Bill,48,8
+Cain,45,8
+Doug,40,8
+Mini-TankBot B,60,20
+Mini-TankBot R,60,18
 Haltworker,25,5
 Haltworker R,25,20
-Simple Doomer,10,5
-Small Doomer,5,10
-Split Doomer,20,5
-Twizzer,60,10
+Simple Doomer,20,5
+Small Doomer,10,10
+Split Doomer,30,5
+Twizzer,80,20
 Waddle Doo,8,3
 Sir Kibble,15,4
 Sparky,10,5
 Sword Knight,20,4
-Bronto Burt,8,2
+Bronto Burt,10,2
 Laser Ball,20,10
-Beanbon,6,2
+Beanbon,12,8
 Jungle Bomb,15,10
-Oohroo,30,12
+Oohroo,40,15
 Chef Kawazaki,20,5
+Chef Kawazaki,50,8
+Chef Kawazaki,80,12
+Needlous,12,8
+Junk,8,5
+Snoozroot,25,10
+Moto Shotzo,15,6
+Poison Mash,12,8
+Seedbon,20,10
