@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RenderableHolder {
 	private List<IRenderable> entities;
@@ -22,8 +23,8 @@ public class RenderableHolder {
 	}
 
 	public RenderableHolder() {
-		entities = new ArrayList<IRenderable>();
-		menuEntities = new ArrayList<IRenderable>();
+		entities = new CopyOnWriteArrayList<IRenderable>();
+		menuEntities = new CopyOnWriteArrayList<IRenderable>();
 		comparator = (IRenderable o1, IRenderable o2) -> {
 			return o1.getZ() - o2.getZ();
 		};

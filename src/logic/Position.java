@@ -5,6 +5,7 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import graphic.DrawingUtility;
 
@@ -14,12 +15,12 @@ public class Position {
 			+ (DrawingUtility.PLAY_SCREEN_HEIGHT / 2);
 	private static int amount;
 
-	public static void set(ArrayList<Enemy> enemyList) {
+	public static void set(CopyOnWriteArrayList<Enemy> enemyList) {
 		amount = enemyList.size();
 		PlaceEnemy(enemyList);
 	}
 
-	public static void set(ArrayList<Enemy> enemyList, String format) {
+	public static void set(CopyOnWriteArrayList<Enemy> enemyList, String format) {
 		amount = enemyList.size();
 		if (format.toLowerCase().equals(".......")) {
 			/* insert high quality code here */
@@ -29,7 +30,7 @@ public class Position {
 
 	}
 
-	private static void PlaceEnemy(ArrayList<Enemy> enemyList) {
+	private static void PlaceEnemy(CopyOnWriteArrayList<Enemy> enemyList) {
 		final int ENEMY_ORIGIN_X = DrawingUtility.PLAY_SCREEN_WIDTH / 4 + 30;
 		final int ENEMY_ORIGIN_Y = PLAYER_POSITION_Y - 30;
 
@@ -53,7 +54,7 @@ public class Position {
 		}
 	}
 
-	private static void LineForm(ArrayList<Enemy> enemyList) {
+	private static void LineForm(CopyOnWriteArrayList<Enemy> enemyList) {
 		int offset;
 		int number = 0; // number in line, 0 is first in line
 		int line_number = 0; // 0 is center, 1 will be bottom, 2 will be top,

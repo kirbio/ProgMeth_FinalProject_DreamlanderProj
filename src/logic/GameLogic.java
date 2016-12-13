@@ -8,6 +8,7 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import data.GameData;
 import graphic.RenderableHolder;
@@ -70,7 +71,7 @@ public class GameLogic {
 			startNewRound();
 
 		} else {
-			ArrayList<Enemy> enemies = round.getEnemyList();
+			CopyOnWriteArrayList<Enemy> enemies = round.getEnemyList();
 			textArea.setText("Press ENTER to Attack");
 
 			// if pause
@@ -182,7 +183,7 @@ public class GameLogic {
 
 	}
 
-	private void playerAttack(ArrayList<Enemy> enemies) {
+	private void playerAttack(CopyOnWriteArrayList<Enemy> enemies) {
 		int exptotal = 0;
 		int currLevel = player.getLevel();
 		for (Enemy e : enemies) {
@@ -228,7 +229,7 @@ public class GameLogic {
 		}
 	}
 
-	private void enemyAttack(ArrayList<Enemy> enemies) {
+	private void enemyAttack(CopyOnWriteArrayList<Enemy> enemies) {
 		player.setBeingAttacked(true);
 		for (Enemy e : enemies) {
 			if (!e.isDead()) {
@@ -253,7 +254,7 @@ public class GameLogic {
 
 	}
 
-	private boolean isAllEnemyDead(ArrayList<Enemy> enemies) {
+	private boolean isAllEnemyDead(CopyOnWriteArrayList<Enemy> enemies) {
 		boolean allEnemyDead = true;
 		for (Enemy e : enemies) {
 			allEnemyDead = allEnemyDead && e.isDead();
