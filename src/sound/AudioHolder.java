@@ -5,6 +5,7 @@
 
 package sound;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -36,24 +37,49 @@ public class AudioHolder {
 	}
 
 	private static void loadResource() {
-		File folder = new File(ClassLoader.getSystemResource("bgm").getFile());
-		for (File file : folder.listFiles()) {
+		sfx_name.add("1");
+		sfx_name.add("congrats");
+		sfx_name.add("fight1");
+		sfx_name.add("fight2");
+		sfx_name.add("fightperfect");
+		sfx_name.add("gameover1");
+		sfx_name.add("gameover2");
+		sfx_name.add("good");
+		sfx_name.add("great");
+		sfx_name.add("hurt1");
+		sfx_name.add("hurt2");
+		sfx_name.add("hurtvoice");
+		sfx_name.add("missed");
+		sfx_name.add("missed2");
+		sfx_name.add("perfect");
+		sfx_name.add("powerup");
+		sfx_name.add("select");
+		sfx_name.add("select2");
+		sfx_name.add("win1");
+		sfx_name.add("win2");
+		
+		bgm_name.add("battle");
+		bgm_name.add("slave");
+		bgm_name.add("tankbot");
+		bgm_name.add("titlescreen");
+		
+		for (String name : sfx_name) {
 			try {
-				bgm.add(new AudioClip(file.toURI().toURL().toString()));
-			} catch (MalformedURLException e) {
+				sfx.add(new AudioClip(ClassLoader.getSystemResource("sfx/"+name+".wav").toString()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(name);
+			}
+		}
+		
+		for (String name : bgm_name) {
+			try {
+				bgm.add(new AudioClip(ClassLoader.getSystemResource("bgm/"+name+".wav").toString()));
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			bgm_name.add(file.getName());
 		}
-		folder = new File(ClassLoader.getSystemResource("sfx").getFile());
-		for (File file : folder.listFiles()) {
-			try {
-				sfx.add(new AudioClip(file.toURI().toURL().toString()));
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			sfx_name.add(file.getName());
-		}
+		
 	}
 
 	public synchronized static AudioHolder getInstance() {
@@ -62,10 +88,10 @@ public class AudioHolder {
 
 	public void playBGM(String name, boolean looping, double volume) {
 		try {
-			if (!bgm_name.contains(name + ".wav")) {
+			if (!bgm_name.contains(name)) {
 				throw new AudioNotFoundException(name);
 			}
-			currentBGM = bgm.get(bgm_name.indexOf(name + ".wav"));
+			currentBGM = bgm.get(bgm_name.indexOf(name));
 			currentBGM.setVolume(volume);
 			if (looping) {
 				currentBGM.setCycleCount(AudioClip.INDEFINITE);
@@ -116,10 +142,10 @@ public class AudioHolder {
 
 	public void playSFX(String name) {
 		try {
-			if (!sfx_name.contains(name + ".wav")) {
+			if (!sfx_name.contains(name)) {
 				throw new AudioNotFoundException(name);
 			}
-			sfx.get(sfx_name.indexOf(name + ".wav")).play();
+			sfx.get(sfx_name.indexOf(name)).play();
 		} catch (AudioNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
@@ -127,11 +153,11 @@ public class AudioHolder {
 
 	public void playSFX(String name, double volume) {
 		try {
-			if (!sfx_name.contains(name + ".wav")) {
+			if (!sfx_name.contains(name)) {
 				throw new AudioNotFoundException(name);
 			}
 			AudioClip audio;
-			audio = sfx.get(sfx_name.indexOf(name + ".wav"));
+			audio = sfx.get(sfx_name.indexOf(name));
 			audio.setVolume(volume);
 			audio.play();
 		} catch (AudioNotFoundException e) {
@@ -142,7 +168,7 @@ public class AudioHolder {
 	}
 
 	public AudioClip getSFX(String name) {
-		return sfx.get(sfx_name.indexOf(name + ".wav"));
+		return sfx.get(sfx_name.indexOf(name));
 	}
 
 	public void stopBGM() {
