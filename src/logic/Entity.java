@@ -1,10 +1,15 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package logic;
 
 import graphic.EntityAnimation;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
 
-public abstract class Entity implements IRenderable{
+public abstract class Entity implements IRenderable {
 	protected String name;
 	protected int hp;
 	protected int maxHP;
@@ -12,72 +17,75 @@ public abstract class Entity implements IRenderable{
 	protected boolean isDead;
 	protected EntityAnimation animation;
 	protected boolean isBeingAttacked;
-	
-	protected int x,y,z;
-	
+
+	protected int x, y, z;
+
 	Entity(String name, int hp, int attack) {
 		this.name = name;
 		this.maxHP = this.hp = hp;
 		this.attack = attack;
-		isDead = isBeingAttacked =false;
-		
+		isDead = isBeingAttacked = false;
+
 		animation = new EntityAnimation(getAnimationFilePath());
-		
-		RenderableHolder.getInstance().add(this);	
-		
+
+		RenderableHolder.getInstance().add(this);
+
 	}
 
-	
-	/*==================================
-	 * Position/Render-related methods
-	================================== */
-	
+	/*
+	 * ================================== Position/Render-related methods
+	 * ==================================
+	 */
+
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
 		return z;
 	}
-	
-	//draw() is implemented on subclass
-	
+
+	// draw() is implemented on subclass
+
 	public void setZ(int z) {
 		// TODO Auto-generated method stub
-		this.z=z;
+		this.z = z;
 	}
+
 	public int getX() {
 		return x;
 	}
+
 	public void setX(int x) {
 		this.x = x;
 	}
+
 	public int getY() {
 		return y;
 	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	/*==================================
-	 * RPG Game Logic Methods
-	 ==================================*/
-	
-	
+
+	/*
+	 * ================================== RPG Game Logic Methods
+	 * ==================================
+	 */
+
 	abstract void attack(Entity entity);
-	
-	
-	void increaseHP(int amount) { 
+
+	void increaseHP(int amount) {
 		this.hp += amount;
 		if (hp >= maxHP) {
 			hp = maxHP;
 		}
 	}
-	
+
 	void decreaseHP(int amount) {
 		this.hp -= amount;
 		if (hp <= 0) {
 			hp = 0;
 			isDead = true;
-			System.out.println(getName()+" is Dead!");
+			System.out.println(getName() + " is Dead!");
 		}
 	}
 
@@ -116,7 +124,7 @@ public abstract class Entity implements IRenderable{
 	public void setAttack(int attack) {
 		this.attack = attack;
 	}
-	
+
 	public boolean isBeingAttacked() {
 		return isBeingAttacked;
 	}
@@ -124,18 +132,18 @@ public abstract class Entity implements IRenderable{
 	public void setBeingAttacked(boolean isBeingAttacked) {
 		this.isBeingAttacked = isBeingAttacked;
 	}
-		
-	
-	/*==================================
-	 * Animation related Methods
-	 ==================================*/
+
+	/*
+	 * ================================== Animation related Methods
+	 * ==================================
+	 */
 
 	public EntityAnimation getAnimation() {
 		return animation;
 	}
-	
+
 	private String getAnimationFilePath() {
 		return getName().toLowerCase().replace(' ', '_') + ".png";
 	}
-	
+
 }

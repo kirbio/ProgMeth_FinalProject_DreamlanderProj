@@ -1,20 +1,18 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package screen;
 
 import graphic.DrawingUtility;
 import graphic.IRenderable;
 import graphic.RenderableHolder;
-import input.InputUtility;
-import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
-import logic.RPGTextArea;
-import logic.StatusBar;
 
 public class GameScreen extends Group {
 	// public static final GameScreen instance = new GameScreen();
@@ -53,7 +51,7 @@ public class GameScreen extends Group {
 	public void requestFocusForCanvas() {
 		this.requestFocus();
 	}
-	
+
 	public GraphicsContext getGraphicsContext() {
 		return gc;
 	}

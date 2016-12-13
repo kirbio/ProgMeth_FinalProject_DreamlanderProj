@@ -1,12 +1,15 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package graphic;
 
 import java.net.URL;
 
 import exception.SpriteParsingException;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import logic.Enemy;
 import logic.Entity;
 
 public class EntityAnimation {
@@ -49,7 +52,7 @@ public class EntityAnimation {
 	public Image getCurrentIdleSprite() {
 		return animationFrame[counter];
 	}
-	
+
 	public Image getDefaultIdleSprite() {
 		return animationFrame[0];
 	}

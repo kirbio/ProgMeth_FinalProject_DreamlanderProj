@@ -1,3 +1,8 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package input;
 
 import java.util.ArrayList;
@@ -5,7 +10,7 @@ import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 
 public class InputUtility {
-	
+
 	private static ArrayList<KeyCode> keyPressed = new ArrayList<>();
 	private static ArrayList<KeyCode> keyTriggered = new ArrayList<>();
 
@@ -21,7 +26,7 @@ public class InputUtility {
 			InputUtility.keyPressed.remove(keycode);
 			InputUtility.keyTriggered.remove(keycode);
 		}
-		
+
 	}
 
 	public static boolean getKeyTriggered(KeyCode keycode) {
@@ -38,8 +43,8 @@ public class InputUtility {
 	}
 
 	public static void postUpdate() {
-		InputUtility.keyTriggered.clear();;
+		InputUtility.keyTriggered.clear();
+		;
 	}
-	
 
 }

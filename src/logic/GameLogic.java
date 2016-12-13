@@ -1,20 +1,19 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package logic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import data.GameData;
-import graphic.AttackAnimation;
-import graphic.DrawingUtility;
-import graphic.IRenderable;
 import graphic.RenderableHolder;
 import input.InputUtility;
 import javafx.scene.input.KeyCode;
 import main.Main;
-import screen.GameScreen;
-import screen.RoundStartScreen;
 import sound.AudioHolder;
 
 public class GameLogic {
@@ -25,8 +24,8 @@ public class GameLogic {
 	private Player player;
 	private Round round;
 	private boolean isWaitforInput; // using to determine if it's wait for
-											// input or not - using mainly for
-											// update graphics and gauges
+									// input or not - using mainly for
+									// update graphics and gauges
 	private boolean isNewRound;
 	private RPGTextArea textArea;
 	private AttackGuage atkGuage;
@@ -72,8 +71,9 @@ public class GameLogic {
 
 		} else {
 			ArrayList<Enemy> enemies = round.getEnemyList();
-			textArea.setText("Press Any Key to Attack");
+			textArea.setText("Press ENTER to Attack");
 
+			// if pause
 			if (InputUtility.getKeyTriggered(KeyCode.SPACE)) {
 				isPause = !isPause;
 				isWaitforInput = !isWaitforInput;
@@ -81,6 +81,7 @@ public class GameLogic {
 				return;
 			}
 
+			// if time out
 			if (counter.isTimeOut()) {
 				isWaitforInput = false;
 				atkGuage.resetGauge();
@@ -95,7 +96,8 @@ public class GameLogic {
 				player.setBeingAttacked(false);
 				counter.resetCounter();
 
-			} else if (isWaitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER)) {
+			} else if (isWaitforInput && InputUtility.getKeyTriggered(KeyCode.ENTER)) { // if
+																						// attack
 				isWaitforInput = false;
 				atkGuage.setShowAttackDescription(true);
 				atkGuage.playSound();
@@ -106,11 +108,12 @@ public class GameLogic {
 					e1.printStackTrace();
 				}
 
+				// if attack missed
 				int attackpower = atkGuage.getCurrentAtkPower();
 				if (attackpower == 0) {
 					enemyAttack(enemies);
 				} else {
-					player.setAttack(attackpower);	//set attack
+					player.setAttack(attackpower); // set attack
 					if (!player.isDead()) {
 						System.out.println("Attack Success, Power: " + attackpower);
 						playerAttack(enemies);
@@ -144,10 +147,6 @@ public class GameLogic {
 
 		}
 
-	}
-	
-	private void checkPause() {
-		
 	}
 
 	private void startNewRound() {
@@ -197,29 +196,29 @@ public class GameLogic {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				
-				if(e.isDead()){
+
+				if (e.isDead()) {
 					textArea.setText(e.getName() + " is defeated !");
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
-					int expGet = e.getMaxHP()*30;
-					exptotal+= expGet;
+					int expGet = e.getMaxHP() * 30;
+					exptotal += expGet;
 				}
 			}
 		}
-		if(exptotal>0){
+		if (exptotal > 0) {
 			player.increaseEXP(exptotal);
-			textArea.setText("Kirby get total "+exptotal+" EXP!");
+			textArea.setText("Kirby get total " + exptotal + " EXP!");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			if(currLevel!=player.getLevel()){
-				textArea.setText("Kirby's level increased by "+(player.getLevel()-currLevel)+" !");
+			if (currLevel != player.getLevel()) {
+				textArea.setText("Kirby's level increased by " + (player.getLevel() - currLevel) + " !");
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
@@ -276,7 +275,7 @@ public class GameLogic {
 				e.printStackTrace();
 			}
 			triggerCongrats();
-			
+
 		} else {
 			if (stage == MID_BOSS) {
 				AudioHolder.getInstance().playSFX("win2", 0.7);
@@ -295,7 +294,7 @@ public class GameLogic {
 				}
 			}
 			stage++;
-			//recoverHP();
+			// recoverHP();
 			Main.instance.getRoundScreen().update();
 			Main.instance.setToRoundScene();
 		}
@@ -335,13 +334,11 @@ public class GameLogic {
 		AudioHolder.getInstance().playSFX("congrats", 1);
 	}
 
-	private void recoverHP() { // call after win every round - probably unused now
-		if (stage == MID_BOSS || stage == BOSS) {
-			player.increaseHP(25);
-		} else {
-			player.increaseHP(10);
-		}
-	}
+	/*
+	 * private void recoverHP() { // call after win every round - probably
+	 * unused // now if (stage == MID_BOSS || stage == BOSS) {
+	 * player.increaseHP(25); } else { player.increaseHP(10); } }
+	 */
 
 	private void removeDeadIrenderable() {
 		for (int i = RenderableHolder.getInstance().getEntities().size() - 1; i >= 0; i--) {
@@ -391,7 +388,11 @@ public class GameLogic {
 					round.addEnemy(new Enemy(11)); // add small doomer
 				}
 				added = true;
-			} else if (e.getName().toLowerCase().equals("chef kawazaki") && e.isDead()) { //If Chef Kawazaki, recover health
+			} else if (e.getName().toLowerCase().equals("chef kawazaki") && e.isDead()) { // If
+																							// Chef
+																							// Kawazaki,
+																							// recover
+																							// health
 				textArea.setText("Kirby's HP recovered!");
 				player.setHp(player.getMaxHP());
 				try {

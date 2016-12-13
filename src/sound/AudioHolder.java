@@ -1,3 +1,8 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package sound;
 
 import java.io.File;
@@ -58,7 +63,7 @@ public class AudioHolder {
 	public void playBGM(String name, boolean looping, double volume) {
 		try {
 			if (!bgm_name.contains(name + ".wav")) {
-				throw new AudioNotFoundException();
+				throw new AudioNotFoundException(name);
 			}
 			currentBGM = bgm.get(bgm_name.indexOf(name + ".wav"));
 			currentBGM.setVolume(volume);
@@ -74,44 +79,57 @@ public class AudioHolder {
 	}
 
 	public void playLevelBGM(int mode, int level) {
-		switch (level) { //0 = easy, 1= normal, 2 = hard
+		switch (level) { // 0 = easy, 1= normal, 2 = hard
 		default:
-			playBGM("battle", true, 0.2); break;
+			playBGM("battle", true, 0.2);
+			break;
 		case GameLogic.MID_BOSS:
 			switch (mode) {
-			case 0  : playBGM("tankbot", true, 0.2); break;
-			case 1  : playBGM("tankbot", true, 0.2); break;
-			case 2  : playBGM("tankbot", true, 0.2); break;
+			case 0:
+				playBGM("tankbot", true, 0.2);
+				break;
+			case 1:
+				playBGM("tankbot", true, 0.2);
+				break;
+			case 2:
+				playBGM("tankbot", true, 0.2);
+				break;
 			}
 			break;
 		case GameLogic.BOSS:
 			switch (mode) {
-			case 0  : playBGM("slave", true, 0.2); break;
-			case 1  : playBGM("slave", true, 0.2); break;
-			case 2  : playBGM("slave", true, 0.2); break;
+			case 0:
+				playBGM("slave", true, 0.2);
+				break;
+			case 1:
+				playBGM("slave", true, 0.2);
+				break;
+			case 2:
+				playBGM("slave", true, 0.2);
+				break;
 			}
 			break;
-		case GameLogic.KAWASAKI :
-			playBGM("battle", true, 0.2); break;
+		case GameLogic.KAWASAKI:
+			playBGM("battle", true, 0.2);
+			break;
 		}
 	}
 
 	public void playSFX(String name) {
 		try {
 			if (!sfx_name.contains(name + ".wav")) {
-				throw new AudioNotFoundException();
+				throw new AudioNotFoundException(name);
 			}
 			sfx.get(sfx_name.indexOf(name + ".wav")).play();
 		} catch (AudioNotFoundException e) {
 			System.out.println(e.getMessage());
-			;
 		}
 	}
 
 	public void playSFX(String name, double volume) {
 		try {
 			if (!sfx_name.contains(name + ".wav")) {
-				throw new AudioNotFoundException();
+				throw new AudioNotFoundException(name);
 			}
 			AudioClip audio;
 			audio = sfx.get(sfx_name.indexOf(name + ".wav"));

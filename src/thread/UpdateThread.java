@@ -1,3 +1,8 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package thread;
 
 import input.InputUtility;
@@ -7,7 +12,7 @@ public class UpdateThread extends Thread {
 
 	@Override
 	public void run() {
-		while(!GameLogic.instance.isGameOver()) {
+		while (!GameLogic.instance.isGameOver()) {
 			GameLogic.instance.update();
 			InputUtility.postUpdate();
 			try {
@@ -16,6 +21,6 @@ public class UpdateThread extends Thread {
 				System.out.println("Interrupted");
 			}
 		}
-		
+
 	}
 }

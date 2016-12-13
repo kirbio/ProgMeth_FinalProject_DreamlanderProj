@@ -1,3 +1,8 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package logic;
 
 import graphic.DrawingUtility;
@@ -6,9 +11,9 @@ import graphic.RenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
 
 public class RPGTextArea extends Thread implements IRenderable {
-	
-	private static String text;
-	private static String disptext;
+
+	private String text;
+	private String disptext;
 	private String prevtext;
 
 	public RPGTextArea() {
@@ -20,15 +25,15 @@ public class RPGTextArea extends Thread implements IRenderable {
 	@Override
 	public void run() {
 		int index = 0;
-		while(!GameLogic.instance.isGameOver()){
-			if(prevtext!=text){
+		while (!GameLogic.instance.isGameOver()) {
+			if (prevtext != text) {
 				prevtext = text;
 				disptext = "";
 				index = 0;
-			}else{
-				if(index<text.length()){
+			} else {
+				if (index < text.length()) {
 					disptext += text.charAt(index);
-					index+=1;
+					index += 1;
 				}
 			}
 			try {
@@ -38,7 +43,7 @@ public class RPGTextArea extends Thread implements IRenderable {
 			}
 		}
 	}
-	
+
 	public String getText() {
 		return text;
 	}
@@ -46,12 +51,12 @@ public class RPGTextArea extends Thread implements IRenderable {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	@Override
 	public int getZ() {
 		return Integer.MAX_VALUE;
 	}
-	
+
 	@Override
 	public void draw(GraphicsContext gc) {
 		DrawingUtility.drawTextArea(gc, disptext);

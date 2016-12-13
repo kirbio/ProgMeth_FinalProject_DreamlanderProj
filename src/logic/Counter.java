@@ -1,3 +1,8 @@
+/**
+ * @author Phakawat and Nitit
+ *
+ */
+
 package logic;
 
 import graphic.DrawingUtility;
@@ -7,21 +12,21 @@ import javafx.scene.canvas.GraphicsContext;
 import sound.AudioHolder;
 
 public class Counter extends Thread implements IRenderable {
-	
+
 	private int startTime;
 	private int currentTime;
-	
+
 	public Counter() {
 		startTime = 10;
 		currentTime = 10;
 		RenderableHolder.getInstance().add(this);
 	}
-	
+
 	@Override
 	public void run() {
 		while (!GameLogic.instance.isNewRound() && !GameLogic.instance.isGameOver()) {
 			try {
-				Thread.sleep(1000);		
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				System.out.println("Interrupted");
 			}
@@ -29,15 +34,15 @@ public class Counter extends Thread implements IRenderable {
 				decreaseTime();
 				AudioHolder.getInstance().playSFX("select2");
 			}
-			
+
 		}
-			
+
 	}
-	
-	
+
 	private void decreaseTime() {
 		currentTime--;
-		if (currentTime <= 0) currentTime = 0;
+		if (currentTime <= 0)
+			currentTime = 0;
 	}
 
 	@Override
@@ -62,15 +67,13 @@ public class Counter extends Thread implements IRenderable {
 	public void setCurrentTime(int currentTime) {
 		this.currentTime = currentTime;
 	}
-	
+
 	public boolean isTimeOut() {
 		return (currentTime == 0);
 	}
-	
+
 	public void resetCounter() {
 		currentTime = startTime;
 	}
-	
-	
 
 }
