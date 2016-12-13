@@ -1,5 +1,6 @@
 package logic;
 
+import graphic.AttackAnimation;
 import graphic.DrawingUtility;
 import javafx.scene.canvas.GraphicsContext;
 import screen.GameScreen;
@@ -22,6 +23,7 @@ public class Player extends Entity {
 	
 	@Override
 	void attack(Entity entity) {
+		new AttackAnimation(entity.getX(),entity.getY());
 		entity.decreaseHP(attack);
 		System.out.println("Kirby attacks "+entity.getName()+"!");
 
@@ -39,11 +41,12 @@ public class Player extends Entity {
 	}
 
 	public void increaseEXP(int amount){ //increasing EXP, will automanage level up
-		int threashold = 350+200*level; //Next Level EXP
+		int threashold = getNextEXP(); //Next Level EXP
 		exp+= amount;
-		if(exp > threashold){
+		while(exp > threashold){
 			exp-=threashold;
 			level+=1;
+			threashold = getNextEXP();
 		}
 	}
 	

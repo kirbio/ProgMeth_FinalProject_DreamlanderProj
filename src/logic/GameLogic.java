@@ -184,19 +184,19 @@ public class GameLogic {
 	}
 
 	private void playerAttack(ArrayList<Enemy> enemies) {
+		int exptotal = 0;
+		int currLevel = player.getLevel();
 		for (Enemy e : enemies) {
 			if (!e.isDead()) {
 				textArea.setText("Kirby Attacks " + e.getName() + "!");
 				playAttackSound("player");
 				player.attack(e);
 				e.setBeingAttacked(true);
-				AttackAnimation a = new AttackAnimation(e.getX(), e.getY());
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				a.setEnd(true);
 				
 				if(e.isDead()){
 					textArea.setText(e.getName() + " is defeated !");
@@ -206,22 +206,24 @@ public class GameLogic {
 						e1.printStackTrace();
 					}
 					int expGet = e.getMaxHP()*30;
-					int currLevel = player.getLevel();
-					player.increaseEXP(expGet);
-					textArea.setText("Kirby get "+expGet+" EXP!");
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					if(currLevel!=player.getLevel()){
-						textArea.setText("Kirby's level increased!");
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e1) {
-							e1.printStackTrace();
-						}
-					}
+					exptotal+= expGet;
+				}
+			}
+		}
+		if(exptotal>0){
+			player.increaseEXP(exptotal);
+			textArea.setText("Kirby get total "+exptotal+" EXP!");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			if(currLevel!=player.getLevel()){
+				textArea.setText("Kirby's level increased by "+(player.getLevel()-currLevel)+" !");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		}
@@ -293,7 +295,7 @@ public class GameLogic {
 				}
 			}
 			stage++;
-			recoverHP();
+			//recoverHP();
 			Main.instance.getRoundScreen().update();
 			Main.instance.setToRoundScene();
 		}
@@ -333,7 +335,7 @@ public class GameLogic {
 		AudioHolder.getInstance().playSFX("congrats", 1);
 	}
 
-	private void recoverHP() { // call after win every round
+	private void recoverHP() { // call after win every round - probably unused now
 		if (stage == MID_BOSS || stage == BOSS) {
 			player.increaseHP(25);
 		} else {
@@ -389,6 +391,14 @@ public class GameLogic {
 					round.addEnemy(new Enemy(11)); // add small doomer
 				}
 				added = true;
+			} else if (e.getName().toLowerCase().equals("chef kawazaki") && e.isDead()) { //If Chef Kawazaki, recover health
+				textArea.setText("Kirby's HP recovered!");
+				player.setHp(player.getMaxHP());
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 

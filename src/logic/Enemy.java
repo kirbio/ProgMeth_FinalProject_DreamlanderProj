@@ -1,6 +1,7 @@
 package logic;
 
 import data.GameData;
+import graphic.AttackAnimation;
 import graphic.DrawingUtility;
 import javafx.scene.canvas.GraphicsContext;
 import screen.GameScreen;
@@ -24,6 +25,7 @@ public class Enemy extends Entity{
 	
 	@Override
 	void attack(Entity entity) {
+		new AttackAnimation(entity.getX(),entity.getY());
 		entity.decreaseHP(attack);
 		System.out.println(name+" attacks!");
 		
