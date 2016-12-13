@@ -59,6 +59,7 @@ public class AudioHolder {
 		sfx_name.add("win2");
 		
 		bgm_name.add("battle");
+		bgm_name.add("kawazaki");
 		bgm_name.add("slave");
 		bgm_name.add("tankbot");
 		bgm_name.add("titlescreen");
@@ -109,17 +110,7 @@ public class AudioHolder {
 			playBGM("battle", true, 0.2);
 			break;
 		case GameLogic.MID_BOSS:
-			switch (mode) {
-			case 0:
-				playBGM("tankbot", true, 0.2);
-				break;
-			case 1:
-				playBGM("tankbot", true, 0.2);
-				break;
-			case 2:
-				playBGM("tankbot", true, 0.2);
-				break;
-			}
+			playBGM("kawazaki", true, 0.2);
 			break;
 		case GameLogic.BOSS:
 			switch (mode) {
@@ -127,10 +118,10 @@ public class AudioHolder {
 				playBGM("slave", true, 0.2);
 				break;
 			case 1:
-				playBGM("slave", true, 0.2);
+				playBGM("tankbot", true, 0.2);
 				break;
 			case 2:
-				playBGM("slave", true, 0.2);
+				playBGM("tankbot", true, 0.2);
 				break;
 			}
 			break;

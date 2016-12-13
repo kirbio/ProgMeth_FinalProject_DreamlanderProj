@@ -33,27 +33,50 @@ public class GameBackground implements IRenderable {
 		default:
 			backgroundName = "plain";
 			break;
-		// both case 0,1,2 use the same result
 		case 0:
 		case 1:
 		case 2:
-			backgroundName = "plain";
-			break;
-		// both case 3,4 use the same result
 		case 3:
-		case 4:
-			backgroundName = "plain";
+			switch (mode) {
+			case 0:
+			case 2:
+				backgroundName = "plain";
+				break;
+			case 1:
+				backgroundName = "haltmann";
+				break;
+			}
 			break;
-
+		case GameLogic.MID_BOSS:
+			backgroundName = "itemroom";
+			break;
 		case GameLogic.BOSS:
 			switch (mode) {
 			case 0:
 				backgroundName = "slave";
 				break;
+			case 1:
+				backgroundName = "tank";
+				break;
 			}
 			break;
-
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+			switch (mode) {
+			case 0:
+			case 2:
+				backgroundName = "plain";
+				break;
+			case 1:
+				backgroundName = "shoot";
+				break;
+			}
+			break;
+			
 		}
+		
 
 		try {
 			path = ClassLoader.getSystemResource("img/bg/" + backgroundName + ".png").toString();
