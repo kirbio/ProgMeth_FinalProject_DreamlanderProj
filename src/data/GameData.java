@@ -68,7 +68,7 @@ public class GameData {
 		Boolean fin = false;
 		System.out.println("new call");
 		try {
-			File f = new File(ClassLoader.getSystemResource("enemydata.csv").toString());
+			File f = new File(ClassLoader.getSystemResource("enemydata.csv").getFile());
 			Scanner s = new Scanner(f);
 			s.nextLine();
 			while (!fin) {
@@ -90,7 +90,7 @@ public class GameData {
 		fin = false;
 		try {
 			System.out.println(Main.instance.getLeveldatafile());
-			Scanner s = new Scanner(new File(ClassLoader.getSystemResource(Main.instance.getLeveldatafile()).toString()));
+			Scanner s = new Scanner(new File(ClassLoader.getSystemResource(Main.instance.getLeveldatafile()).getFile()));
 			s.nextLine(); // Skip First Line
 			while (!fin) {
 				String rawdata = s.nextLine();
