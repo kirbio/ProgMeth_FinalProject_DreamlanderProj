@@ -5,8 +5,12 @@
 
 package data;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -68,33 +72,38 @@ public class GameData {
 		Boolean fin = false;
 		System.out.println("new call");
 		try {
-			File f = new File(ClassLoader.getSystemResource("enemydata.csv").getFile());
-			Scanner s = new Scanner(f);
-			s.nextLine();
-			while (!fin) {
-				String rawdata = s.nextLine();
+			
+			InputStream inputStream = ClassLoader.
+			        getSystemResourceAsStream("enemydata.csv");
+			InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
+			BufferedReader in = new BufferedReader(streamReader);
+
+			in.readLine();
+			for (String line; (line = in.readLine()) != null;) {
+				String rawdata = line;
 				String[] parseddata = rawdata.split(",");
 				EnemyData e = new EnemyData(parseddata[0], Integer.parseInt(parseddata[1]),
 						Integer.parseInt(parseddata[2]));
 				enemyDatas.add(e);
 
-				if (!s.hasNextLine()) {
-					fin = true;
-				}
+				
 			}
-			s.close();
+			
 			System.out.println("--Enemy Data Parsing Complete--");
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			System.out.println("--Error: Enemy Data File not found--");
 		}
 		fin = false;
 		try {
-			System.out.println(Main.instance.getLeveldatafile());
-			Scanner s = new Scanner(new File(ClassLoader.getSystemResource(Main.instance.getLeveldatafile()).getFile()));
-			s.nextLine(); // Skip First Line
-			while (!fin) {
-				String rawdata = s.nextLine();
-				// System.out.println(rawdata);
+			
+			InputStream inputStream = ClassLoader.
+			        getSystemResourceAsStream(Main.instance.getLeveldatafile());
+			InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
+			BufferedReader in = new BufferedReader(streamReader);
+
+			in.readLine();
+			for (String line; (line = in.readLine()) != null;) {
+				String rawdata = line;
 				String[] parseddata = rawdata.split(",");
 				LevelData lvd = new LevelData();
 				String[] levelmeta = parseddata[0].split("#");
@@ -120,14 +129,10 @@ public class GameData {
 					}
 				}
 				levelDatas.add(lvd);
-
-				if (!s.hasNextLine()) {
-					fin = true;
-				}
+				
 			}
-			s.close();
 			System.out.println("--Level Data Parsing Complete--");
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			System.out.println("--Error: Level Data File not found--");
 		}
 
